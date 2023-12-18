@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">recip-easy</string>
+    <string name="app_name">recipEasy</string>
+
+    <string name="nav_home">HOME</string>
+    <string name="nav_recipes">RECIPES</string>
+    <string name="nav_pantry">PANTRY</string>
+    <string name="nav_profile">PROFILE</string>
+    <string name="article_recipe_1">Chicken with roasted vegetables</string>
 </resources>
