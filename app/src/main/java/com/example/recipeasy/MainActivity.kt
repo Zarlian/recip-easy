@@ -45,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.ui.theme.RecipeasyTheme
+import java.util.HexFormat
 
 
 class MainActivity : ComponentActivity() {
@@ -328,39 +329,21 @@ private fun PantryButtonText(text: String, modifier: Modifier) {
 }
 
 
-@Composable
-fun PantryArticle(text: Int, drawable: Int, modifier: Modifier = Modifier) {
-    Row (
-        modifier = Modifier.width(320.dp)
-                            .height(100.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ){
-        Row (
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ){
-            PantryImage(drawable)
-            PantryText(text)
-        }
-        PantryButton(text = R.string.number_1)
-    }
-}
+
 
 @Composable
-private fun PantryText(text: Int) {
+private fun PantryText(text: String) {
     Text(
-        text = stringResource(text),
+        text = text,
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.primary
     )
 }
-
 @Composable
-private fun PantryImage(drawable: Int) {
+private fun PantryImage(drawable: Int, color: Long) {
     Surface(
         shape = MaterialTheme.shapes.small,
-        color = Color(0xFFEECED3),
+        color = Color(color),
         modifier = Modifier
             .padding(vertical = 8.dp)
             .width(130.dp)
@@ -379,18 +362,61 @@ private fun PantryImage(drawable: Int) {
         }
     }
 }
-
 @Composable
 fun PantryList(modifier: Modifier = Modifier) {
+    val ingredientsStrings = listOf(
+        "Beans",
+        "Chicken Breast",
+        "Eggs",
+        "Honey",
+        "Onions",
+        "Tagliatelle"
+    )
+    val ingredientDrawableMap = mapOf(
+        "Beans" to R.drawable.beans,
+        "Chicken Breast" to R.drawable.chicken_breast,
+        "Eggs" to R.drawable.eggs,
+        "Honey" to R.drawable.honey,
+        "Onions" to R.drawable.onions,
+        "Tagliatelle" to R.drawable.tagliatelle
+    )
+
+    val colorList = listOf(
+        0xFFEECED3,
+        0xFFBEDEDF,
+        0xFFF7CE94,
+        0xFFF7E7A9
+    )
+    var colorIndex = 0
 
     LazyColumn(modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)){
-        items(10) {
+        verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        items(25) { index ->
             PantryArticle(
-                text = R.string.article_recipe_1,
-                drawable = R.drawable.plate_1
+                text = ingredientsStrings[index % ingredientsStrings.size],
+                drawable = ingredientDrawableMap[ingredientsStrings[index % ingredientsStrings.size]] ?: R.drawable.default_image,
+                color = colorList[colorIndex % colorList.size]
             )
+            colorIndex++
         }
+    }
+}
+@Composable
+fun PantryArticle(text: String, drawable: Int, color: Long, modifier: Modifier = Modifier) {
+    Row (
+        modifier = Modifier.width(320.dp)
+            .height(100.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ){
+            PantryImage(drawable, color)
+            PantryText(text)
+        }
+        PantryButton(text = R.string.number_1)
     }
 }
 

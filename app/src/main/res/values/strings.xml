@@ -8,5 +8,11 @@
     <string name="article_recipe_1">Chicken\nwith roasted\nvegetables</string>
     <string name="article_recipe_2">Spaghetti\nbolognese</string>
     <string name="number_1">5</string>
+    <string class="ingredients" name="beans">beans</string>
+    <string class="ingredients" name="chickenBreast">chicken breast</string>
+    <string class="ingredients" name="eggs">eggs</string>
+    <string class="ingredients" name="honey">honey</string>
+    <string class="ingredients" name="onions">onions</string>
+    <string class="ingredients" name="tagliatelle">tagliatelle</string>
 </resources>
 
