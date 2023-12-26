@@ -1,9 +1,12 @@
 <resources>
-    <string name="app_name">recipEasy</string>
+    <string name="app_name">RecipEasy</string>
 
     <string name="nav_home">HOME</string>
     <string name="nav_recipes">RECIPES</string>
     <string name="nav_pantry">PANTRY</string>
     <string name="nav_profile">PROFILE</string>
-    <string name="article_recipe_1">Chicken with roasted vegetables</string>
+    <string name="article_recipe_1">Chicken\nwith roasted\nvegetables</string>
+    <string name="article_recipe_2">Spaghetti\nbolognese</string>
+    <string name="number_1">5</string>
 </resources>
+
