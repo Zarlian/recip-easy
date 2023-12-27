@@ -22,8 +22,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -478,35 +481,182 @@ fun SearchPage() {
 
 @Composable
 fun ShopPage() {
-    TODO("Not yet implemented")
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun AppTitlePreview() {
-    RecipeasyTheme {
-        AppTitle(R.string.app_name)
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        SecondHeader()
+        ShopIcons()
+        ShopArticles()
     }
 }
 
-
-
-@Preview(showBackground = true)
 @Composable
-fun RecipeArticlePreview() {
-    RecipeasyTheme {
-        RecipeArticle(
-            text=R.string.article_recipe_1,
-            drawable = R.drawable.plate_1)
+fun ShopIcons() {
+    Row (
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.width(290.dp)
+    ){
+        ShopIcon()
+        ShopIcon()
+        ShopIcon()
+        ShopIcon()
+    }
+}
+
+@Composable
+fun ShopIcon() {
+    Icon(
+        imageVector = Icons.Filled.ShoppingCart,
+        contentDescription = "Shopping Cart",
+        modifier = Modifier.padding(6.dp)
+    )
+}
+
+@Composable
+fun SecondHeader() {
+    Column (
+        modifier = Modifier.fillMaxWidth()
+            .padding(top = 50.dp, bottom = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Row () {
+            Icon (
+                imageVector = Icons.Filled.ArrowBack,
+                contentDescription = "Shopping Cart",
+                modifier = Modifier.padding(6.dp)
+            )
+            Text(
+                text = "Shopping List",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.secondary
+            )
+        }
+        Divider()
+    }
+}
+
+@Composable
+fun ShopArticles() {
+    LazyColumn() {
+        items(2) {
+            ShopArticle()
+        }
+    }
+}
+
+@Composable
+fun ShopItem(modifier: Modifier = Modifier) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.width(320.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(
+                checked = true,
+                onCheckedChange = { /*TODO*/ },
+                modifier = Modifier.padding(6.dp)
+            )
+            Column {
+                Text(
+                    text = "6 Spare ribs",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    text = "Spare ribs with fried potatoes",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
+        }
+
+        Icon(
+            imageVector = Icons.Outlined.Edit,
+            tint = MaterialTheme.colorScheme.secondary,
+            contentDescription = "Shopping Cart",
+            modifier = Modifier
+                .padding(6.dp)
+                .size(24.dp)
+        )
+    }
+}
+
+@Composable
+fun ShopArticle(modifier: Modifier = Modifier) {
+    Column {
+        ShopTitle()
+        Surface(
+            shape = MaterialTheme.shapes.small,
+            color = Color(0xFFEECED3),
+            modifier = modifier
+                .padding(vertical = 8.dp)
+                .width(320.dp)
+        ) {
+            Column {
+                ShopItem()
+                ShopItem()
+                ShopItem()
+                ShopItem()
+            }
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun RecipeCardListPreview() {
-    RecipeasyTheme {
-        RecipeCardList()
+fun ShopArticlePreview() {
+    RecipeasyTheme(dynamicColor = false) {
+        ShopPage()
+    }
+}
+
+@Composable
+fun ShopTitle(modifier: Modifier = Modifier) {
+    Text(
+        text = "Meat",
+        style = MaterialTheme.typography.titleLarge,
+        color = MaterialTheme.colorScheme.secondary
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomePagePreview() {
+    var selectedPage by remember { mutableStateOf(Page.HOME) }
+    RecipeasyTheme (dynamicColor = false){
+        HomePage(
+            selectedPage = selectedPage,
+            onItemSelected = { page ->
+                selectedPage = page
+            })
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RecipePagePreview() {
+    var selectedPage by remember { mutableStateOf(Page.HOME) }
+    RecipeasyTheme (dynamicColor = false){
+        RecipePage(
+            selectedPage = selectedPage,
+            onItemSelected = { page ->
+                selectedPage = page
+            })
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PantryPagePreview() {
+    var selectedPage by remember { mutableStateOf(Page.HOME) }
+    RecipeasyTheme (dynamicColor = false){
+        PantryPage(
+            selectedPage = selectedPage,
+            onItemSelected = { page ->
+                selectedPage = page
+            })
     }
 }
 
