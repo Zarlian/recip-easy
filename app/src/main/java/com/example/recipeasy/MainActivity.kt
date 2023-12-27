@@ -22,7 +22,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.Edit
@@ -40,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -48,7 +51,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.ui.theme.RecipeasyTheme
-import java.util.HexFormat
 
 
 class MainActivity : ComponentActivity() {
@@ -200,7 +202,9 @@ fun Header(
 ) {
     Column(modifier.padding(bottom = 20.dp)) {
         Surface(
-            modifier = modifier.fillMaxWidth().padding(top = 50.dp)
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 50.dp)
         ) {
             AppTitle(title = R.string.app_name)
             HeaderIcons()
@@ -407,7 +411,8 @@ fun PantryList(modifier: Modifier = Modifier) {
 @Composable
 fun PantryArticle(text: String, drawable: Int, color: Long, modifier: Modifier = Modifier) {
     Row (
-        modifier = Modifier.width(320.dp)
+        modifier = Modifier
+            .width(320.dp)
             .height(100.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -437,7 +442,7 @@ fun HomePage(modifier: Modifier = Modifier, selectedPage: Page, onItemSelected: 
 }
 
 @Composable
-fun RecipePageText(modifier: Modifier = Modifier){
+fun PantryRecipePageText(modifier: Modifier = Modifier){
     Column( modifier = modifier.width(320.dp)
         ){
         Text(
@@ -457,7 +462,7 @@ fun PantryRecipePage(modifier: Modifier = Modifier, selectedPage: Page, onItemSe
             onItemSelected = onItemSelected,
             modifier = modifier
         )
-        RecipePageText(modifier = modifier.align(Alignment.CenterHorizontally))
+        PantryRecipePageText(modifier = modifier.align(Alignment.CenterHorizontally))
         RecipeCardList(modifier = modifier.align(Alignment.CenterHorizontally))
     }
 }
@@ -518,7 +523,8 @@ fun ShopIcon() {
 @Composable
 fun SecondHeader() {
     Column (
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(top = 50.dp, bottom = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -615,6 +621,145 @@ fun ShopTitle(modifier: Modifier = Modifier) {
     )
 }
 
+
+@Composable
+fun RecipePage() {
+    Column {
+        SecondHeader()
+        Recipe()
+    }
+}
+
+@Composable
+fun RecipeIcons() {
+    val icons = listOf(
+        Icons.Filled.AccountBox,
+        Icons.Filled.Delete,
+        Icons.Filled.ShoppingCart,
+        Icons.Filled.ShoppingCart
+    )
+
+    val iconTitle = listOf(
+        "Time",
+        "Difficulty",
+        "Servings",
+        "Add to\nshop"
+    )
+
+    val iconText = listOf(
+        "30 min",
+        "Easy",
+        "4",
+        ""
+    )
+    Row (
+        modifier = Modifier.width(320.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
+        for (i in 0..3) {
+            Column {
+                RecipeIcon(imageVector = icons[i], title = iconTitle[i], text = iconText[i])
+            }
+        }
+    }
+}
+
+@Composable
+fun RecipeIcon(imageVector: ImageVector, title: String, text: String) {
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ){
+        Icon(
+            imageVector = imageVector,
+            contentDescription = "Shopping Cart",
+            tint = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.size(40.dp)
+        )
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.secondary
+        )
+    }
+}
+
+@Composable
+fun RecipeText() {
+    val ingredients = listOf(
+        "- 1 tbsp olive oil",
+        "- 1 onion, chopped",
+        "- 2 garlic cloves, crushed",
+        "- 1 tsp ground cumin",
+        "- 1 tsp ground coriander",
+        "- 1 tsp ground cinnamon",
+        "- 1 tsp harissa paste",
+        "- 400g can chopped tomatoes",
+        "- 2 tbsp clear honey",
+        "- 2 x 400g cans chickpeas, drained and rinsed",
+        "- 1 lemon, juiced",
+        "- 2 tbsp chopped coriander",
+        "- 2 tbsp chopped parsley",
+        "- 2 tbsp chopped mint",
+        "- 100g feta cheese, crumbled",
+    )
+
+    val steps = listOf(
+        "1. Heat the oil in a large saucepan and cook the onion for 5 mins until softened and starting to turn golden. Add the garlic and spices, and cook for 1 min more. Stir in the harissa, tomatoes and honey, and bubble together for 5 mins.",
+        "2. Add the chickpeas to the pan with the lemon juice and seasoning, then simmer for 3 mins more. Stir through the herbs and scatter over the feta to serve."
+    )
+
+    Column (modifier = Modifier.width(320.dp)){
+        Text(
+            text = "Ingredients",
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
+        ingredients.forEach {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary
+            )
+        }
+
+        Divider()
+
+        Text(
+            text = "Preparation",
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        steps.forEach {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary
+            )
+        }
+    }
+}
+
+
+@Composable
+fun Recipe() {
+    Column (
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        RecipeArticleMirror(drawable = R.drawable.plate_1, text = R.string.empty_string)
+        RecipeIcons()
+        RecipeText()
+    }
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun HomePagePreview() {
@@ -669,5 +814,14 @@ fun ShopPagePreview() {
         ShopPage()
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun RecipePagePreview() {
+    RecipeasyTheme (dynamicColor = false){
+        RecipePage()
+    }
+}
+
 
 

@@ -14,5 +14,6 @@
     <string class="ingredients" name="honey">honey</string>
     <string class="ingredients" name="onions">onions</string>
     <string class="ingredients" name="tagliatelle">tagliatelle</string>
+    <string name="empty_string"></string>
 </resources>
 
