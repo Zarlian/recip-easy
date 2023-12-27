@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
                                 selectedPage = page
                             }
                         )
-                        Page.RECIPES -> RecipePage(
+                        Page.RECIPES -> PantryRecipePage(
                             selectedPage = selectedPage,
                             onItemSelected = { page ->
                                 selectedPage = page
@@ -450,7 +450,7 @@ fun RecipePageText(modifier: Modifier = Modifier){
 }
 
 @Composable
-fun RecipePage(modifier: Modifier = Modifier, selectedPage: Page, onItemSelected: (Page) -> Unit){
+fun PantryRecipePage(modifier: Modifier = Modifier, selectedPage: Page, onItemSelected: (Page) -> Unit){
     Column(modifier = modifier.fillMaxSize()) {
         Header(
             selectedPage = selectedPage,
@@ -478,6 +478,8 @@ fun PantryPage(modifier: Modifier = Modifier, selectedPage: Page, onItemSelected
 fun SearchPage() {
     TODO("Not yet implemented")
 }
+
+
 
 @Composable
 fun ShopPage() {
@@ -604,14 +606,6 @@ fun ShopArticle(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ShopArticlePreview() {
-    RecipeasyTheme(dynamicColor = false) {
-        ShopPage()
-    }
-}
-
 @Composable
 fun ShopTitle(modifier: Modifier = Modifier) {
     Text(
@@ -636,10 +630,10 @@ fun HomePagePreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun RecipePagePreview() {
+fun PantryRecipePagePreview() {
     var selectedPage by remember { mutableStateOf(Page.HOME) }
     RecipeasyTheme (dynamicColor = false){
-        RecipePage(
+        PantryRecipePage(
             selectedPage = selectedPage,
             onItemSelected = { page ->
                 selectedPage = page
