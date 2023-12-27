@@ -23,13 +23,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -42,6 +49,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -71,18 +79,21 @@ class MainActivity : ComponentActivity() {
                                 selectedPage = page
                             }
                         )
+
                         Page.RECIPES -> PantryRecipePage(
                             selectedPage = selectedPage,
                             onItemSelected = { page ->
                                 selectedPage = page
                             }
                         )
+
                         Page.PANTRY -> PantryPage(
                             selectedPage = selectedPage,
                             onItemSelected = { page ->
                                 selectedPage = page
                             }
                         )
+
                         Page.PROFILE -> TODO() // Implement ProfilePage similarly
                     }
                 }
@@ -97,8 +108,8 @@ enum class Page {
 }
 
 @Composable
-fun AppTitle(@StringRes title: Int, modifier: Modifier = Modifier){
-    Row(horizontalArrangement = Arrangement.Center){
+fun AppTitle(@StringRes title: Int, modifier: Modifier = Modifier) {
+    Row(horizontalArrangement = Arrangement.Center) {
         Text(
             text = stringResource(title),
             modifier = modifier
@@ -108,7 +119,7 @@ fun AppTitle(@StringRes title: Int, modifier: Modifier = Modifier){
             color = MaterialTheme.colorScheme.primary
         )
     }
-    
+
 }
 
 @Composable
@@ -129,7 +140,7 @@ fun NavBarItems(
     Text(
         text = stringResource(text),
         style = MaterialTheme.typography.bodyLarge,
-        fontWeight = if(selectedPage == page)  FontWeight.ExtraBold else FontWeight.Normal,
+        fontWeight = if (selectedPage == page) FontWeight.ExtraBold else FontWeight.Normal,
         color = if (selectedPage == page) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
         modifier = modifier
             .padding(horizontal = 8.dp)
@@ -175,19 +186,21 @@ fun NavBar(
 }
 
 @Composable
-fun HeaderIcons(modifier: Modifier = Modifier){
-    Row(horizontalArrangement = Arrangement.End,
-        modifier = modifier.offset(x = (-25).dp)){
+fun HeaderIcons(modifier: Modifier = Modifier) {
+    Row(
+        horizontalArrangement = Arrangement.End,
+        modifier = modifier.offset(x = (-25).dp)
+    ) {
         Icon(
             imageVector = Icons.Filled.Search,
             contentDescription = "Search",
-            modifier = modifier.padding( 6.dp),
+            modifier = modifier.padding(6.dp),
             tint = MaterialTheme.colorScheme.secondary
         )
         Icon(
             imageVector = Icons.Filled.ShoppingCart,
             contentDescription = "Shopping Cart",
-            modifier = modifier.padding( 6.dp),
+            modifier = modifier.padding(6.dp),
             tint = MaterialTheme.colorScheme.secondary
         )
     }
@@ -222,7 +235,8 @@ fun Header(
 fun RecipeArticle(
     @DrawableRes drawable: Int,
     @StringRes text: Int,
-    modifier: Modifier = Modifier){
+    modifier: Modifier = Modifier
+) {
     Surface(
         shape = MaterialTheme.shapes.small,
         color = Color(0xFFEECED3),
@@ -256,7 +270,8 @@ fun RecipeArticle(
 fun RecipeArticleMirror(
     @DrawableRes drawable: Int,
     @StringRes text: Int,
-    modifier: Modifier = Modifier){
+    modifier: Modifier = Modifier
+) {
     Surface(
         shape = MaterialTheme.shapes.small,
         color = Color(0xFFBEDEDF),
@@ -289,8 +304,10 @@ fun RecipeArticleMirror(
 @Composable
 fun RecipeCardList(modifier: Modifier = Modifier) {
 
-    LazyColumn(modifier = modifier,
-               verticalArrangement = Arrangement.spacedBy(8.dp)){
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         items(10) {
             RecipeArticle(
                 text = R.string.article_recipe_1,
@@ -298,23 +315,24 @@ fun RecipeCardList(modifier: Modifier = Modifier) {
             )
             RecipeArticleMirror(
                 drawable = R.drawable.plate_2,
-                text = R.string.article_recipe_2)
+                text = R.string.article_recipe_2
+            )
         }
     }
 }
 
 @Composable
-fun PantryButton(@StringRes text: Int, modifier: Modifier = Modifier){
+fun PantryButton(@StringRes text: Int, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .border(1.dp, MaterialTheme.colorScheme.secondary)
             .fillMaxHeight(0.7f)
             .padding(horizontal = 10.dp)
-    ){
-        Column (
-                horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
 
-        ){
+        ) {
             PantryButtonText(text = "+", modifier = Modifier)
             Text(
                 text = stringResource(text),
@@ -336,8 +354,6 @@ private fun PantryButtonText(text: String, modifier: Modifier) {
 }
 
 
-
-
 @Composable
 private fun PantryText(text: String) {
     Text(
@@ -346,6 +362,7 @@ private fun PantryText(text: String) {
         color = MaterialTheme.colorScheme.primary
     )
 }
+
 @Composable
 private fun PantryImage(drawable: Int, color: Long) {
     Surface(
@@ -369,6 +386,7 @@ private fun PantryImage(drawable: Int, color: Long) {
         }
     }
 }
+
 @Composable
 fun PantryList(modifier: Modifier = Modifier) {
     val ingredientsStrings = listOf(
@@ -396,31 +414,41 @@ fun PantryList(modifier: Modifier = Modifier) {
     )
     var colorIndex = 0
 
-    LazyColumn(modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         items(25) { index ->
             PantryArticle(
                 text = ingredientsStrings[index % ingredientsStrings.size],
-                drawable = ingredientDrawableMap[ingredientsStrings[index % ingredientsStrings.size]] ?: R.drawable.default_image,
+                drawable = ingredientDrawableMap[ingredientsStrings[index % ingredientsStrings.size]]
+                    ?: R.drawable.default_image,
                 color = colorList[colorIndex % colorList.size]
             )
             colorIndex++
         }
     }
+    //TODO make this button work
+    FloatingActionButton(
+        onClick = { /*TODO*/ },
+    ) {
+        Icon(Icons.Filled.Add, "Floating action button.")
+    }
 }
+
 @Composable
 fun PantryArticle(text: String, drawable: Int, color: Long, modifier: Modifier = Modifier) {
-    Row (
+    Row(
         modifier = Modifier
             .width(320.dp)
             .height(100.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
-    ){
-        Row (
+    ) {
+        Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ){
+        ) {
             PantryImage(drawable, color)
             PantryText(text)
         }
@@ -442,9 +470,10 @@ fun HomePage(modifier: Modifier = Modifier, selectedPage: Page, onItemSelected: 
 }
 
 @Composable
-fun PantryRecipePageText(modifier: Modifier = Modifier){
-    Column( modifier = modifier.width(320.dp)
-        ){
+fun PantryRecipePageText(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.width(320.dp)
+    ) {
         Text(
             text = "Recipes with your pantry ingredients",
             style = MaterialTheme.typography.titleMedium,
@@ -455,7 +484,11 @@ fun PantryRecipePageText(modifier: Modifier = Modifier){
 }
 
 @Composable
-fun PantryRecipePage(modifier: Modifier = Modifier, selectedPage: Page, onItemSelected: (Page) -> Unit){
+fun PantryRecipePage(
+    modifier: Modifier = Modifier,
+    selectedPage: Page,
+    onItemSelected: (Page) -> Unit
+) {
     Column(modifier = modifier.fillMaxSize()) {
         Header(
             selectedPage = selectedPage,
@@ -468,7 +501,7 @@ fun PantryRecipePage(modifier: Modifier = Modifier, selectedPage: Page, onItemSe
 }
 
 @Composable
-fun PantryPage(modifier: Modifier = Modifier, selectedPage: Page, onItemSelected: (Page) -> Unit){
+fun PantryPage(modifier: Modifier = Modifier, selectedPage: Page, onItemSelected: (Page) -> Unit) {
     Column(modifier = modifier.fillMaxSize()) {
         Header(
             selectedPage = selectedPage,
@@ -480,19 +513,175 @@ fun PantryPage(modifier: Modifier = Modifier, selectedPage: Page, onItemSelected
 }
 
 @Composable
-fun SearchPage() {
-    TODO("Not yet implemented")
+fun FilterPage() {
+    var choice by remember { mutableStateOf("") }
+
+    Column {
+        SecondHeader(title = "Result", subtitle = "You have 3 items")
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Filter() { updatedChoice ->
+                choice = updatedChoice // Update the choice in FilterPage
+            }
+            FilterBy(choice = choice)
+            Sort()
+        }
+        FilterResults()
+
+    }
+
+
 }
 
+@Composable
+fun FilterBy(choice: String) {
+    var expandedFilter by remember { mutableStateOf(false) }
+
+    if(choice == "ONLY" || choice == "NO"){
+        Box {
+            Button(
+                onClick = { expandedFilter = !expandedFilter },
+                shape = RectangleShape,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = MaterialTheme.colorScheme.secondary
+                ),
+
+                ) {
+                Text("________________")
+                Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = "Dropdown")
+            }
+
+            DropdownMenu(
+                expanded = expandedFilter,
+                onDismissRequest = { expandedFilter = false },
+                content = {
+
+                    DropdownMenuItem(
+                        onClick = { /* TODO */ },
+                        text = { Text("Chicken") },
+                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
+                    )
+                    DropdownMenuItem(
+                        onClick = { /* TODO */ },
+                        text = { Text("Eggs") },
+                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
+                    )
+                    DropdownMenuItem(
+                        onClick = { /* TODO */ },
+                        text = { Text("Pasta") },
+                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
+                    )
+                    DropdownMenuItem(
+                        onClick = { /* TODO */ },
+                        text = { Text("Beef") },
+                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
+                    )
+                    DropdownMenuItem(
+                        onClick = { /* TODO */ },
+                        text = { Text("Milk") },
+                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
+                    )
+                    DropdownMenuItem(
+                        onClick = { /* TODO */ },
+                        text = { Text("Cheese") },
+                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
+                    )
+
+                    DropdownMenuItem(
+                        onClick = { expandedFilter = false },
+                        text = { Text("Done") },
+                    )
+
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun FilterResults() {
+    LazyColumn() {
+        items(3) {
+            FilterResult()
+        }
+    }
+}
+
+@Composable
+fun FilterResult() {
+}
+
+@Composable
+fun Filter(onChoiceSelected: (String) -> Unit) {
+    var expandedFilter by remember { mutableStateOf(false) }
+
+    var choice by remember { mutableStateOf("FILTER") }
+
+    Box {
+        Button(
+            onClick = { expandedFilter = !expandedFilter },
+            shape = RectangleShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = MaterialTheme.colorScheme.secondary
+            )
+        ) {
+            Text(choice)
+        }
+
+        // DropdownMenu tied to the 'expanded' state
+        DropdownMenu(
+            expanded = expandedFilter,
+            onDismissRequest = { expandedFilter = false },
+            content = {
+                DropdownMenuItem(onClick = { onChoiceSelected("ONLY"); expandedFilter = false ; choice="ONLY" }, text = { Text("ONLY") })
+                DropdownMenuItem(onClick = { onChoiceSelected("NO"); expandedFilter = false ; choice="NO"}, text = { Text("NO") })
+                DropdownMenuItem(onClick = { onChoiceSelected(""); expandedFilter = false ; choice="FILTER"}, text = { Text("CANCEL") })
+            }
+        )
+    }
+}
+
+@Composable
+private fun Sort() {
+    var expandedSort by remember { mutableStateOf(false) }
+
+    Box {
+        Button(
+            onClick = { expandedSort = !expandedSort },
+            shape = RectangleShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = MaterialTheme.colorScheme.secondary
+            ),
+
+            ) {
+            Text("SORT")
+        }
+
+        DropdownMenu(
+            expanded = expandedSort,
+            onDismissRequest = { expandedSort = false },
+            content = {
+                DropdownMenuItem(onClick = { /* TODO */ }, text = { Text("ALPHABETIC") })
+                DropdownMenuItem(onClick = { /* TODO */ }, text = { Text("CALORIES") })
+                DropdownMenuItem(onClick = { /* TODO */ }, text = { Text("TIME") })
+            }
+        )
+    }
+}
 
 
 @Composable
 fun ShopPage() {
-    Column (
+    Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SecondHeader()
+        SecondHeader(title = "Shopping List")
         ShopIcons()
         ShopArticles()
     }
@@ -500,10 +689,10 @@ fun ShopPage() {
 
 @Composable
 fun ShopIcons() {
-    Row (
+    Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.width(290.dp)
-    ){
+    ) {
         ShopIcon()
         ShopIcon()
         ShopIcon()
@@ -521,24 +710,32 @@ fun ShopIcon() {
 }
 
 @Composable
-fun SecondHeader() {
-    Column (
+fun SecondHeader(title: String, subtitle: String = "") {
+    //TODO text need to be in the middle, icon to the left
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 50.dp, bottom = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Row () {
-            Icon (
+    ) {
+        Row() {
+            Icon(
                 imageVector = Icons.Filled.ArrowBack,
                 contentDescription = "Shopping Cart",
                 modifier = Modifier.padding(6.dp)
             )
-            Text(
-                text = "Shopping List",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.secondary
-            )
+            Column {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
         }
         Divider()
     }
@@ -625,7 +822,7 @@ fun ShopTitle(modifier: Modifier = Modifier) {
 @Composable
 fun RecipePage() {
     Column {
-        SecondHeader()
+        SecondHeader("Chicken with vegetables")
         Recipe()
     }
 }
@@ -652,10 +849,10 @@ fun RecipeIcons() {
         "4",
         ""
     )
-    Row (
+    Row(
         modifier = Modifier.width(320.dp),
         horizontalArrangement = Arrangement.SpaceBetween
-    ){
+    ) {
         for (i in 0..3) {
             Column {
                 RecipeIcon(imageVector = icons[i], title = iconTitle[i], text = iconText[i])
@@ -666,9 +863,9 @@ fun RecipeIcons() {
 
 @Composable
 fun RecipeIcon(imageVector: ImageVector, title: String, text: String) {
-    Column (
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-    ){
+    ) {
         Icon(
             imageVector = imageVector,
             contentDescription = "Shopping Cart",
@@ -713,7 +910,7 @@ fun RecipeText() {
         "2. Add the chickpeas to the pan with the lemon juice and seasoning, then simmer for 3 mins more. Stir through the herbs and scatter over the feta to serve."
     )
 
-    Column (modifier = Modifier.width(320.dp)){
+    Column(modifier = Modifier.width(320.dp)) {
         Text(
             text = "Ingredients",
             style = MaterialTheme.typography.titleLarge,
@@ -748,11 +945,11 @@ fun RecipeText() {
 
 @Composable
 fun Recipe() {
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         RecipeArticleMirror(drawable = R.drawable.plate_1, text = R.string.empty_string)
         RecipeIcons()
         RecipeText()
@@ -764,7 +961,7 @@ fun Recipe() {
 @Composable
 fun HomePagePreview() {
     var selectedPage by remember { mutableStateOf(Page.HOME) }
-    RecipeasyTheme (dynamicColor = false){
+    RecipeasyTheme(dynamicColor = false) {
         HomePage(
             selectedPage = selectedPage,
             onItemSelected = { page ->
@@ -777,7 +974,7 @@ fun HomePagePreview() {
 @Composable
 fun PantryRecipePagePreview() {
     var selectedPage by remember { mutableStateOf(Page.HOME) }
-    RecipeasyTheme (dynamicColor = false){
+    RecipeasyTheme(dynamicColor = false) {
         PantryRecipePage(
             selectedPage = selectedPage,
             onItemSelected = { page ->
@@ -790,7 +987,7 @@ fun PantryRecipePagePreview() {
 @Composable
 fun PantryPagePreview() {
     var selectedPage by remember { mutableStateOf(Page.HOME) }
-    RecipeasyTheme (dynamicColor = false){
+    RecipeasyTheme(dynamicColor = false) {
         PantryPage(
             selectedPage = selectedPage,
             onItemSelected = { page ->
@@ -802,15 +999,15 @@ fun PantryPagePreview() {
 @Preview(showBackground = true)
 @Composable
 fun SearchPagePreview() {
-    RecipeasyTheme (dynamicColor = false){
-        SearchPage()
+    RecipeasyTheme(dynamicColor = false) {
+        FilterPage()
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun ShopPagePreview() {
-    RecipeasyTheme (dynamicColor = false){
+    RecipeasyTheme(dynamicColor = false) {
         ShopPage()
     }
 }
@@ -818,7 +1015,7 @@ fun ShopPagePreview() {
 @Preview(showBackground = true)
 @Composable
 fun RecipePagePreview() {
-    RecipeasyTheme (dynamicColor = false){
+    RecipeasyTheme(dynamicColor = false) {
         RecipePage()
     }
 }
