@@ -12,5 +12,9 @@
     <string class="ingredients" name="honey">honey</string>
     <string class="ingredients" name="onions">onions</string>
     <string class="ingredients" name="tagliatelle">tagliatelle</string>
-</resources>
+    <string class="recipe_icon_title" name="time">Time</string>
+    <string class="recipe_icon_title" name="difficulty">Difficulty</string>
+    <string class="recipe_icon_title" name="servings">Servings</string>
+    <string class="recipe_icon_title" name="add_to_shop">Add to\nshop</string>
 
+</resources>
