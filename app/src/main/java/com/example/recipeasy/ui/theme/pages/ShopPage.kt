@@ -15,6 +15,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,6 +74,8 @@ fun ShopArticles(shop: List<ShopArticle>) {
 
 @Composable
 fun ShopItem(shopItem: ShopItem) {
+    var checked by remember { mutableStateOf(true) }
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.width(320.dp),
@@ -77,8 +83,10 @@ fun ShopItem(shopItem: ShopItem) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
-                checked = true,
-                onCheckedChange = { /*TODO*/ },
+                checked = checked,
+                onCheckedChange = { isChecked ->
+                    checked = isChecked
+                },
                 modifier = Modifier.padding(6.dp)
             )
             Column {
