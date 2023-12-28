@@ -1,8 +1,13 @@
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -13,21 +18,34 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.recipeasy.R
+import com.example.recipeasy.data.dataclasses.RecipeArticle
+import com.example.recipeasy.data.filterResultList
+import com.example.recipeasy.ui.theme.RecipeasyTheme
 
 @Composable
-fun FilterPage() {
+fun FilterPage(
+    recipeArticles: List<RecipeArticle>) {
     var choice by remember { mutableStateOf("") }
 
-    Column {
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ){
         SecondHeader(title = "Result", subtitle = "You have 3 items")
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -39,7 +57,7 @@ fun FilterPage() {
             FilterBy(choice = choice)
             Sort()
         }
-        FilterResults()
+        FilterResults(recipeArticles = recipeArticles)
 
     }
 
@@ -99,16 +117,93 @@ fun FilterBy(choice: String) {
 }
 
 @Composable
-fun FilterResults() {
-    LazyColumn() {
-        items(3) {
-            FilterResult()
+fun FilterResults(recipeArticles: List<RecipeArticle>) {
+    Box(
+        modifier = Modifier
+            .width(320.dp),
+
+    ) {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.width(320.dp)
+        ) {
+            items(recipeArticles.size) { index ->
+                val recipeArticle = recipeArticles[index]
+                FilterResult(recipeArticle = recipeArticle)
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FilterResultsPreview() {
+    RecipeasyTheme {
+        FilterResults(recipeArticles = filterResultList)
+    }
+}
+
+@Composable
+fun FilterResult(modifier: Modifier = Modifier, recipeArticle: RecipeArticle) {
+    Row(
+        modifier = modifier
+            .width(320.dp)
+            .height(100.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.width(320.dp)
+        ) {
+            FilterImage(recipeArticle.image, recipeArticle.color)
+            FilterText(recipeArticle.title)
         }
     }
 }
 
 @Composable
-fun FilterResult() {
+private fun FilterText(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleMedium,
+        color = MaterialTheme.colorScheme.primary
+    )
+}
+
+@Composable
+private fun FilterImage(drawable: Int, color: Color) {
+    Surface(
+        shape = MaterialTheme.shapes.small,
+        shadowElevation = 4.dp,
+        color = color,
+        modifier = Modifier
+            .padding(vertical = 8.dp)
+            .width(130.dp)
+            .height(100.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Image(
+                painter = painterResource(drawable),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(115.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FilterResultPreview() {
+    RecipeasyTheme {
+        FilterResult(modifier = Modifier , RecipeArticle("Chicken pie", R.drawable.plate_1, Color(0xFFEECED3)))
+    }
 }
 
 @Composable

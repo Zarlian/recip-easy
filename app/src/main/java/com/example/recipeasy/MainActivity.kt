@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.recipeasy.data.filterResultList
 import com.example.recipeasy.data.pantryItems
 import com.example.recipeasy.data.pantryRecipeList
 import com.example.recipeasy.ui.theme.RecipeasyTheme
@@ -123,7 +124,7 @@ fun PantryPagePreview() {
 @Composable
 fun SearchPagePreview() {
     RecipeasyTheme(dynamicColor = false) {
-        FilterPage()
+        FilterPage(recipeArticles = filterResultList)
     }
 }
 

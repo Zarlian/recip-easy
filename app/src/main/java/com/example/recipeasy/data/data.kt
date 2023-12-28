@@ -155,3 +155,21 @@ val shop = listOf(
     )
 )
 
+val filterResultList = listOf(
+    RecipeArticle(
+        title = "Bread with eggs",
+        image = R.drawable.plate_2,
+        color = Color(0xFFF7CE94)
+    ),
+    RecipeArticle(
+        title = "Asparagus with eggs",
+        image = R.drawable.plate_3,
+        color = Color(0xFFBEDEDF)
+    ),
+    RecipeArticle(
+        title = "Chicken pie",
+        image = R.drawable.plate_1,
+        color = Color(0xFFEECED3)
+    ),
+
+)
