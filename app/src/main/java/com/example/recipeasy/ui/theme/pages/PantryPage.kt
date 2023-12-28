@@ -105,7 +105,7 @@ fun PantryList(modifier: Modifier = Modifier) {
 @Composable
 fun PantryArticle(text: String, drawable: Int, color: Long, modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .width(320.dp)
             .height(100.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -135,6 +135,7 @@ private fun PantryText(text: String) {
 private fun PantryImage(drawable: Int, color: Long) {
     Surface(
         shape = MaterialTheme.shapes.small,
+        shadowElevation = 4.dp,
         color = Color(color),
         modifier = Modifier
             .padding(vertical = 8.dp)
@@ -158,8 +159,8 @@ private fun PantryImage(drawable: Int, color: Long) {
 @Composable
 fun PantryButton(@StringRes text: Int, modifier: Modifier = Modifier) {
     Surface(
-        shape = MaterialTheme.shapes.extraSmall, // Adjust shape as needed
-        shadowElevation = 4.dp, // Add shadow with elevation
+        shape = MaterialTheme.shapes.extraSmall,
+        shadowElevation = 4.dp,
         modifier = modifier
             .fillMaxHeight(0.7f)
 
@@ -170,20 +171,20 @@ fun PantryButton(@StringRes text: Int, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .padding(horizontal = 10.dp)
             ) {
-                PantryButtonText(text = "+", modifier = Modifier)
+                PantryButtonText(text = "+")
                 Text(
                     text = stringResource(text),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
-                PantryButtonText(text = "-", modifier = Modifier)
+                PantryButtonText(text = "-")
             }
 
     }
 }
 
 @Composable
-private fun PantryButtonText(text: String, modifier: Modifier) {
+private fun PantryButtonText(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.titleMedium,
