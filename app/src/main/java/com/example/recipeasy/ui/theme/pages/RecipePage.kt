@@ -1,22 +1,18 @@
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.R
 
@@ -33,10 +29,10 @@ fun RecipePage(
 @Composable
 fun RecipeIcons() {
     val icons = listOf(
-        Icons.Filled.AccountBox,
-        Icons.Filled.Delete,
-        Icons.Filled.ShoppingCart,
-        Icons.Filled.ShoppingCart
+        R.drawable.outline_timer,
+        R.drawable.cooking,
+        R.drawable.plate,
+        R.drawable.outline_add_shopping_cart
     )
 
     val iconTitle = listOf(
@@ -58,21 +54,20 @@ fun RecipeIcons() {
     ) {
         for (i in 0..3) {
             Column {
-                RecipeIcon(imageVector = icons[i], title = iconTitle[i], text = iconText[i])
+                RecipeIcon(icon = icons[i], title = iconTitle[i], text = iconText[i])
             }
         }
     }
 }
 
 @Composable
-fun RecipeIcon(imageVector: ImageVector, title: String, text: String) {
+fun RecipeIcon(icon: Int, title: String, text: String) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Icon(
-            imageVector = imageVector,
+        Image(
+            painter = painterResource(icon),
             contentDescription = "Shopping Cart",
-            tint = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.size(40.dp)
         )
         Text(
