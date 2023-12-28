@@ -1,6 +1,5 @@
 package com.example.recipeasy
 
-
 import FilterPage
 import HomePage
 import PantryPage
@@ -20,7 +19,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.recipeasy.data.pantryItems
 import com.example.recipeasy.ui.theme.RecipeasyTheme
+import com.example.recipeasy.data.recipeArticlesList
 
 
 class MainActivity : ComponentActivity() {
@@ -39,21 +40,24 @@ class MainActivity : ComponentActivity() {
                             selectedPage = selectedPage,
                             onItemSelected = { page ->
                                 selectedPage = page
-                            }
+                            },
+                            recipeArticles = recipeArticlesList
                         )
 
                         Page.RECIPES -> PantryRecipePage(
                             selectedPage = selectedPage,
                             onItemSelected = { page ->
                                 selectedPage = page
-                            }
+                            },
+                            recipeArticles = recipeArticlesList
                         )
 
                         Page.PANTRY -> PantryPage(
                             selectedPage = selectedPage,
                             onItemSelected = { page ->
                                 selectedPage = page
-                            }
+                            },
+                            pantry = pantryItems
                         )
 
                         Page.PROFILE -> TODO()
@@ -78,7 +82,9 @@ fun HomePagePreview() {
             selectedPage = selectedPage,
             onItemSelected = { page ->
                 selectedPage = page
-            })
+            },
+            recipeArticles = recipeArticlesList
+        )
     }
 }
 
@@ -91,7 +97,9 @@ fun PantryRecipePagePreview() {
             selectedPage = selectedPage,
             onItemSelected = { page ->
                 selectedPage = page
-            })
+            },
+            recipeArticles = recipeArticlesList
+        )
     }
 }
 
@@ -104,7 +112,8 @@ fun PantryPagePreview() {
             selectedPage = selectedPage,
             onItemSelected = { page ->
                 selectedPage = page
-            })
+            },
+            pantry = pantryItems)
     }
 }
 
@@ -131,6 +140,7 @@ fun RecipePagePreview() {
         RecipePage()
     }
 }
+
 
 
 

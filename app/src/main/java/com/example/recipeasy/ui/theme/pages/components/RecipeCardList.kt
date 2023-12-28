@@ -1,5 +1,4 @@
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,27 +16,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.recipeasy.R
+import com.example.recipeasy.data.dataclasses.RecipeArticle
 
 @Composable
-fun RecipeCardList(modifier: Modifier = Modifier) {
+fun RecipeCardList(modifier: Modifier = Modifier, recipeArticles: List<RecipeArticle>) {
 
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(10) {
-            RecipeArticle(
-                text = R.string.article_recipe_1,
-                drawable = R.drawable.plate_1
-            )
-            RecipeArticleMirror(
-                drawable = R.drawable.plate_2,
-                text = R.string.article_recipe_2
-            )
+        items(recipeArticles.size) { index ->
+            val recipe = recipeArticles[index]
+            if (index % 2 == 0) {
+                RecipeArticle(
+                    text = recipe.title,
+                    drawable = recipe.image,
+                    color = recipe.color
+                )
+            } else {
+                RecipeArticleMirror(
+                    drawable = recipe.image,
+                    text = recipe.title,
+                    color = recipe.color
+                )
+            }
         }
     }
 }
@@ -45,12 +49,14 @@ fun RecipeCardList(modifier: Modifier = Modifier) {
 @Composable
 fun RecipeArticle(
     @DrawableRes drawable: Int,
-    @StringRes text: Int,
-    modifier: Modifier = Modifier
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color
 ) {
     Surface(
         shape = MaterialTheme.shapes.small,
-        color = Color(0xFFEECED3),
+        color = color,
+        shadowElevation = 4.dp,
         modifier = modifier
             .padding(vertical = 8.dp)
             .width(320.dp)
@@ -67,7 +73,7 @@ fun RecipeArticle(
                 modifier = Modifier.size(115.dp)
             )
             Text(
-                text = stringResource(text),
+                text = text,
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Right,
                 modifier = Modifier.padding(horizontal = 8.dp),
@@ -80,12 +86,14 @@ fun RecipeArticle(
 @Composable
 fun RecipeArticleMirror(
     @DrawableRes drawable: Int,
-    @StringRes text: Int,
-    modifier: Modifier = Modifier
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color
 ) {
     Surface(
         shape = MaterialTheme.shapes.small,
-        color = Color(0xFFBEDEDF),
+        color = color,
+        shadowElevation = 4.dp,
         modifier = modifier
             .padding(vertical = 8.dp)
             .width(320.dp)
@@ -96,7 +104,7 @@ fun RecipeArticleMirror(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = stringResource(text),
+                text = text,
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Right,
                 modifier = Modifier.padding(horizontal = 8.dp),
@@ -111,3 +119,4 @@ fun RecipeArticleMirror(
         }
     }
 }
+

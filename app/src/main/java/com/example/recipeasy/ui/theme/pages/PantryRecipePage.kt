@@ -9,12 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.Page
+import com.example.recipeasy.data.dataclasses.RecipeArticle
 
 @Composable
 fun PantryRecipePage(
     modifier: Modifier = Modifier,
     selectedPage: Page,
-    onItemSelected: (Page) -> Unit
+    onItemSelected: (Page) -> Unit,
+    recipeArticles: List<RecipeArticle>
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         Header(
@@ -23,7 +25,7 @@ fun PantryRecipePage(
             modifier = modifier
         )
         PantryRecipePageText(modifier = modifier.align(Alignment.CenterHorizontally))
-        RecipeCardList(modifier = modifier.align(Alignment.CenterHorizontally))
+        RecipeCardList(modifier = modifier.align(Alignment.CenterHorizontally), recipeArticles = recipeArticles)
     }
 }
 

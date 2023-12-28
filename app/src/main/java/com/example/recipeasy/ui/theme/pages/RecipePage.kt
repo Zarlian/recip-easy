@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.R
@@ -150,7 +151,7 @@ fun Recipe() {
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        RecipeArticleMirror(drawable = R.drawable.plate_1, text = R.string.empty_string)
+        RecipeArticleMirror(drawable = R.drawable.plate_1, text = "", color = Color(0xFFEECED3))
         RecipeIcons()
         RecipeText()
     }
