@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,7 +22,11 @@ import androidx.compose.ui.unit.dp
 import com.example.recipeasy.data.dataclasses.RecipeArticle
 
 @Composable
-fun RecipeCardList(modifier: Modifier = Modifier, recipeArticles: List<RecipeArticle>) {
+fun RecipeCardList(
+    modifier: Modifier = Modifier,
+    recipeArticles: List<RecipeArticle>,
+    onItemClick: (RecipeArticle) -> Unit
+) {
 
     LazyColumn(
         modifier = modifier,
@@ -33,25 +38,29 @@ fun RecipeCardList(modifier: Modifier = Modifier, recipeArticles: List<RecipeArt
                 RecipeArticle(
                     text = recipe.title,
                     drawable = recipe.image,
-                    color = recipe.color
+                    color = recipe.color,
+                    onClick = { onItemClick(recipe) }
                 )
             } else {
                 RecipeArticleMirror(
                     drawable = recipe.image,
                     text = recipe.title,
-                    color = recipe.color
+                    color = recipe.color,
+                    onClick = { onItemClick(recipe) }
                 )
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeArticle(
     @DrawableRes drawable: Int,
     text: String,
     modifier: Modifier = Modifier,
-    color: Color
+    color: Color,
+    onClick: () -> Unit
 ) {
     Surface(
         shape = MaterialTheme.shapes.small,
@@ -60,7 +69,8 @@ fun RecipeArticle(
         modifier = modifier
             .padding(vertical = 8.dp)
             .width(320.dp)
-            .height(130.dp)
+            .height(130.dp),
+        onClick = onClick
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -83,12 +93,14 @@ fun RecipeArticle(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeArticleMirror(
     @DrawableRes drawable: Int,
     text: String,
     modifier: Modifier = Modifier,
-    color: Color
+    color: Color,
+    onClick: () -> Unit
 ) {
     Surface(
         shape = MaterialTheme.shapes.small,
@@ -97,7 +109,8 @@ fun RecipeArticleMirror(
         modifier = modifier
             .padding(vertical = 8.dp)
             .width(320.dp)
-            .height(130.dp)
+            .height(130.dp),
+        onClick = onClick
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

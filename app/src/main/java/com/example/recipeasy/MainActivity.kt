@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.recipeasy.data.dataclasses.RecipeArticle
 import com.example.recipeasy.data.filterResultList
 import com.example.recipeasy.data.pantryItems
 import com.example.recipeasy.data.pantryRecipeList
@@ -37,6 +38,8 @@ class MainActivity : ComponentActivity() {
                 var selectedPage by remember { mutableStateOf(Page.HOME) }
                 var showFilterPage by remember { mutableStateOf(false) }
                 var showShopPage by remember { mutableStateOf(false) }
+                var selectedRecipeArticle by remember { mutableStateOf<RecipeArticle?>(null) }
+                var showRecipePage by remember { mutableStateOf(false) }
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -54,7 +57,19 @@ class MainActivity : ComponentActivity() {
                             onBackClicked = {
                                 showShopPage = false
                             })
-                    } else{
+                    }
+                    else if(showRecipePage) {
+                        selectedRecipeArticle?.let { selectedArticle ->
+                            RecipePage(
+                                onBackClicked = {
+                                    showRecipePage = false
+                                    selectedRecipeArticle = null
+                                },
+                                recipeArticle = selectedArticle
+                            )
+                        }
+                    }
+                    else{
                         when (selectedPage) {
                             Page.HOME -> HomePage(
                                 selectedPage = selectedPage,
@@ -67,6 +82,10 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onShopClicked = {
                                     showShopPage = true
+                                },
+                                onRecipeArticleClicked = { recipeArticle ->
+                                    selectedRecipeArticle = recipeArticle
+                                    showRecipePage = true
                                 }
                             )
 
@@ -81,6 +100,10 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onShopClicked = {
                                     showShopPage = true
+                                },
+                                onRecipeArticleClicked = { recipeArticle ->
+                                    selectedRecipeArticle = recipeArticle
+                                    showRecipePage = true
                                 }
                             )
 
@@ -135,7 +158,8 @@ fun HomePagePreview() {
             },
             recipeArticles = recipeArticlesList,
             onSearchClicked = {},
-            onShopClicked = {}
+            onShopClicked = {},
+            onRecipeArticleClicked = {}
         )
     }
 }
@@ -152,7 +176,8 @@ fun PantryRecipePagePreview() {
             },
             recipeArticles = pantryRecipeList,
             onSearchClicked = {},
-            onShopClicked = {}
+            onShopClicked = {},
+            onRecipeArticleClicked = {}
         )
     }
 }

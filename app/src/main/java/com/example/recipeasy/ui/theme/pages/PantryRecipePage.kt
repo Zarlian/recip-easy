@@ -18,7 +18,8 @@ fun PantryRecipePage(
     onItemSelected: (Page) -> Unit,
     recipeArticles: List<RecipeArticle>,
     onSearchClicked: () -> Unit,
-    onShopClicked: () -> Unit
+    onShopClicked: () -> Unit,
+    onRecipeArticleClicked: (RecipeArticle) -> Unit
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         Header(
@@ -29,7 +30,12 @@ fun PantryRecipePage(
             onShopClicked = onShopClicked
         )
         PantryRecipePageText(modifier = modifier.align(Alignment.CenterHorizontally))
-        RecipeCardList(modifier = modifier.align(Alignment.CenterHorizontally), recipeArticles = recipeArticles)
+        RecipeCardList(
+            modifier = modifier.align(Alignment.CenterHorizontally),
+            recipeArticles = recipeArticles,
+            onItemClick = { recipeArticle ->
+                onRecipeArticleClicked(recipeArticle)
+            })
     }
 }
 

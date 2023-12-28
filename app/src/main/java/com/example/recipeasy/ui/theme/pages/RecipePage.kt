@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -99,16 +98,15 @@ fun RecipeText(recipe: Recipe) {
         "- " + step.prepStep
     }
 
-    LazyColumn(modifier = Modifier.width(320.dp)) {
-        item {
+    Column(modifier = Modifier.width(320.dp)) {
             Text(
                 text = "Ingredients",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
-        }
 
-        items(ingredients) { ingredient ->
+
+        ingredients.forEach { ingredient ->
             Text(
                 text = ingredient,
                 style = MaterialTheme.typography.bodyMedium,
@@ -116,19 +114,19 @@ fun RecipeText(recipe: Recipe) {
             )
 
         }
-        item {
-            Divider(modifier = Modifier.padding(vertical = 6.dp))
-        }
 
-        item {
+            Divider(modifier = Modifier.padding(vertical = 6.dp))
+
+
+
             Text(
                 text = "Preparation",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
-        }
 
-        items(steps) { step ->
+
+        steps.forEach { step ->
             Text(
                 text = step,
                 style = MaterialTheme.typography.bodyMedium,
@@ -142,13 +140,26 @@ fun RecipeText(recipe: Recipe) {
 
 @Composable
 fun Recipe(recipeArticle: RecipeArticle) {
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        RecipeArticleMirror(drawable = recipeArticle.image, text = "", color = recipeArticle.color)
-        RecipeIcons(recipe = recipeArticle.recipe)
-        RecipeText(recipe = recipeArticle.recipe)
+        item {
+            RecipeArticleMirror(
+                drawable = recipeArticle.image,
+                text = "",
+                color = recipeArticle.color,
+                onClick = {}
+            )
+        }
+
+        item {
+            RecipeIcons(recipe = recipeArticle.recipe)
+        }
+
+        item {
+            RecipeText(recipe = recipeArticle.recipe)
+        }
     }
 }
