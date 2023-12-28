@@ -92,7 +92,7 @@ fun PantryList(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp),
-            onClick = { /* TODO */ },
+            onClick = { /* add new pantry item */ },
             containerColor = Color.White,
             contentColor = MaterialTheme.colorScheme.secondary
         ) {
