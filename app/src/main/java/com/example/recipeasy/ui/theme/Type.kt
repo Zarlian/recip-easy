@@ -29,7 +29,7 @@ val Typography = Typography(
         fontFamily = javaneseText,
         fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
-        lineHeight = 28.sp,
+        lineHeight = 26.sp,
         letterSpacing = 0.sp
     )
     /* Other default text styles to override
