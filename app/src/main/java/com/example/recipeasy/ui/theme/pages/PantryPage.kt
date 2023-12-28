@@ -1,6 +1,5 @@
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,9 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.Page
 import com.example.recipeasy.R
+import com.example.recipeasy.ui.theme.RecipeasyTheme
 
 @Composable
 fun PantryPage(modifier: Modifier = Modifier, selectedPage: Page, onItemSelected: (Page) -> Unit) {
@@ -69,27 +70,37 @@ fun PantryList(modifier: Modifier = Modifier) {
     )
     var colorIndex = 0
 
-    LazyColumn(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(25) { index ->
-            PantryArticle(
-                text = ingredientsStrings[index % ingredientsStrings.size],
-                drawable = ingredientDrawableMap[ingredientsStrings[index % ingredientsStrings.size]]
-                    ?: R.drawable.default_image,
-                color = colorList[colorIndex % colorList.size]
-            )
-            colorIndex++
+    Box(modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center ){
+        LazyColumn(
+            modifier = Modifier.padding(bottom = 72.dp), // Adjust bottom padding for FAB height
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(25) { index ->
+                PantryArticle(
+                    text = ingredientsStrings[index % ingredientsStrings.size],
+                    drawable = ingredientDrawableMap[ingredientsStrings[index % ingredientsStrings.size]]
+                        ?: R.drawable.default_image,
+                    color = colorList[colorIndex % colorList.size]
+                )
+                colorIndex++
+            }
+
+        }
+        FloatingActionButton(
+            shape = MaterialTheme.shapes.extraSmall,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
+            onClick = { /* TODO */ },
+            containerColor = Color.White,
+            contentColor = MaterialTheme.colorScheme.secondary
+        ) {
+            Icon(Icons.Filled.Add, "Floating action button.")
         }
     }
-    //TODO make this button work
-    FloatingActionButton(
-        onClick = { /*TODO*/ },
-    ) {
-        Icon(Icons.Filled.Add, "Floating action button.")
-    }
 }
+
 
 @Composable
 fun PantryArticle(text: String, drawable: Int, color: Long, modifier: Modifier = Modifier) {
@@ -146,24 +157,28 @@ private fun PantryImage(drawable: Int, color: Long) {
 
 @Composable
 fun PantryButton(@StringRes text: Int, modifier: Modifier = Modifier) {
-    Box(
+    Surface(
+        shape = MaterialTheme.shapes.extraSmall, // Adjust shape as needed
+        shadowElevation = 4.dp, // Add shadow with elevation
         modifier = modifier
-            .border(1.dp, MaterialTheme.colorScheme.secondary)
             .fillMaxHeight(0.7f)
-            .padding(horizontal = 10.dp)
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
 
-        ) {
-            PantryButtonText(text = "+", modifier = Modifier)
-            Text(
-                text = stringResource(text),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary
-            )
-            PantryButtonText(text = "-", modifier = Modifier)
-        }
+    ) {
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+            ) {
+                PantryButtonText(text = "+", modifier = Modifier)
+                Text(
+                    text = stringResource(text),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                PantryButtonText(text = "-", modifier = Modifier)
+            }
+
     }
 }
 
@@ -174,4 +189,12 @@ private fun PantryButtonText(text: String, modifier: Modifier) {
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.secondary
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PantryListPreview() {
+    RecipeasyTheme(dynamicColor = false) {
+        PantryList()
+    }
 }
