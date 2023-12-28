@@ -20,8 +20,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.recipeasy.data.pantryItems
+import com.example.recipeasy.data.pantryRecipeList
 import com.example.recipeasy.ui.theme.RecipeasyTheme
 import com.example.recipeasy.data.recipeArticlesList
+import com.example.recipeasy.data.shop
 
 
 class MainActivity : ComponentActivity() {
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
                             onItemSelected = { page ->
                                 selectedPage = page
                             },
-                            recipeArticles = recipeArticlesList
+                            recipeArticles = pantryRecipeList
                         )
 
                         Page.PANTRY -> PantryPage(
@@ -98,7 +100,7 @@ fun PantryRecipePagePreview() {
             onItemSelected = { page ->
                 selectedPage = page
             },
-            recipeArticles = recipeArticlesList
+            recipeArticles = pantryRecipeList
         )
     }
 }
@@ -129,7 +131,7 @@ fun SearchPagePreview() {
 @Composable
 fun ShopPagePreview() {
     RecipeasyTheme(dynamicColor = false) {
-        ShopPage()
+        ShopPage(shop = shop)
     }
 }
 

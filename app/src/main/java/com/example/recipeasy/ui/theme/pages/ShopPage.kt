@@ -17,18 +17,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.recipeasy.data.dataclasses.ShopArticle
+import com.example.recipeasy.data.dataclasses.ShopItem
 
 @Composable
-fun ShopPage() {
+fun ShopPage(shop: List<ShopArticle>) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SecondHeader(title = "Shopping List")
         ShopIcons()
-        ShopArticles()
+        ShopArticles(shop = shop)
     }
 }
 
@@ -57,16 +59,17 @@ fun ShopIcon() {
 
 
 @Composable
-fun ShopArticles() {
+fun ShopArticles(shop: List<ShopArticle>) {
     LazyColumn() {
-        items(2) {
-            ShopArticle()
+        items(shop.size) { index ->
+            val shopArticle = shop[index]
+            ShopArticle(shopArticle = shopArticle)
         }
     }
 }
 
 @Composable
-fun ShopItem(modifier: Modifier = Modifier) {
+fun ShopItem(shopItem: ShopItem) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.width(320.dp),
@@ -80,12 +83,12 @@ fun ShopItem(modifier: Modifier = Modifier) {
             )
             Column {
                 Text(
-                    text = "6 Spare ribs",
+                    text = shopItem.quantity.toString() + " " + shopItem.name,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = "Spare ribs with fried potatoes",
+                    text = shopItem.recipeTitle,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.secondary
                 )
@@ -103,31 +106,36 @@ fun ShopItem(modifier: Modifier = Modifier) {
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-fun ShopArticle(modifier: Modifier = Modifier) {
+fun ShopItemPreview() {
+    ShopItem(shopItem = ShopItem(4, "Spare ribs", "Spare ribs with fried potatoes"))
+}
+
+@Composable
+fun ShopArticle(modifier: Modifier = Modifier, shopArticle: ShopArticle) {
     Column {
-        ShopTitle()
+        ShopTitle(title = shopArticle.title)
         Surface(
             shape = MaterialTheme.shapes.small,
-            color = Color(0xFFEECED3),
+            color = shopArticle.color,
             modifier = modifier
                 .padding(vertical = 8.dp)
                 .width(320.dp)
         ) {
             Column {
-                ShopItem()
-                ShopItem()
-                ShopItem()
-                ShopItem()
+                shopArticle.shopItems.forEach { shopItem ->
+                    ShopItem(shopItem = shopItem)
+                }
             }
         }
     }
 }
 
 @Composable
-fun ShopTitle(modifier: Modifier = Modifier) {
+fun ShopTitle(title: String) {
     Text(
-        text = "Meat",
+        text = title,
         style = MaterialTheme.typography.titleLarge,
         color = MaterialTheme.colorScheme.secondary
     )

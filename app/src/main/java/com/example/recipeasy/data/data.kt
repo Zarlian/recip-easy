@@ -4,6 +4,8 @@ import androidx.compose.ui.graphics.Color
 import com.example.recipeasy.R
 import com.example.recipeasy.data.dataclasses.PantryItem
 import com.example.recipeasy.data.dataclasses.RecipeArticle
+import com.example.recipeasy.data.dataclasses.ShopArticle
+import com.example.recipeasy.data.dataclasses.ShopItem
 
 val recipeArticlesList = listOf(
     RecipeArticle(
@@ -32,6 +34,16 @@ val recipeArticlesList = listOf(
         image = R.drawable.plate_2,
         color = Color(0xFFF7E7A9)
     ),
+)
+
+val pantryRecipeList = listOf(
+    RecipeArticle(
+        title = "Chicken\n" +
+                "with roasted\n" +
+                "vegetables",
+        image = R.drawable.plate_1,
+        color = Color(0xFFEECED3)
+    )
 )
 
 
@@ -72,5 +84,74 @@ val pantryItems = listOf(
         image = R.drawable.tagliatelle,
         color = Color(0xFFA5D8D3)
     ),
+)
+
+val shop = listOf(
+    ShopArticle(
+        title = "Meat",
+        shopItems = listOf(
+            ShopItem(
+                name = "Spare ribs",
+                quantity = 4,
+                recipeTitle = "Spare ribs with fried potatoes"
+            ),
+            ShopItem(
+                name = "Chicken breast",
+                quantity = 4,
+                recipeTitle = "Chicken pie & french toast"
+            ),
+            ShopItem(
+                name = "gr Grounded beef",
+                quantity = 500,
+                recipeTitle = "Lasagne"
+            ),
+
+        ),
+        color = Color(0xFFEECED3)
+    ),
+    ShopArticle(
+        title = "Dairy",
+        shopItems = listOf(
+            ShopItem(
+                name = "Free Range Eggs",
+                quantity = 6,
+                recipeTitle = "French toast with scrambled eggs"
+            ),
+            ShopItem(
+                name = "l Reduced fat Milk",
+                quantity = 2,
+                recipeTitle = "French toast & lasagna"
+            ),
+            ShopItem(
+                name = "gr Cheddar",
+                quantity = 500,
+                recipeTitle = "Cottage Pie"
+            ),
+
+            ),
+        color = Color(0xFFF7CE94)
+    ),
+    ShopArticle(
+        title = "Vegetables",
+        shopItems = listOf(
+            ShopItem(
+                name = "Leeks",
+                quantity = 2,
+                recipeTitle = "Chicken Pie"
+            ),
+            ShopItem(
+                name = "Tomatoes",
+                quantity = 5,
+                recipeTitle = "Lasagna"
+            ),
+            ShopItem(
+                name = "Bell Peppers",
+                quantity = 2,
+                recipeTitle = "Lasagna"
+            ),
+
+            ),
+        color = Color(0xFFBEDEDF)
+    )
 )
 
