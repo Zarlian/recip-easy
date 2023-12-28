@@ -198,7 +198,8 @@ fun ShopPagePreview() {
 fun RecipePagePreview() {
     RecipeasyTheme(dynamicColor = false) {
         RecipePage(
-            onBackClicked = {}
+            onBackClicked = {},
+            recipeArticle = recipeArticlesList[0]
         )
     }
 }

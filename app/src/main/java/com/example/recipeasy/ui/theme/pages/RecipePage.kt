@@ -3,31 +3,36 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.R
+import com.example.recipeasy.data.dataclasses.Recipe
+import com.example.recipeasy.data.dataclasses.RecipeArticle
 
 @Composable
 fun RecipePage(
-    onBackClicked: () -> Unit
+    onBackClicked: () -> Unit,
+    recipeArticle: RecipeArticle
 ) {
     Column {
-        SecondHeader("Chicken with vegetables", onBackClicked = onBackClicked)
-        Recipe()
+        SecondHeader(recipeArticle.recipe.recipeTitle, onBackClicked = onBackClicked)
+        Recipe( recipeArticle = recipeArticle)
     }
 }
 
 @Composable
-fun RecipeIcons() {
+fun RecipeIcons( recipe: Recipe) {
     val icons = listOf(
         R.drawable.outline_timer,
         R.drawable.cooking,
@@ -43,9 +48,9 @@ fun RecipeIcons() {
     )
 
     val iconText = listOf(
-        "30 min",
-        "Easy",
-        "4",
+        recipe.time.toString() + " min",
+        recipe.difficulty,
+        recipe.servings.toString(),
         ""
     )
     Row(
@@ -84,57 +89,50 @@ fun RecipeIcon(icon: Int, title: String, text: String) {
 }
 
 @Composable
-fun RecipeText() {
-    val ingredients = listOf(
-        "- 1 tbsp olive oil",
-        "- 1 onion, chopped",
-        "- 2 garlic cloves, crushed",
-        "- 1 tsp ground cumin",
-        "- 1 tsp ground coriander",
-        "- 1 tsp ground cinnamon",
-        "- 1 tsp harissa paste",
-        "- 400g can chopped tomatoes",
-        "- 2 tbsp clear honey",
-        "- 2 x 400g cans chickpeas, drained and rinsed",
-        "- 1 lemon, juiced",
-        "- 2 tbsp chopped coriander",
-        "- 2 tbsp chopped parsley",
-        "- 2 tbsp chopped mint",
-        "- 100g feta cheese, crumbled",
-    )
+fun RecipeText(recipe: Recipe) {
+    val ingredients = recipe.ingredients.map { ingredient ->
+        "- " + ingredient.name + " " + ingredient.quantity.toString() + " " + ingredient.unit
+    }
 
-    val steps = listOf(
-        "1. Heat the oil in a large saucepan and cook the onion for 5 mins until softened and starting to turn golden. Add the garlic and spices, and cook for 1 min more. Stir in the harissa, tomatoes and honey, and bubble together for 5 mins.",
-        "2. Add the chickpeas to the pan with the lemon juice and seasoning, then simmer for 3 mins more. Stir through the herbs and scatter over the feta to serve."
-    )
+    val steps = recipe.steps.map { step ->
+        "- " + step.prepStep
+    }
 
-    Column(modifier = Modifier.width(320.dp)) {
-        Text(
-            text = "Ingredients",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
-        )
-        ingredients.forEach {
+    LazyColumn(modifier = Modifier.width(320.dp)) {
+        item {
             Text(
-                text = it,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.secondary
+                text = "Ingredients",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary
             )
         }
 
-        Divider()
-
-        Text(
-            text = "Preparation",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        steps.forEach {
+        items(ingredients) { ingredient ->
             Text(
-                text = it,
+                text = ingredient,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary
+            )
+
+        }
+        item {
+            Divider(modifier = Modifier.padding(vertical = 6.dp))
+        }
+
+        item {
+            Text(
+                text = "Preparation",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+
+        items(steps) { step ->
+            Text(
+                text = step,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.padding(bottom = 6.dp)
             )
         }
     }
@@ -142,14 +140,14 @@ fun RecipeText() {
 
 
 @Composable
-fun Recipe() {
+fun Recipe(recipeArticle: RecipeArticle) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        RecipeArticleMirror(drawable = R.drawable.plate_1, text = "", color = Color(0xFFEECED3))
-        RecipeIcons()
-        RecipeText()
+        RecipeArticleMirror(drawable = recipeArticle.image, text = "", color = recipeArticle.color)
+        RecipeIcons(recipe = recipeArticle.recipe)
+        RecipeText(recipe = recipeArticle.recipe)
     }
 }
