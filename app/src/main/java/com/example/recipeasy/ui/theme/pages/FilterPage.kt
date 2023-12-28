@@ -49,8 +49,18 @@ fun FilterPage() {
 @Composable
 fun FilterBy(choice: String) {
     var expandedFilter by remember { mutableStateOf(false) }
+    val foodItems = remember {
+        mapOf(
+            "Chicken" to mutableStateOf(false),
+            "Eggs" to mutableStateOf(false),
+            "Pasta" to mutableStateOf(false),
+            "Beef" to mutableStateOf(false),
+            "Milk" to mutableStateOf(false),
+            "Cheese" to mutableStateOf(false)
+        )
+    }
 
-    if(choice == "ONLY" || choice == "NO"){
+    if (choice == "ONLY" || choice == "NO") {
         Box {
             Button(
                 onClick = { expandedFilter = !expandedFilter },
@@ -59,8 +69,7 @@ fun FilterBy(choice: String) {
                     containerColor = Color.Transparent,
                     contentColor = MaterialTheme.colorScheme.secondary
                 ),
-
-                ) {
+            ) {
                 Text("________________")
                 Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = "Dropdown")
             }
@@ -69,43 +78,20 @@ fun FilterBy(choice: String) {
                 expanded = expandedFilter,
                 onDismissRequest = { expandedFilter = false },
                 content = {
-
-                    DropdownMenuItem(
-                        onClick = { /* TODO */ },
-                        text = { Text("Chicken") },
-                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
-                    )
-                    DropdownMenuItem(
-                        onClick = { /* TODO */ },
-                        text = { Text("Eggs") },
-                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
-                    )
-                    DropdownMenuItem(
-                        onClick = { /* TODO */ },
-                        text = { Text("Pasta") },
-                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
-                    )
-                    DropdownMenuItem(
-                        onClick = { /* TODO */ },
-                        text = { Text("Beef") },
-                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
-                    )
-                    DropdownMenuItem(
-                        onClick = { /* TODO */ },
-                        text = { Text("Milk") },
-                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
-                    )
-                    DropdownMenuItem(
-                        onClick = { /* TODO */ },
-                        text = { Text("Cheese") },
-                        leadingIcon = { Checkbox(checked = false, onCheckedChange = {  }) }
-                    )
+                    foodItems.forEach { (food, checked) ->
+                        DropdownMenuItem(
+                            onClick = { checked.value = !checked.value },
+                            text = { Text(food) },
+                            leadingIcon = { Checkbox(checked = checked.value, onCheckedChange = { isChecked ->
+                                checked.value = isChecked
+                            }) }
+                        )
+                    }
 
                     DropdownMenuItem(
                         onClick = { expandedFilter = false },
                         text = { Text("Done") },
                     )
-
                 }
             )
         }
