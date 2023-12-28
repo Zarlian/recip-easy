@@ -103,7 +103,11 @@ fun NavBar(
 }
 
 @Composable
-fun HeaderIcons(modifier: Modifier = Modifier) {
+fun HeaderIcons(
+    modifier: Modifier = Modifier,
+    onSearchClicked: () -> Unit,
+    onShopClicked: () -> Unit) {
+
     Row(
         horizontalArrangement = Arrangement.End,
         modifier = modifier.offset(x = (-25).dp)
@@ -111,13 +115,15 @@ fun HeaderIcons(modifier: Modifier = Modifier) {
         Icon(
             imageVector = Icons.Filled.Search,
             contentDescription = "Search",
-            modifier = modifier.padding(6.dp),
+            modifier = modifier.padding(6.dp)
+                                .clickable(onClick = onSearchClicked),
             tint = MaterialTheme.colorScheme.secondary
         )
         Icon(
             imageVector = Icons.Filled.ShoppingCart,
             contentDescription = "Shopping Cart",
-            modifier = modifier.padding(6.dp),
+            modifier = modifier.padding(6.dp)
+                                .clickable(onClick = onShopClicked),
             tint = MaterialTheme.colorScheme.secondary
         )
     }
@@ -128,7 +134,9 @@ fun HeaderIcons(modifier: Modifier = Modifier) {
 fun Header(
     modifier: Modifier = Modifier,
     selectedPage: Page,
-    onItemSelected: (Page) -> Unit
+    onItemSelected: (Page) -> Unit,
+    onSearchClicked: () -> Unit,
+    onShopClicked: () -> Unit
 ) {
     Column(modifier.padding(bottom = 20.dp)) {
         Surface(
@@ -137,7 +145,10 @@ fun Header(
                 .padding(top = 50.dp)
         ) {
             AppTitle(title = R.string.app_name)
-            HeaderIcons()
+            HeaderIcons(
+                onSearchClicked = onSearchClicked,
+                onShopClicked = onShopClicked,
+            )
         }
         NavBar(
             selectedPage = selectedPage,

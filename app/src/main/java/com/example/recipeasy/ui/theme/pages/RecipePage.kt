@@ -21,9 +21,11 @@ import androidx.compose.ui.unit.dp
 import com.example.recipeasy.R
 
 @Composable
-fun RecipePage() {
+fun RecipePage(
+    onBackClicked: () -> Unit
+) {
     Column {
-        SecondHeader("Chicken with vegetables")
+        SecondHeader("Chicken with vegetables", onBackClicked = onBackClicked)
         Recipe()
     }
 }

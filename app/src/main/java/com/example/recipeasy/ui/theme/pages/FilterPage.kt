@@ -3,6 +3,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -40,28 +41,51 @@ import com.example.recipeasy.ui.theme.RecipeasyTheme
 
 @Composable
 fun FilterPage(
-    recipeArticles: List<RecipeArticle>) {
+    recipeArticles: List<RecipeArticle>,
+    onBackClicked: () -> Unit
+) {
     var choice by remember { mutableStateOf("") }
 
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ){
-        SecondHeader(title = "Result", subtitle = "You have 3 items")
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Box(
+            modifier = Modifier.weight(1f)
         ) {
-            Filter() { updatedChoice ->
-                choice = updatedChoice // Update the choice in FilterPage
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.Top
+            ) {
+                SecondHeader(
+                    title = "Result",
+                    subtitle = "You have 3 items",
+                    onBackClicked = onBackClicked
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Filter() { updatedChoice ->
+                        choice = updatedChoice // Update the choice in FilterPage
+                    }
+                    FilterBy(choice = choice)
+                    Sort()
+                }
+                FilterResults(recipeArticles = recipeArticles)
             }
-            FilterBy(choice = choice)
-            Sort()
         }
-        FilterResults(recipeArticles = recipeArticles)
-
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            FilterButton()
+        }
     }
-
-
 }
 
 @Composable

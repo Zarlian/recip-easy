@@ -34,12 +34,17 @@ import com.example.recipeasy.ui.theme.RecipeasyTheme
 fun PantryPage(
     modifier: Modifier = Modifier,
     selectedPage: Page, onItemSelected: (Page) -> Unit,
-    pantry: List<PantryItem>) {
+    pantry: List<PantryItem>,
+    onSearchClicked: () -> Unit,
+    onShopClicked: () -> Unit
+) {
     Column(modifier = modifier.fillMaxSize()) {
         Header(
             selectedPage = selectedPage,
             onItemSelected = onItemSelected,
-            modifier = modifier
+            modifier = modifier,
+            onSearchClicked = onSearchClicked,
+            onShopClicked = onShopClicked
         )
         PantryList(modifier = modifier.align(Alignment.CenterHorizontally), pantry = pantry)
     }

@@ -11,13 +11,16 @@ fun HomePage(
     modifier: Modifier = Modifier,
     selectedPage: Page,
     onItemSelected: (Page) -> Unit,
-    recipeArticles: List<RecipeArticle>
+    recipeArticles: List<RecipeArticle>,
+    onSearchClicked: () -> Unit,
+    onShopClicked: () -> Unit
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         Header(
             selectedPage = selectedPage,
             onItemSelected = onItemSelected,
-            modifier = modifier
+            onSearchClicked = onSearchClicked,
+            onShopClicked = onShopClicked
         )
         RecipeCardList(modifier = modifier.align(Alignment.CenterHorizontally ),recipeArticles = recipeArticles)
     }

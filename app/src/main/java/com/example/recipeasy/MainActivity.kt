@@ -4,6 +4,7 @@ import FilterPage
 import HomePage
 import PantryPage
 import PantryRecipePage
+import ProfilePage
 import RecipePage
 import ShopPage
 import android.os.Bundle
@@ -34,36 +35,82 @@ class MainActivity : ComponentActivity() {
         setContent {
             RecipeasyTheme(dynamicColor = false) {
                 var selectedPage by remember { mutableStateOf(Page.HOME) }
+                var showFilterPage by remember { mutableStateOf(false) }
+                var showShopPage by remember { mutableStateOf(false) }
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    when (selectedPage) {
-                        Page.HOME -> HomePage(
-                            selectedPage = selectedPage,
-                            onItemSelected = { page ->
-                                selectedPage = page
-                            },
-                            recipeArticles = recipeArticlesList
-                        )
+                    if (showFilterPage) {
+                        FilterPage(
+                            recipeArticles = filterResultList,
+                            onBackClicked = {
+                                showFilterPage = false
+                            })
+                    }
+                    else if(showShopPage) {
+                        ShopPage(shop = shop,
+                            onBackClicked = {
+                                showShopPage = false
+                            })
+                    } else{
+                        when (selectedPage) {
+                            Page.HOME -> HomePage(
+                                selectedPage = selectedPage,
+                                onItemSelected = { page ->
+                                    selectedPage = page
+                                },
+                                recipeArticles = recipeArticlesList,
+                                onSearchClicked = {
+                                    showFilterPage = true
+                                },
+                                onShopClicked = {
+                                    showShopPage = true
+                                }
+                            )
 
-                        Page.RECIPES -> PantryRecipePage(
-                            selectedPage = selectedPage,
-                            onItemSelected = { page ->
-                                selectedPage = page
-                            },
-                            recipeArticles = pantryRecipeList
-                        )
+                            Page.RECIPES -> PantryRecipePage(
+                                selectedPage = selectedPage,
+                                onItemSelected = { page ->
+                                    selectedPage = page
+                                },
+                                recipeArticles = pantryRecipeList,
+                                onSearchClicked = {
+                                    showFilterPage = true
+                                },
+                                onShopClicked = {
+                                    showShopPage = true
+                                }
+                            )
 
-                        Page.PANTRY -> PantryPage(
-                            selectedPage = selectedPage,
-                            onItemSelected = { page ->
-                                selectedPage = page
-                            },
-                            pantry = pantryItems
-                        )
+                            Page.PANTRY -> PantryPage(
+                                selectedPage = selectedPage,
+                                onItemSelected = { page ->
+                                    selectedPage = page
+                                },
+                                pantry = pantryItems,
+                                onSearchClicked = {
+                                    showFilterPage = true
+                                },
+                                onShopClicked = {
+                                    showShopPage = true
+                                }
+                            )
 
-                        Page.PROFILE -> TODO()
+                            Page.PROFILE -> ProfilePage(
+                                selectedPage = selectedPage,
+                                onItemSelected = { page ->
+                                    selectedPage = page
+                                },
+                                onSearchClicked = {
+                                    showFilterPage = true
+                                },
+                                onShopClicked = {
+                                    showShopPage = true
+                                }
+                            )
+                        }
                     }
                 }
 
@@ -86,7 +133,9 @@ fun HomePagePreview() {
             onItemSelected = { page ->
                 selectedPage = page
             },
-            recipeArticles = recipeArticlesList
+            recipeArticles = recipeArticlesList,
+            onSearchClicked = {},
+            onShopClicked = {}
         )
     }
 }
@@ -101,7 +150,9 @@ fun PantryRecipePagePreview() {
             onItemSelected = { page ->
                 selectedPage = page
             },
-            recipeArticles = pantryRecipeList
+            recipeArticles = pantryRecipeList,
+            onSearchClicked = {},
+            onShopClicked = {}
         )
     }
 }
@@ -116,7 +167,10 @@ fun PantryPagePreview() {
             onItemSelected = { page ->
                 selectedPage = page
             },
-            pantry = pantryItems)
+            pantry = pantryItems,
+            onSearchClicked = {},
+            onShopClicked = {}
+        )
     }
 }
 
@@ -124,7 +178,9 @@ fun PantryPagePreview() {
 @Composable
 fun SearchPagePreview() {
     RecipeasyTheme(dynamicColor = false) {
-        FilterPage(recipeArticles = filterResultList)
+        FilterPage(
+            recipeArticles = filterResultList,
+            onBackClicked = {})
     }
 }
 
@@ -132,7 +188,8 @@ fun SearchPagePreview() {
 @Composable
 fun ShopPagePreview() {
     RecipeasyTheme(dynamicColor = false) {
-        ShopPage(shop = shop)
+        ShopPage(shop = shop,
+            onBackClicked = {})
     }
 }
 
@@ -140,7 +197,9 @@ fun ShopPagePreview() {
 @Composable
 fun RecipePagePreview() {
     RecipeasyTheme(dynamicColor = false) {
-        RecipePage()
+        RecipePage(
+            onBackClicked = {}
+        )
     }
 }
 

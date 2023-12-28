@@ -27,12 +27,14 @@ import com.example.recipeasy.data.dataclasses.ShopArticle
 import com.example.recipeasy.data.dataclasses.ShopItem
 
 @Composable
-fun ShopPage(shop: List<ShopArticle>) {
+fun ShopPage(
+    shop: List<ShopArticle>,
+    onBackClicked: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SecondHeader(title = "Shopping List")
+        SecondHeader(title = "Shopping List", onBackClicked = onBackClicked)
         ShopIcons()
         ShopArticles(shop = shop)
     }
