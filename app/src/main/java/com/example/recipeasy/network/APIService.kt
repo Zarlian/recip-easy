@@ -26,6 +26,9 @@ interface APIservice
     @GET("random.php")
     suspend fun getRandomRecipe(): Recipe
 
+    @GET("lookup.php")
+    suspend fun getRecipeById(@Query("i") recipeId: String): Recipe
+
 }
 
 object recipeApi {
