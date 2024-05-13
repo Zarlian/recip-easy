@@ -1,5 +1,4 @@
-import android.os.Build
-import androidx.annotation.RequiresExtension
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,12 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.recipeasy.R
 import com.example.recipeasy.data.dataclasses.MealDetails
-import com.example.recipeasy.data.dataclasses.Recipe
-import com.example.recipeasy.data.dataclasses.RecipeDummy
-import com.example.recipeasy.data.dataclasses.RecipeArticle
 import com.example.recipeasy.ui.NavigationDestination
-import com.example.recipeasy.ui.api.APIUiState
-import com.example.recipeasy.ui.api.APIViewModel
 import com.example.recipeasy.ui.pages.recipedetail.RecipeDetailViewModel
 import com.example.recipeasy.ui.theme.Colors
 
