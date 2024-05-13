@@ -1,3 +1,5 @@
+import android.os.Build
+import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,28 +13,61 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.recipeasy.R
+import com.example.recipeasy.data.dataclasses.MealDetails
 import com.example.recipeasy.data.dataclasses.Recipe
+import com.example.recipeasy.data.dataclasses.RecipeDummy
 import com.example.recipeasy.data.dataclasses.RecipeArticle
+import com.example.recipeasy.ui.NavigationDestination
+import com.example.recipeasy.ui.api.APIUiState
+import com.example.recipeasy.ui.api.APIViewModel
+import com.example.recipeasy.ui.pages.recipedetail.RecipeDetailViewModel
+import com.example.recipeasy.ui.theme.Colors
 
-@Composable
-fun RecipePage(
-    onBackClicked: () -> Unit,
-    recipeArticle: RecipeArticle
-) {
-    Column {
-        SecondHeader(recipeArticle.recipe.recipeTitle, onBackClicked = onBackClicked)
-        Recipe( recipeArticle = recipeArticle)
-    }
+object RecipeDetailDestination : NavigationDestination {
+    override val route = "recipe_detail"
+    const val recipeIdArg = "recipeId"
+    val routeWithArgs = "$route/{$recipeIdArg}"
 }
 
 @Composable
-fun RecipeIcons( recipe: Recipe) {
+fun RecipePage(
+    navigateBack: () -> Unit,
+    //recipeArticle: RecipeArticle
+    recipeId: String
+) {
+    val viewModel: RecipeDetailViewModel = viewModel()
+    val recipeDetailState by viewModel.recipeDetailState.collectAsState()
+
+    LaunchedEffect(key1 = recipeId) {
+        viewModel.fetchRecipeDetail(recipeId)
+    }
+
+    val recipe = recipeDetailState
+
+    Column {
+        if (recipe != null) {
+            SecondHeader(recipe.strMeal, onBackClicked = navigateBack)
+        }
+        if (recipe != null) {
+            Recipe( recipe = recipe)
+        }
+    }
+
+
+}
+
+@Composable
+fun RecipeIcons( recipe: MealDetails) {
     val icons = listOf(
         R.drawable.outline_timer,
         R.drawable.cooking,
@@ -48,9 +83,9 @@ fun RecipeIcons( recipe: Recipe) {
     )
 
     val iconText = listOf(
-        recipe.time.toString() + " min",
+        recipe.time + " min",
         recipe.difficulty,
-        recipe.servings.toString(),
+        recipe.servings,
         ""
     )
     Row(
@@ -89,14 +124,13 @@ fun RecipeIcon(icon: Int, title: String, text: String) {
 }
 
 @Composable
-fun RecipeText(recipe: Recipe) {
-    val ingredients = recipe.ingredients.map { ingredient ->
-        "- " + ingredient.name + " " + ingredient.quantity.toString() + " " + ingredient.unit
-    }
+fun RecipeText(recipe: MealDetails) {
 
-    val steps = recipe.steps.map { step ->
-        "- " + step.prepStep
-    }
+
+
+
+    val preparation = recipe.strInstructions
+
 
     Column(modifier = Modifier.width(320.dp)) {
             Text(
@@ -106,9 +140,9 @@ fun RecipeText(recipe: Recipe) {
             )
 
 
-        ingredients.forEach { ingredient ->
+        recipe.ingredients.forEach { ingredient ->
             Text(
-                text = ingredient,
+                text = "- " + ingredient.name + " " + ingredient.measure,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary
             )
@@ -126,40 +160,42 @@ fun RecipeText(recipe: Recipe) {
             )
 
 
-        steps.forEach { step ->
             Text(
-                text = step,
+                text = preparation,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.padding(bottom = 6.dp)
             )
         }
-    }
+
 }
 
 
 @Composable
-fun Recipe(recipeArticle: RecipeArticle) {
+fun Recipe(recipe: MealDetails) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
+
+            val color = Colors.surfaceColors[0]
+
             RecipeArticleMirror(
-                drawable = recipeArticle.image,
+                imageUrl = recipe.strMealThumb,
                 text = "",
-                color = recipeArticle.color,
-                onClick = {}
+                onClick = {},
+                color = color
             )
         }
 
         item {
-            RecipeIcons(recipe = recipeArticle.recipe)
+            RecipeIcons(recipe = recipe)
         }
 
         item {
-            RecipeText(recipe = recipeArticle.recipe)
+            RecipeText(recipe = recipe)
         }
     }
 }
