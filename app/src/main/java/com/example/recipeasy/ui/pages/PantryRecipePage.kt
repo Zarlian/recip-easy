@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.recipeasy.Page
 import com.example.recipeasy.data.dataclasses.RecipeArticle
 
 @Composable
@@ -19,7 +18,7 @@ fun PantryRecipePage(
     recipeArticles: List<RecipeArticle>,
     onSearchClicked: () -> Unit,
     onShopClicked: () -> Unit,
-    onRecipeArticleClicked: (RecipeArticle) -> Unit
+    navigateToRecipeDetail: (String) -> Unit
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         Header(
@@ -32,10 +31,9 @@ fun PantryRecipePage(
         PantryRecipePageText(modifier = modifier.align(Alignment.CenterHorizontally))
         RecipeCardList(
             modifier = modifier.align(Alignment.CenterHorizontally),
-            recipeArticles = recipeArticles,
-            onItemClick = { recipeArticle ->
-                onRecipeArticleClicked(recipeArticle)
-            })
+            recipes = emptyList(),
+            onItemClick = navigateToRecipeDetail
+            )
     }
 }
 
