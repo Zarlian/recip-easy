@@ -35,14 +35,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.R
+import com.example.recipeasy.data.DataSource
 import com.example.recipeasy.data.dataclasses.RecipeArticle
-import com.example.recipeasy.data.filterResultList
+import com.example.recipeasy.ui.NavigationDestination
 import com.example.recipeasy.ui.theme.RecipeasyTheme
+
+
+object FilterDestination : NavigationDestination {
+    override val route = "filter"
+}
 
 @Composable
 fun FilterPage(
     recipeArticles: List<RecipeArticle>,
-    onBackClicked: () -> Unit
+    navigateBack: () -> Unit
 ) {
     var choice by remember { mutableStateOf("") }
 
@@ -62,7 +68,7 @@ fun FilterPage(
                 SecondHeader(
                     title = "Result",
                     subtitle = "You have 3 items",
-                    onBackClicked = onBackClicked
+                    onBackClicked = navigateBack
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -164,7 +170,7 @@ fun FilterResults(recipeArticles: List<RecipeArticle>) {
 @Composable
 fun FilterResultsPreview() {
     RecipeasyTheme {
-        FilterResults(recipeArticles = filterResultList)
+        FilterResults(recipeArticles = DataSource.filterResultList)
     }
 }
 
@@ -226,7 +232,7 @@ private fun FilterImage(drawable: Int, color: Color) {
 @Composable
 fun FilterResultPreview() {
     RecipeasyTheme {
-        FilterResult(modifier = Modifier , RecipeArticle("Chicken pie", R.drawable.plate_1, Color(0xFFEECED3)))
+        FilterResult(modifier = Modifier , RecipeArticle(1,"Chicken pie", R.drawable.plate_1, Color(0xFFEECED3)))
     }
 }
 
