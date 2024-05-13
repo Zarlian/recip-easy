@@ -1,3 +1,6 @@
+package com.example.recipeasy.ui.pages
+
+import SecondHeader
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -29,17 +32,24 @@ import androidx.compose.ui.unit.dp
 import com.example.recipeasy.R
 import com.example.recipeasy.data.dataclasses.ShopArticle
 import com.example.recipeasy.data.dataclasses.ShopItem
+import com.example.recipeasy.ui.NavigationDestination
 
+
+object ShopDestination : NavigationDestination {
+    override val route = "shop"
+}
 
 @Composable
 fun ShopPage(
-    shop: List<ShopArticle>,
-    onBackClicked: () -> Unit) {
+
+    navigateBack: () -> Unit,
+
+    shop: List<ShopArticle>) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SecondHeader(title = "Shopping List", onBackClicked = onBackClicked)
+        SecondHeader(title = "Shopping List", onBackClicked = navigateBack)
         ShopIcons()
         ShopArticles(shop = shop)
     }
