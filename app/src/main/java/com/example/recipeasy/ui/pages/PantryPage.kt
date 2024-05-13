@@ -25,10 +25,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.recipeasy.Page
+import com.example.recipeasy.data.DataSource.pantryItems
 import com.example.recipeasy.data.dataclasses.PantryItem
-import com.example.recipeasy.data.pantryItems
+import com.example.recipeasy.ui.NavigationDestination
 import com.example.recipeasy.ui.theme.RecipeasyTheme
+
+
+object PantryDestination : NavigationDestination {
+    override val route = "pantry"
+}
 
 @Composable
 fun PantryPage(
@@ -63,7 +68,6 @@ fun PantryList(modifier: Modifier = Modifier, pantry: List<PantryItem>) {
                 PantryArticle(
                     text = pantryItem.name,
                     drawable = pantryItem.image,
-                    color = pantryItem.color,
                     quantity = pantryItem.quantity
                 )
             }
@@ -85,7 +89,7 @@ fun PantryList(modifier: Modifier = Modifier, pantry: List<PantryItem>) {
 
 
 @Composable
-fun PantryArticle(text: String, drawable: Int, color: Color, modifier: Modifier = Modifier, quantity: Int) {
+fun PantryArticle(text: String, drawable: Int, modifier: Modifier = Modifier, quantity: Int) {
     Row(
         modifier = modifier
             .width(320.dp)
@@ -97,7 +101,7 @@ fun PantryArticle(text: String, drawable: Int, color: Color, modifier: Modifier 
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            PantryImage(drawable, color)
+            PantryImage(drawable)
             PantryText(text)
         }
         PantryButton(text = quantity)
@@ -114,11 +118,11 @@ private fun PantryText(text: String) {
 }
 
 @Composable
-private fun PantryImage(drawable: Int, color: Color) {
+private fun PantryImage(drawable: Int) {
     Surface(
         shape = MaterialTheme.shapes.small,
         shadowElevation = 4.dp,
-        color = color,
+        color = Color(0xFFA5D8D3),
         modifier = Modifier
             .padding(vertical = 8.dp)
             .width(130.dp)
