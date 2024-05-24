@@ -136,32 +136,32 @@ object DataSource {
         PantryItem(
             name = "Chicken breast",
             quantity = 2,
-            image = R.drawable.chicken_breast
+            //image = R.drawable.chicken_breast
         ),
         PantryItem(
             name = "Beans",
             quantity = 3,
-            image = R.drawable.beans
+            //image = R.drawable.beans
         ),
         PantryItem(
             name = "Eggs",
             quantity = 7,
-            image = R.drawable.eggs
+            //image = R.drawable.eggs
         ),
         PantryItem(
             name = "Honey",
             quantity = 1,
-            image = R.drawable.honey
+            //image = R.drawable.honey
         ),
         PantryItem(
             name = "Onions",
             quantity = 4,
-            image = R.drawable.onions
+            //image = R.drawable.onions
         ),
         PantryItem(
             name = "Tagliatelle",
             quantity = 2,
-            image = R.drawable.tagliatelle
+            //image = R.drawable.tagliatelle
         ),
     )
 
