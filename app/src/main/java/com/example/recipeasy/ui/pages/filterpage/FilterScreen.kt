@@ -17,8 +17,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,51 +48,51 @@ object FilterDestination : NavigationDestination {
 }
 
 @Composable
-fun FilterPage(
+fun FilterScreen(
+    modifier: Modifier = Modifier,
     recipeArticles: List<RecipeArticle>,
     navigateBack: () -> Unit
 ) {
     var choice by remember { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Box(
-            modifier = Modifier.weight(1f)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.Top
+
+    Scaffold (
+        topBar = {
+            SecondHeader(
+                title = "Result",
+                subtitle = "You have 3 items",
+                onBackClicked = navigateBack
+            )
+        },
+        floatingActionButton = {
+            Box(
+                modifier = modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
             ) {
-                SecondHeader(
-                    title = "Result",
-                    subtitle = "You have 3 items",
-                    onBackClicked = navigateBack
-                )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                FloatingActionButton(
+                    onClick = { /*TODO*/ },
+                    modifier = modifier.padding(16.dp)
                 ) {
-                    Filter() { updatedChoice ->
-                        choice = updatedChoice // Update the choice in FilterPage
-                    }
-                    FilterBy(choice = choice)
-                    Sort()
+                    FilterButton()
                 }
-                FilterResults(recipeArticles = recipeArticles)
             }
         }
-        Box(
+    )
+    { innerPadding ->
+
+        Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            contentAlignment = Alignment.BottomCenter
+                            .padding(innerPadding)
+                            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            FilterButton()
+            Filter() { updatedChoice ->
+                choice = updatedChoice // Update the choice in FilterPage
+            }
+            FilterBy(choice = choice)
+            Sort()
         }
+        FilterResults(recipeArticles = recipeArticles)
     }
 }
 
@@ -293,5 +295,14 @@ private fun Sort() {
                 DropdownMenuItem(onClick = { /* TODO */ }, text = { Text("TIME") })
             }
         )
+    }
+}
+
+@Preview
+@Composable
+fun FilterScreen(){
+    RecipeasyTheme {
+        FilterScreen(recipeArticles = listOf(),
+                    navigateBack = {})
     }
 }
