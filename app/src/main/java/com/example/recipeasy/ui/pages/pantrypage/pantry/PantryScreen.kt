@@ -1,3 +1,7 @@
+package com.example.recipeasy.ui.pages.pantrypage.pantry
+
+import MainTopBar
+import Page
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,25 +14,32 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.recipeasy.data.DataSource.pantryItems
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
 import com.example.recipeasy.data.dataclasses.PantryItem
+import com.example.recipeasy.ui.AppViewModelProvider
 import com.example.recipeasy.ui.NavigationDestination
-import com.example.recipeasy.ui.theme.RecipeasyTheme
+import com.example.recipeasy.ui.home.HomeViewModel
 
 
 object PantryDestination : NavigationDestination {
@@ -36,22 +47,46 @@ object PantryDestination : NavigationDestination {
 }
 
 @Composable
-fun PantryPage(
+fun PantryScreen(
     modifier: Modifier = Modifier,
     selectedPage: Page, onItemSelected: (Page) -> Unit,
     pantry: List<PantryItem>,
-    onSearchClicked: () -> Unit,
-    onShopClicked: () -> Unit
+    navigateToFilter: () -> Unit,
+    navigateToShop: () -> Unit,
+    navigateToPantryEntry: () -> Unit,
+    navController: NavHostController,
+    viewModel: PantryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
-        Header(
-            selectedPage = selectedPage,
-            onItemSelected = onItemSelected,
-            modifier = modifier,
-            onSearchClicked = onSearchClicked,
-            onShopClicked = onShopClicked
-        )
-        PantryList(modifier = modifier.align(Alignment.CenterHorizontally), pantry = pantry)
+
+    val pantryUiState by viewModel.pantryUiState.collectAsState()
+
+    Scaffold(
+        topBar = {
+            MainTopBar(
+                selectedPage = selectedPage,
+                onItemSelected = onItemSelected,
+                onSearchClicked = navigateToFilter,
+                modifier = modifier,
+                onShopClicked = navigateToShop,
+                navController = navController
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                shape = MaterialTheme.shapes.extraSmall,
+                modifier = modifier
+                    .padding(16.dp),
+                onClick = navigateToPantryEntry,
+                containerColor = Color.White,
+                contentColor = MaterialTheme.colorScheme.secondary
+            ) {
+                Icon(Icons.Filled.Add, "Floating action button.")
+            }
+        }
+    ) { innerPadding ->
+            PantryList(
+                modifier = modifier.padding(innerPadding),
+                pantry = pantryUiState.pantryItems)
     }
 }
 
@@ -67,29 +102,18 @@ fun PantryList(modifier: Modifier = Modifier, pantry: List<PantryItem>) {
                 val pantryItem = pantry[index]
                 PantryArticle(
                     text = pantryItem.name,
-                    drawable = pantryItem.image,
+                    imageUrl = pantryItem.image,
                     quantity = pantryItem.quantity
                 )
             }
 
-        }
-        FloatingActionButton(
-            shape = MaterialTheme.shapes.extraSmall,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp),
-            onClick = { /* add new pantry item */ },
-            containerColor = Color.White,
-            contentColor = MaterialTheme.colorScheme.secondary
-        ) {
-            Icon(Icons.Filled.Add, "Floating action button.")
         }
     }
 }
 
 
 @Composable
-fun PantryArticle(text: String, drawable: Int, modifier: Modifier = Modifier, quantity: Int) {
+fun PantryArticle(text: String, imageUrl: String, modifier: Modifier = Modifier, quantity: Int) {
     Row(
         modifier = modifier
             .width(320.dp)
@@ -101,7 +125,7 @@ fun PantryArticle(text: String, drawable: Int, modifier: Modifier = Modifier, qu
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            PantryImage(drawable)
+            PantryImage(imageUrl)
             PantryText(text)
         }
         PantryButton(text = quantity)
@@ -118,7 +142,7 @@ private fun PantryText(text: String) {
 }
 
 @Composable
-private fun PantryImage(drawable: Int) {
+private fun PantryImage(imageUrl: String) {
     Surface(
         shape = MaterialTheme.shapes.small,
         shadowElevation = 4.dp,
@@ -133,10 +157,12 @@ private fun PantryImage(drawable: Int) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Image(
-                painter = painterResource(drawable),
+                painter = rememberAsyncImagePainter(imageUrl),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(115.dp)
+                modifier = Modifier
+                    .size(115.dp)
+                    .clip(CircleShape)
             )
         }
     }
@@ -178,10 +204,18 @@ private fun PantryButtonText(text: String) {
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PantryListPreview() {
-    RecipeasyTheme(dynamicColor = false) {
-        PantryList(pantry = pantryItems)
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PantryScreen() {
+//    RecipeasyTheme(dynamicColor = false) {
+//        PantryScreen(
+//            selectedPage = Page.PANTRY,
+//            onItemSelected = {},
+//            pantry = pantryItems,
+//            navigateToFilter = {},
+//            navigateToShop = {},
+//            navController = NavHostController
+//
+//        )
+//    }
+//}
