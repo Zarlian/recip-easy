@@ -21,7 +21,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.recipeasy.R
+import com.example.recipeasy.ui.pages.ProfileDestination
+import com.example.recipeasy.ui.pages.pantrypage.pantry.PantryDestination
 
 @Composable
 fun AppTitle(@StringRes title: Int, modifier: Modifier = Modifier) {
@@ -76,29 +79,28 @@ fun NavBar(
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
-        content = {
-            NavBarItems(
-                text = R.string.nav_home,
-                selectedPage = selectedPage,
-                onClick = { onItemSelected(Page.HOME) }
-            )
-            NavBarItems(
-                text = R.string.nav_recipes,
-                selectedPage = selectedPage,
-                onClick = { onItemSelected(Page.RECIPES) }
-            )
-            NavBarItems(
-                text = R.string.nav_pantry,
-                selectedPage = selectedPage,
-                onClick = { onItemSelected(Page.PANTRY) }
-            )
-            NavBarItems(
-                text = R.string.nav_profile,
-                selectedPage = selectedPage,
-                onClick = { onItemSelected(Page.PROFILE) }
-            )
-        }
-    )
+    ) {
+        NavBarItems(
+            text = R.string.nav_home,
+            selectedPage = selectedPage,
+            onClick = { onItemSelected(Page.HOME) }
+        )
+        NavBarItems(
+            text = R.string.nav_recipes,
+            selectedPage = selectedPage,
+            onClick = { onItemSelected(Page.RECIPES) }
+        )
+        NavBarItems(
+            text = R.string.nav_pantry,
+            selectedPage = selectedPage,
+            onClick = { onItemSelected(Page.PANTRY) }
+        )
+        NavBarItems(
+            text = R.string.nav_profile,
+            selectedPage = selectedPage,
+            onClick = { onItemSelected(Page.PROFILE) }
+        )
+    }
 }
 
 @Composable
@@ -130,12 +132,13 @@ fun HeaderIcons(
 
 
 @Composable
-fun Header(
+fun MainTopBar(
     modifier: Modifier = Modifier,
     selectedPage: Page,
     onItemSelected: (Page) -> Unit,
     onSearchClicked: () -> Unit,
-    onShopClicked: () -> Unit
+    onShopClicked: () -> Unit,
+    navController: NavHostController
 ) {
     Column(modifier.padding(bottom = 20.dp)) {
         Surface(
@@ -151,7 +154,16 @@ fun Header(
         }
         NavBar(
             selectedPage = selectedPage,
-            onItemSelected = onItemSelected,
+            onItemSelected = {
+                onItemSelected(it)
+                when (it) {
+                    Page.HOME -> navController.navigate(HomeDestination.route)
+                    Page.RECIPES -> navController.navigate(PantryRecipeDestination.route)
+                    Page.PANTRY -> navController.navigate(PantryDestination.route)
+                    Page.PROFILE -> navController.navigate(ProfileDestination.route)
+                    else -> {}
+                }
+            },
             modifier = modifier.padding(start = 25.dp, end = 25.dp, bottom = 3.dp)
         )
         Divider(color = Color.Gray, thickness = 0.7.dp)
