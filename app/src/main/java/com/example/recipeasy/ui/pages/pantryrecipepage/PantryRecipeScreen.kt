@@ -1,36 +1,45 @@
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.recipeasy.data.dataclasses.RecipeArticle
+import androidx.navigation.NavHostController
+import com.example.recipeasy.ui.NavigationDestination
+
+
+object PantryRecipeDestination : NavigationDestination {
+    override val route = "recipes"
+}
 
 @Composable
-fun PantryRecipePage(
+fun PantryRecipeScreen(
     modifier: Modifier = Modifier,
     selectedPage: Page,
     onItemSelected: (Page) -> Unit,
-    recipeArticles: List<RecipeArticle>,
-    onSearchClicked: () -> Unit,
-    onShopClicked: () -> Unit,
-    navigateToRecipeDetail: (String) -> Unit
+    navigateToFilter: () -> Unit,
+    navigateToShop: () -> Unit,
+    navigateToRecipeDetail: (String) -> Unit,
+    navController: NavHostController,
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
-        Header(
-            selectedPage = selectedPage,
-            onItemSelected = onItemSelected,
-            modifier = modifier,
-            onSearchClicked = onSearchClicked,
-            onShopClicked = onShopClicked
-        )
-        PantryRecipePageText(modifier = modifier.align(Alignment.CenterHorizontally))
+    Scaffold(
+        topBar = {
+            MainTopBar(
+                selectedPage = selectedPage,
+                onItemSelected = onItemSelected,
+                onSearchClicked = navigateToFilter,
+                modifier = modifier,
+                onShopClicked = navigateToShop,
+                navController = navController
+            )
+        }
+    ) { innerPadding ->
+        PantryRecipePageText(modifier  = modifier.padding(innerPadding))
         RecipeCardList(
-            modifier = modifier.align(Alignment.CenterHorizontally),
+            modifier = modifier.padding(innerPadding),
             recipes = emptyList(),
             onItemClick = navigateToRecipeDetail
             )
