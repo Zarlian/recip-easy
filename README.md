@@ -22,9 +22,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 ||**Must have (12/20)**||
 |:heavy_check_mark:| Build a multiscreen app (at least 4 screens) using the Jetpack Navigation component
 |:heavy_check_mark:| Use Jetpack Compose with Kotlin to build your screen layout (use at least 4 different elements with mandatory: a scrollable List, Button, Text and Image)
-|:hourglass:| Create a menu-based navigation and bottom navigation
+|:heavy_check_mark:| Create a menu-based navigation and bottom navigation
 |:heavy_check_mark:| Use the Android app architecture (ViewModel – State in Compose)
-|:hourglass:| Use a local Room database to store user data persistently
+|:heavy_check_mark:| Use a local Room database to store user data persistently
 |:heavy_check_mark:| Use Retrofit to communicate with an API service
 |:hourglass:| Schedule at least 1 background task using the Workmanager
 |:hourglass:| Use at least 2 Implicit Intents
