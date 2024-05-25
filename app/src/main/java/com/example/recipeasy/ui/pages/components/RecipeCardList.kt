@@ -26,7 +26,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
 import coil.compose.rememberAsyncImagePainter
 import com.example.recipeasy.data.dataclasses.MealDetails
-import com.example.recipeasy.ui.theme.Colors
+import com.example.recipeasy.ui.theme.oldtheme.Colors
 
 @Composable
 fun RecipeCardList(
