@@ -27,7 +27,7 @@ class PantryEntryViewModel(private val pantryRepository: PantryRepository) : Vie
 
     private fun validateInput(uiState: PantryItemDetails = pantryUiState.pantryItem): Boolean {
         return with(uiState) {
-            name.isNotBlank()  && image.isNotBlank() && quantity.isNotBlank()
+            name.isNotBlank()  && imageUri != null && quantity.isNotBlank()
         }
     }
 }
