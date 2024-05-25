@@ -1,5 +1,6 @@
 package com.example.recipeasy.ui.pages.pantrypage
 
+import android.net.Uri
 import androidx.room.PrimaryKey
 import com.example.recipeasy.data.dataclasses.PantryItem
 
@@ -13,13 +14,13 @@ data class PantryItemDetails(
     val id: Int = 0,
     val name: String = "",
     val quantity: String = "",
-    val image: String = ""
+    val imageUri: Uri? = null
 )
 
 fun PantryItemDetails.toItem(): PantryItem = PantryItem(
     id = id,
     name = name,
-    image = image ?: "",
+    image = imageUri.toString(),
     quantity = quantity.toIntOrNull() ?: 0
 )
 
@@ -31,6 +32,6 @@ fun PantryItem.toItemUiState(isEntryValid: Boolean = false): PantryUiState = Pan
 fun PantryItem.toPantryDetails(): PantryItemDetails = PantryItemDetails(
     id = id,
     name = name,
-    image = image,
+    imageUri = Uri.parse(image),
     quantity = quantity.toString()
 )
