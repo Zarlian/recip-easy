@@ -2,6 +2,8 @@ package com.example.recipeasy.ui.pages.pantrypage.pantry
 
 import MainTopBar
 import Page
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -31,15 +34,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.example.recipeasy.R
 import com.example.recipeasy.data.dataclasses.PantryItem
 import com.example.recipeasy.ui.AppViewModelProvider
 import com.example.recipeasy.ui.NavigationDestination
-import com.example.recipeasy.ui.home.HomeViewModel
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 object PantryDestination : NavigationDestination {
@@ -71,22 +78,59 @@ fun PantryScreen(
                 navController = navController
             )
         },
+
         floatingActionButton = {
-            FloatingActionButton(
-                shape = MaterialTheme.shapes.extraSmall,
-                modifier = modifier
-                    .padding(16.dp),
-                onClick = navigateToPantryEntry,
-                containerColor = Color.White,
-                contentColor = MaterialTheme.colorScheme.secondary
+            val context = LocalContext.current
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Icon(Icons.Filled.Add, "Floating action button.")
+                FloatingActionButton(
+                    shape = MaterialTheme.shapes.extraSmall,
+                    onClick = { savePantryItemsToFile(context, pantryUiState.pantryItems.map { it.name to it.quantity }) },
+                    containerColor = Color.White,
+                    contentColor = MaterialTheme.colorScheme.secondary
+                ) {
+                    Icon(painter = painterResource(R.drawable.baseline_save_24), "Save Pantry Items")
+                }
+
+                FloatingActionButton(
+                    shape = MaterialTheme.shapes.extraSmall,
+                    onClick = navigateToPantryEntry,
+                    containerColor = Color.White,
+                    contentColor = MaterialTheme.colorScheme.secondary
+                ) {
+                    Icon(Icons.Filled.Add, "Add pantry item")
+                }
             }
         }
+
     ) { innerPadding ->
-            PantryList(
-                modifier = modifier.padding(innerPadding),
-                pantry = pantryUiState.pantryItems)
+
+        PantryList(
+            modifier = modifier.padding(innerPadding),
+            pantry = pantryUiState.pantryItems
+        )
+    }
+}
+
+fun savePantryItemsToFile(context: Context, pantryItems: List<Pair<String, Int>>) {
+    val pantryText = pantryItems.joinToString(separator = "\n") { (name, quantity) -> "$name: $quantity" }
+    val fileName = "pantry_items.txt"
+    val fileContents = "Pantry Items:\n$pantryText"
+
+    try {
+        // Create or open the file in the internal storage
+        val file = File(context.filesDir, fileName)
+        val fos = FileOutputStream(file)
+        fos.write(fileContents.toByteArray())
+        fos.close()
+        // Optionally, notify the user that the file has been saved
+        Toast.makeText(context, "Pantry items saved to $fileName", Toast.LENGTH_SHORT).show()
+    } catch (e: IOException) {
+        e.printStackTrace()
+        // Optionally, notify the user that there was an error
+        Toast.makeText(context, "Failed to save pantry items", Toast.LENGTH_SHORT).show()
     }
 }
 
