@@ -92,36 +92,3 @@ fun HomeScreen(
         }
     }
 }
-
-//    Column(modifier = modifier.fillMaxSize()) {
-//        MainTopBar(
-//            selectedPage = selectedPage,
-//            onItemSelected = onItemSelected,
-//            onSearchClicked = navigateToFilter,
-//            onShopClicked = navigateToShop
-//        )
-//        when (apiUiState) {
-//            is APIUiState.Success -> {
-//                val recipes = apiUiState.recipes
-//                RecipeCardList(
-//                    modifier = Modifier.align(Alignment.CenterHorizontally ),
-//                    recipes = recipes,
-//                    onItemClick = navigateToRecipeDetail,
-//                )
-//            }
-//            is APIUiState.Loading -> Text(
-//                text = "Loading recipes...",
-//                modifier = Modifier.padding(all = 10.dp),
-//                style = MaterialTheme.typography.bodyMedium
-//            )
-//            is APIUiState.Error -> Text(
-//                text = "Error!",
-//                modifier = Modifier.padding(all = 10.dp),
-//                style = MaterialTheme.typography.bodyMedium
-//            )
-//        }
-//
-//
-//
-//    }
-//}
