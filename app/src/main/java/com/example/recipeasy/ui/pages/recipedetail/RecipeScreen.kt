@@ -1,5 +1,9 @@
 
+import android.content.Context
+import android.content.Intent
+import android.provider.CalendarContract
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,7 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,7 +33,7 @@ import com.example.recipeasy.R
 import com.example.recipeasy.data.dataclasses.MealDetails
 import com.example.recipeasy.ui.NavigationDestination
 import com.example.recipeasy.ui.pages.recipedetail.RecipeDetailViewModel
-import com.example.recipeasy.ui.theme.Colors
+import com.example.recipeasy.ui.theme.oldtheme.Colors
 
 object RecipeDetailDestination : NavigationDestination {
     override val route = "recipe_detail"
@@ -34,9 +42,8 @@ object RecipeDetailDestination : NavigationDestination {
 }
 
 @Composable
-fun RecipePage(
+fun RecipeScreen(
     navigateBack: () -> Unit,
-    //recipeArticle: RecipeArticle
     recipeId: String
 ) {
     val viewModel: RecipeDetailViewModel = viewModel()
@@ -53,7 +60,9 @@ fun RecipePage(
             SecondHeader(recipe.strMeal, onBackClicked = navigateBack)
         }
         if (recipe != null) {
-            Recipe( recipe = recipe)
+            Recipe(
+                recipe = recipe
+            )
         }
     }
 
@@ -61,12 +70,15 @@ fun RecipePage(
 }
 
 @Composable
-fun RecipeIcons( recipe: MealDetails) {
+fun RecipeIcons(
+    recipe: MealDetails
+) {
     val icons = listOf(
         R.drawable.outline_timer,
         R.drawable.cooking,
         R.drawable.plate,
-        R.drawable.outline_add_shopping_cart
+        R.drawable.outline_add_shopping_cart,
+
     )
 
     val iconTitle = listOf(
@@ -91,7 +103,54 @@ fun RecipeIcons( recipe: MealDetails) {
                 RecipeIcon(icon = icons[i], title = iconTitle[i], text = iconText[i])
             }
         }
+
+        val context = LocalContext.current
+
+        Row{
+            Icon(
+                imageVector = Icons.Filled.Share,
+                contentDescription = "share",
+                modifier = Modifier.size(40.dp)
+                    .padding(6.dp)
+                    .clickable {
+                        shareRecipe(context, recipe)
+                    },
+                tint = MaterialTheme.colorScheme.primary
+
+            )
+
+            Icon(
+                painter = painterResource(R.drawable.baseline_calendar_month_24),
+                contentDescription = "Add to calendar",
+                modifier = Modifier.size(40.dp)
+                    .padding(6.dp)
+                    .clickable {
+                        addRecipeToCalendar(context, recipe)
+                    },
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
+
     }
+}
+
+fun addRecipeToCalendar(context: Context, recipe: MealDetails) {
+    val intent = Intent(Intent.ACTION_INSERT)
+        .setData(CalendarContract.Events.CONTENT_URI)
+        .putExtra(CalendarContract.Events.TITLE, recipe.strMeal)
+        .putExtra(CalendarContract.Events.DESCRIPTION, recipe.strInstructions)
+        .putExtra(CalendarContract.Events.EVENT_LOCATION, "Home")
+    context.startActivity(intent)
+}
+
+fun shareRecipe(context: Context, recipe: MealDetails) {
+    val recipeText = "I will be eating: ${recipe.strMeal}}"
+    val intent: Intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, recipeText)
+    }
+
+    context.startActivity(Intent.createChooser(intent, "Share recipe using:"))
 }
 
 @Composable
@@ -166,7 +225,10 @@ fun RecipeText(recipe: MealDetails) {
 
 
 @Composable
-fun Recipe(recipe: MealDetails) {
+fun Recipe(
+    recipe: MealDetails
+)
+{
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth(),

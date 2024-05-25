@@ -1,9 +1,7 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -40,7 +38,9 @@ import com.example.recipeasy.R
 import com.example.recipeasy.data.DataSource
 import com.example.recipeasy.data.dataclasses.RecipeArticle
 import com.example.recipeasy.ui.NavigationDestination
-import com.example.recipeasy.ui.theme.RecipeasyTheme
+
+import com.example.recipeasy.ui.theme.AppTheme
+import com.example.recipeasy.ui.theme.oldtheme.RecipeasyTheme
 
 
 object FilterDestination : NavigationDestination {
@@ -82,8 +82,8 @@ fun FilterScreen(
 
         Row(
             modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxWidth(),
+                .padding(innerPadding)
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Filter() { updatedChoice ->
@@ -92,7 +92,9 @@ fun FilterScreen(
             FilterBy(choice = choice)
             Sort()
         }
-        FilterResults(recipeArticles = recipeArticles)
+        FilterResults(recipeArticles = recipeArticles,
+            modifier = Modifier
+                .padding(innerPadding))
     }
 }
 
@@ -149,7 +151,10 @@ fun FilterBy(choice: String) {
 }
 
 @Composable
-fun FilterResults(recipeArticles: List<RecipeArticle>) {
+fun FilterResults(
+    recipeArticles: List<RecipeArticle>,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .width(320.dp),
@@ -170,7 +175,7 @@ fun FilterResults(recipeArticles: List<RecipeArticle>) {
 
 @Preview(showBackground = true)
 @Composable
-fun FilterResultsPreview() {
+fun FilterResultsPreview(modifier: Modifier = Modifier) {
     RecipeasyTheme {
         FilterResults(recipeArticles = DataSource.filterResultList)
     }
@@ -301,7 +306,7 @@ private fun Sort() {
 @Preview
 @Composable
 fun FilterScreen(){
-    RecipeasyTheme {
+    AppTheme {
         FilterScreen(recipeArticles = listOf(),
                     navigateBack = {})
     }
