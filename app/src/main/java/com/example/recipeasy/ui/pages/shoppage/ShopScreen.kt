@@ -1,4 +1,4 @@
-package com.example.recipeasy.ui.pages
+package com.example.recipeasy.ui.pages.shoppage
 
 import SecondHeader
 import androidx.annotation.DrawableRes
@@ -40,7 +40,7 @@ object ShopDestination : NavigationDestination {
 }
 
 @Composable
-fun ShopPage(
+fun ShopScreen(
 
     navigateBack: () -> Unit,
 
