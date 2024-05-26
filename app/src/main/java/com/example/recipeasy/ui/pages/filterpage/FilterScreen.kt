@@ -1,7 +1,9 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
@@ -36,6 +39,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.R
 import com.example.recipeasy.data.DataSource
+import com.example.recipeasy.data.dataclasses.Ingredient
+import com.example.recipeasy.data.dataclasses.MealDetails
 import com.example.recipeasy.data.dataclasses.RecipeArticle
 import com.example.recipeasy.ui.NavigationDestination
 
@@ -50,13 +55,12 @@ object FilterDestination : NavigationDestination {
 @Composable
 fun FilterScreen(
     modifier: Modifier = Modifier,
-    recipeArticles: List<RecipeArticle>,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    navigateToRecipeDetail: (String) -> Unit,
 ) {
     var choice by remember { mutableStateOf("") }
 
-
-    Scaffold (
+    Scaffold(
         topBar = {
             SecondHeader(
                 title = "Result",
@@ -65,36 +69,50 @@ fun FilterScreen(
             )
         },
         floatingActionButton = {
-            Box(
-                modifier = modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
+            FloatingActionButton(
+                onClick = { /*TODO*/ },
+                modifier = modifier
+                    .padding(16.dp)
+                    .size(56.dp)
+                //make it a circle
+
             ) {
-                FloatingActionButton(
-                    onClick = { /*TODO*/ },
-                    modifier = modifier.padding(16.dp)
-                ) {
-                    FilterButton()
-                }
+                FilterButton()
             }
         }
-    )
-    { innerPadding ->
-
-        Row(
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .fillMaxSize()
         ) {
-            Filter() { updatedChoice ->
-                choice = updatedChoice // Update the choice in FilterPage
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Filter { updatedChoice ->
+                    choice = updatedChoice // Update the choice in FilterPage
+                }
+                FilterBy(choice = choice)
+                Sort()
             }
-            FilterBy(choice = choice)
-            Sort()
+
+            RecipeCardList(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                onItemClick = navigateToRecipeDetail,
+                recipes = listOf(
+                    MealDetails(
+                        "1", "Chicken Pie", "make it",
+                        "https://www.themealdb.com/images/media/meals/ypxsqy1515365094.jpg",
+                        listOf(Ingredient("chicken", "1kg")), "easy", "4", "30"
+                    )
+                )
+            )
         }
-        FilterResults(recipeArticles = recipeArticles,
-            modifier = Modifier
-                .padding(innerPadding))
     }
 }
 
@@ -155,22 +173,17 @@ fun FilterResults(
     recipeArticles: List<RecipeArticle>,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = Modifier
-            .width(320.dp),
-
-    ) {
         LazyColumn(
+            modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.width(320.dp)
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(recipeArticles.size) { index ->
                 val recipeArticle = recipeArticles[index]
                 FilterResult(recipeArticle = recipeArticle)
             }
         }
-    }
+
 }
 
 @Preview(showBackground = true)
@@ -303,11 +316,3 @@ private fun Sort() {
     }
 }
 
-@Preview
-@Composable
-fun FilterScreen(){
-    AppTheme {
-        FilterScreen(recipeArticles = listOf(),
-                    navigateBack = {})
-    }
-}
