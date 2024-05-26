@@ -25,4 +25,6 @@ interface PantryDao {
     @Delete
     suspend fun deletePantryItem(item: PantryItem)
 
+    @Query("SELECT * FROM pantry WHERE isMainIngredient = 1")
+    fun getMainIngredients(): Flow<List<PantryItem>>
 }
