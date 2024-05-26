@@ -15,8 +15,11 @@ class PantryEntryViewModel(private val pantryRepository: PantryRepository) : Vie
         private set
 
     fun updateUiState(pantryDetails: PantryItemDetails) {
-        pantryUiState =
-            PantryUiState(pantryItem = pantryDetails, isEntryValid = validateInput(pantryDetails))
+        pantryUiState = pantryUiState.copy(
+            pantryItem = pantryDetails,
+            isEntryValid = validateInput(pantryDetails),
+            isMainIngredientChecked = pantryDetails.isMainIngredient
+        )
     }
 
     suspend fun saveItem() {
