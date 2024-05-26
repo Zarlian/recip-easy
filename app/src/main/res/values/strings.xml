@@ -16,5 +16,7 @@
     <string class="recipe_icon_title" name="difficulty">Difficulty</string>
     <string class="recipe_icon_title" name="servings">Servings</string>
     <string class="recipe_icon_title" name="add_to_shop">Add to\nshop</string>
+    <string name="channel_name">Daily Recipe</string>
+    <string name="channel_description">test2</string>
 
 </resources>
