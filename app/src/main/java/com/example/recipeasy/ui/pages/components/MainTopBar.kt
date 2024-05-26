@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.recipeasy.R
 import com.example.recipeasy.ui.pages.ProfileDestination
@@ -34,7 +35,7 @@ fun AppTitle(@StringRes title: Int, modifier: Modifier = Modifier) {
             modifier = modifier
                 .fillMaxWidth(),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleLarge.copy(fontSize = 32.sp),
             color = MaterialTheme.colorScheme.primary
         )
     }
