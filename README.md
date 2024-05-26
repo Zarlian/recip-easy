@@ -26,14 +26,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 |:heavy_check_mark:| Use the Android app architecture (ViewModel – State in Compose)
 |:heavy_check_mark:| Use a local Room database to store user data persistently
 |:heavy_check_mark:| Use Retrofit to communicate with an API service
-|:hourglass:| Schedule at least 1 background task using the Workmanager
+|:heavy_check_mark:| Schedule at least 1 background task using the Workmanager
 |:heavy_check_mark:| Use at least 2 Implicit Intents
 |:hourglass:| Write significant tests to make a robust app (code coverage at least 90%)
 |:hourglass:| Implement a custom application theme using MaterialDesign with a custom app icon
 |:hourglass:| Generate an installable APK
 ||
 || **Intermediate - self learning topics (14+/20)**
-|:hourglass:| Notifications
+|:heavy_check_mark:| Notifications
 |:hourglass:| Canvas and animations
 |:x:| Sensor data (GPS, motion, position, environmental)
 |||
