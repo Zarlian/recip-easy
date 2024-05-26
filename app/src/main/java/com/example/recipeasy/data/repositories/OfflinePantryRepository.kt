@@ -13,4 +13,5 @@ class OfflinePantryRepository (private val pantryDao : PantryDao) : PantryReposi
 
     override suspend fun updateItem(item: PantryItem) = pantryDao.updatePantryItem(item)
     override suspend fun deleteItem(item: PantryItem) = pantryDao.deletePantryItem(item)
+    override fun getMainIngredientsStream(): Flow<List<PantryItem>> = pantryDao.getMainIngredients()
 }
