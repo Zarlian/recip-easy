@@ -16,6 +16,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -178,13 +180,26 @@ fun ItemInputForm(
                         .clip(CircleShape)
                 )
             }
-
         }
 
-        if (enabled) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically
+
+        ) {
             Text(
-                text = "*required fields",
-                modifier = Modifier.padding(start = dimensionResource(id = R.dimen.padding_medium))
+                text = "Main ingredient",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(start = 16.dp)
+            )
+
+            Checkbox(
+                checked = itemDetails.isMainIngredient,
+                onCheckedChange = { isChecked ->
+                    onValueChange(itemDetails.copy(isMainIngredient = isChecked))
+                },
+                colors = CheckboxDefaults.colors(
+                    checkmarkColor = MaterialTheme.colorScheme.secondary
+                )
             )
         }
     }
