@@ -8,6 +8,7 @@ import com.example.recipeasy.RecipeApplication
 import com.example.recipeasy.ui.home.HomeViewModel
 import com.example.recipeasy.ui.pages.pantrypage.entry.PantryEntryViewModel
 import com.example.recipeasy.ui.pages.pantrypage.pantry.PantryViewModel
+import com.example.recipeasy.ui.pages.pantryrecipepage.PantryRecipeViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -20,6 +21,11 @@ object AppViewModelProvider {
 
         initializer {
             PantryViewModel(recipeasyApplication().container.pantryRepository)
+        }
+
+        initializer {
+            PantryRecipeViewModel(recipeasyApplication().container.pantryRepository)
+
         }
     }
 }
