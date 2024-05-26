@@ -55,6 +55,7 @@ android {
 
 dependencies {
     implementation("androidx.compose.ui:ui-text-google-fonts:1.6.7")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
     val nav_version = "2.7.7"
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.navigation:navigation-compose:$nav_version")
