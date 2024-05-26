@@ -18,8 +18,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.recipeasy.data.DataSource.defaultRecipeList
-import com.example.recipeasy.data.DataSource.pantryItems
 import com.example.recipeasy.data.DataSource.shop
 import com.example.recipeasy.ui.pages.ProfileDestination
 import com.example.recipeasy.ui.pages.ProfileScreen
@@ -66,7 +64,6 @@ fun RecipEasyNavHost(
             PantryScreen(
                 selectedPage = Page.PANTRY,
                 onItemSelected = { },
-                pantry = pantryItems,
                 navigateToFilter = { navController.navigate(FilterDestination.route) },
                 navigateToShop = { navController.navigate(ShopDestination.route) },
                 navController = navController,
@@ -104,7 +101,7 @@ fun RecipEasyNavHost(
         composable(route = FilterDestination.route) {
             FilterScreen(
                 navigateBack = { navController.popBackStack() },
-                recipeArticles = defaultRecipeList
+                navigateToRecipeDetail = { navController.navigate("${RecipeDetailDestination.route}/${it}") },
             )
         }
 
