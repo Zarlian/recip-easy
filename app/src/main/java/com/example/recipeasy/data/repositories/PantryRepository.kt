@@ -13,4 +13,5 @@ interface PantryRepository {
     suspend fun updateItem(item: PantryItem)
 
     suspend fun deleteItem(item: PantryItem)
+    fun getMainIngredientsStream(): Flow<List<PantryItem>>
 }
