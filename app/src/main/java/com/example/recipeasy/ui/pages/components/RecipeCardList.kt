@@ -35,8 +35,11 @@ fun RecipeCardList(
     onItemClick: (String) -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 8.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         val colors = Colors.surfaceColors
@@ -102,7 +105,7 @@ fun RecipeArticle(
 
             Text(
                 text = text,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .weight(1f) // Expand to take remaining space
@@ -140,7 +143,7 @@ fun RecipeArticleMirror(
 
             Text(
                 text = text,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .weight(1f) // Expand to take remaining space
