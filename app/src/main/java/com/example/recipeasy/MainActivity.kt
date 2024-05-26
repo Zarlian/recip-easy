@@ -7,16 +7,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.recipeasy.ui.RecipEasyApp
 import com.example.recipeasy.ui.theme.AppTheme
 
 import com.example.recipeasy.ui.theme.oldtheme.RecipeasyTheme
-
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val workRequest = PeriodicWorkRequestBuilder<DailyRecipeWorker>(
+            repeatInterval = 1,
+            repeatIntervalTimeUnit = TimeUnit.MINUTES
+        ).build()
+
+        WorkManager.getInstance(this).enqueue(workRequest)
+
+
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme(dynamicColor = false) {
