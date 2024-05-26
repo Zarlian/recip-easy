@@ -236,7 +236,7 @@ fun Recipe(
     ) {
         item {
 
-            val color = Colors.surfaceColors[0]
+            val color = Colors.surfaceColors.random()
 
             RecipeArticleMirror(
                 imageUrl = recipe.strMealThumb,
