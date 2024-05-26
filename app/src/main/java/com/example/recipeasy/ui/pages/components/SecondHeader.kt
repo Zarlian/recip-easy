@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.recipeasy.ui.theme.oldtheme.RecipeasyTheme
 
 @Composable
@@ -49,7 +50,7 @@ fun SecondHeader(title: String, subtitle: String = "", onBackClicked: () -> Unit
                 ){
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleLarge.copy(fontSize = 32.sp),
                         color = MaterialTheme.colorScheme.secondary
                     )
                     Text(
