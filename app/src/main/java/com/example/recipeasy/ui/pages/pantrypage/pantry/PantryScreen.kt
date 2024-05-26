@@ -6,11 +6,9 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -44,9 +43,13 @@ import com.example.recipeasy.R
 import com.example.recipeasy.data.dataclasses.PantryItem
 import com.example.recipeasy.ui.AppViewModelProvider
 import com.example.recipeasy.ui.NavigationDestination
+import com.example.recipeasy.ui.theme.AppTheme
+import com.example.recipeasy.ui.theme.oldtheme.Colors
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.IconButton
 
 
 object PantryDestination : NavigationDestination {
@@ -56,15 +59,14 @@ object PantryDestination : NavigationDestination {
 @Composable
 fun PantryScreen(
     modifier: Modifier = Modifier,
-    selectedPage: Page, onItemSelected: (Page) -> Unit,
-    pantry: List<PantryItem>,
+    selectedPage: Page,
+    onItemSelected: (Page) -> Unit,
     navigateToFilter: () -> Unit,
     navigateToShop: () -> Unit,
     navigateToPantryEntry: () -> Unit,
     navController: NavHostController,
     viewModel: PantryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-
     val pantryUiState by viewModel.pantryUiState.collectAsState()
 
     Scaffold(
@@ -78,20 +80,29 @@ fun PantryScreen(
                 navController = navController
             )
         },
-
         floatingActionButton = {
             val context = LocalContext.current
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 FloatingActionButton(
                     shape = MaterialTheme.shapes.extraSmall,
-                    onClick = { savePantryItemsToFile(context, pantryUiState.pantryItems.map { it.name to it.quantity }) },
+                    onClick = {
+                        savePantryItemsToFile(
+                            context,
+                            pantryUiState.pantryItems.map { it.name to it.quantity })
+                    },
                     containerColor = Color.White,
-                    contentColor = MaterialTheme.colorScheme.secondary
+                    contentColor = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.padding(start = 25.dp)
                 ) {
-                    Icon(painter = painterResource(R.drawable.baseline_save_24), "Save Pantry Items")
+                    Icon(
+                        painter = painterResource(R.drawable.baseline_save_24),
+                        contentDescription = "Save Pantry Items"
+                    )
                 }
 
                 FloatingActionButton(
@@ -100,22 +111,184 @@ fun PantryScreen(
                     containerColor = Color.White,
                     contentColor = MaterialTheme.colorScheme.secondary
                 ) {
-                    Icon(Icons.Filled.Add, "Add pantry item")
+                    Icon(Icons.Filled.Add, contentDescription = "Add pantry item")
                 }
             }
         }
-
     ) { innerPadding ->
-
         PantryList(
-            modifier = modifier.padding(innerPadding),
-            pantry = pantryUiState.pantryItems
+            modifier = modifier
+                .padding(innerPadding)
+                .fillMaxWidth(),
+            pantry = pantryUiState.pantryItems,
+            onIncreaseClick = { viewModel.increaseQuantity(it.id) },
+            onDecreaseClick = { viewModel.decreaseQuantity(it.id) }
         )
     }
 }
 
+@Composable
+fun PantryList(
+    modifier: Modifier = Modifier,
+    pantry: List<PantryItem>,
+    onIncreaseClick: (PantryItem) -> Unit,
+    onDecreaseClick: (PantryItem) -> Unit
+) {
+
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        val colors = Colors.surfaceColors
+
+        items(items = pantry) { pantryItem ->
+            val index = pantry.indexOf(pantryItem)
+            val color = colors[index % colors.size]
+
+            PantryArticle(
+                text = pantryItem.name,
+                imageUrl = pantryItem.image,
+                color = color,
+                quantity = pantryItem.quantity,
+                onIncreaseClick = { onIncreaseClick(pantryItem) },
+                onDecreaseClick = { onDecreaseClick(pantryItem) }
+            )
+        }
+    }
+}
+
+@Composable
+fun PantryArticle(
+    text: String,
+    imageUrl: String,
+    modifier: Modifier = Modifier,
+    quantity: Int,
+    color: Color,
+    onIncreaseClick: () -> Unit,
+    onDecreaseClick: () -> Unit
+) {
+    Row(
+        modifier = modifier
+            .width(320.dp)
+            .height(140.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            PantryImage(imageUrl, color)
+            PantryText(text)
+        }
+        PantryButton(
+            text = quantity,
+            onIncreaseClick = onIncreaseClick,
+            onDecreaseClick = onDecreaseClick
+        )
+    }
+}
+
+@Composable
+fun PantryButton(
+    text: Int,
+    modifier: Modifier = Modifier,
+    onIncreaseClick: () -> Unit,
+    onDecreaseClick: () -> Unit
+) {
+    Surface(
+        shape = MaterialTheme.shapes.extraSmall,
+        shadowElevation = 4.dp,
+        modifier = modifier.fillMaxHeight(0.8f)
+    ) {
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+
+        ) {
+            IconButton(onClick = onIncreaseClick) {
+                PantryButtonText(text = "+")
+            }
+            Text(
+                text = text.toString(),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+            IconButton(onClick = onDecreaseClick) {
+                PantryButtonText(text = "-")
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PantryButtonPreview() {
+AppTheme {
+    PantryButton(
+        text = 5,
+        onIncreaseClick = {},
+        onDecreaseClick = {}
+    )
+}
+}
+
+@Composable
+private fun PantryText(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleLarge,
+        color = MaterialTheme.colorScheme.primary
+    )
+}
+
+@Composable
+private fun PantryImage(
+    imageUrl: String,
+    color: Color
+) {
+    Surface(
+        shape = MaterialTheme.shapes.small,
+        shadowElevation = 4.dp,
+        color = color,
+        modifier = Modifier
+            .padding(vertical = 8.dp)
+            .width(130.dp)
+            .height(130.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = rememberAsyncImagePainter(imageUrl),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(90.dp)
+                    .clip(CircleShape)
+            )
+        }
+    }
+}
+
+
+
+@Composable
+private fun PantryButtonText(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodyLarge,
+        color = MaterialTheme.colorScheme.secondary
+    )
+}
+
 fun savePantryItemsToFile(context: Context, pantryItems: List<Pair<String, Int>>) {
-    val pantryText = pantryItems.joinToString(separator = "\n") { (name, quantity) -> "$name: $quantity" }
+    val pantryText =
+        pantryItems.joinToString(separator = "\n") { (name, quantity) -> "$name: $quantity" }
     val fileName = "pantry_items.txt"
     val fileContents = "Pantry Items:\n$pantryText"
 
@@ -134,132 +307,20 @@ fun savePantryItemsToFile(context: Context, pantryItems: List<Pair<String, Int>>
     }
 }
 
-@Composable
-fun PantryList(modifier: Modifier = Modifier, pantry: List<PantryItem>) {
 
-    Box(modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center ){
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(pantry.size) {index ->
-                val pantryItem = pantry[index]
-                PantryArticle(
-                    text = pantryItem.name,
-                    imageUrl = pantryItem.image,
-                    quantity = pantryItem.quantity
-                )
-            }
-
-        }
-    }
-}
-
-
-@Composable
-fun PantryArticle(text: String, imageUrl: String, modifier: Modifier = Modifier, quantity: Int) {
-    Row(
-        modifier = modifier
-            .width(320.dp)
-            .height(100.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            PantryImage(imageUrl)
-            PantryText(text)
-        }
-        PantryButton(text = quantity)
-    }
-}
-
-@Composable
-private fun PantryText(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.primary
-    )
-}
-
-@Composable
-private fun PantryImage(imageUrl: String) {
-    Surface(
-        shape = MaterialTheme.shapes.small,
-        shadowElevation = 4.dp,
-        color = Color(0xFFA5D8D3),
-        modifier = Modifier
-            .padding(vertical = 8.dp)
-            .width(130.dp)
-            .height(100.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Image(
-                painter = rememberAsyncImagePainter(imageUrl),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(115.dp)
-                    .clip(CircleShape)
-            )
-        }
-    }
-}
-
-@Composable
-fun PantryButton(text: Int, modifier: Modifier = Modifier) {
-    Surface(
-        shape = MaterialTheme.shapes.extraSmall,
-        shadowElevation = 4.dp,
-        modifier = modifier
-            .fillMaxHeight(0.7f)
-
-    ) {
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(horizontal = 10.dp)
-            ) {
-                PantryButtonText(text = "+")
-                Text(
-                    text = text.toString(),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                PantryButtonText(text = "-")
-            }
-
-    }
-}
-
-@Composable
-private fun PantryButtonText(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.secondary
-    )
-}
-
-//@Preview(showBackground = true)
+//@Preview
 //@Composable
-//fun PantryScreen() {
-//    RecipeasyTheme(dynamicColor = false) {
+//fun PantryScreenPreview() {
+//    val navController = rememberNavController()
+//
+//    AppTheme {
 //        PantryScreen(
 //            selectedPage = Page.PANTRY,
 //            onItemSelected = {},
-//            pantry = pantryItems,
 //            navigateToFilter = {},
 //            navigateToShop = {},
-//            navController = NavHostController
-//
+//            navigateToPantryEntry = {},
+//            navController = navController
 //        )
 //    }
 //}
