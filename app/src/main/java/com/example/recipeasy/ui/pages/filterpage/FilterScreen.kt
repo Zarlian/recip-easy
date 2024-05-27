@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.R
@@ -63,8 +64,8 @@ fun FilterScreen(
     Scaffold(
         topBar = {
             SecondHeader(
-                title = "Result",
-                subtitle = "You have 3 items",
+                title = stringResource(R.string.result),
+                subtitle = stringResource(R.string.three_items),
                 onBackClicked = navigateBack
             )
         },
@@ -106,9 +107,9 @@ fun FilterScreen(
                 onItemClick = navigateToRecipeDetail,
                 recipes = listOf(
                     MealDetails(
-                        "1", "Chicken Pie", "make it",
-                        "https://www.themealdb.com/images/media/meals/ypxsqy1515365094.jpg",
-                        listOf(Ingredient("chicken", "1kg")), "easy", "4", "30"
+                        stringResource(R.string.number_1), stringResource(R.string.chicken_pie), stringResource(R.string.make_it),
+                        stringResource(R.string.image_link_1),
+                        listOf(Ingredient(stringResource(R.string.chicken), stringResource(R.string.one_kg))), stringResource(R.string.easy), stringResource(R.string.number_4), stringResource(R.string.number_30)
                     )
                 )
             )
@@ -130,7 +131,7 @@ fun FilterBy(choice: String) {
         )
     }
 
-    if (choice == "ONLY" || choice == "NO") {
+    if (choice == stringResource(R.string.only) || choice == stringResource(R.string.no)) {
         Box {
             Button(
                 onClick = { expandedFilter = !expandedFilter },
@@ -141,7 +142,7 @@ fun FilterBy(choice: String) {
                 ),
             ) {
                 Text("________________")
-                Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = "Dropdown")
+                Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = stringResource(R.string.dropdown))
             }
 
             DropdownMenu(
@@ -160,7 +161,7 @@ fun FilterBy(choice: String) {
 
                     DropdownMenuItem(
                         onClick = { expandedFilter = false },
-                        text = { Text("Done") },
+                        text = { Text(stringResource(R.string.done)) },
                     )
                 }
             )
@@ -252,7 +253,7 @@ private fun FilterImage(drawable: Int, color: Color) {
 @Composable
 fun FilterResultPreview() {
     RecipeasyTheme {
-        FilterResult(modifier = Modifier , RecipeArticle(1,"Chicken pie", R.drawable.plate_1, Color(0xFFEECED3)))
+        FilterResult(modifier = Modifier , RecipeArticle(1,stringResource(R.string.chicken_pie), R.drawable.plate_1, Color(0xFFEECED3)))
     }
 }
 

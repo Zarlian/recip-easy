@@ -1,22 +1,71 @@
 <resources>
     <string name="app_name">RecipEasy</string>
 
+    //navigation
     <string name="nav_home">HOME</string>
     <string name="nav_recipes">RECIPES</string>
     <string name="nav_pantry">PANTRY</string>
     <string name="nav_profile">PROFILE</string>
-    <string name="number_1">5</string>
+
+    //numbers
+    <string name="number_1">1</string>
+    <string name="number_4">4</string>
+    <string name="number_5">5</string>
+    <string name="number_30">30</string>
+
+    //ingredients
+    <string name="chicken">chicken</string>
+    <string name="chicken_capital_c">Chicken</string>
+    <string name="eggs_capital_E">Eggs</string>
+    <string name="pasta">Pasta</string>
+    <string name="beef">Beef</string>
+    <string name="milk">Milk</string>
+    <string name="cheese">Cheese</string>
     <string class="ingredients" name="beans">beans</string>
     <string class="ingredients" name="chickenBreast">chicken breast</string>
     <string class="ingredients" name="eggs">eggs</string>
     <string class="ingredients" name="honey">honey</string>
     <string class="ingredients" name="onions">onions</string>
     <string class="ingredients" name="tagliatelle">tagliatelle</string>
+
+    //recipes
+    <string name="chicken_vegtables">Chicken with vegetables</string>
+    <string name="chicken_pie">Chicken Pie</string>
     <string class="recipe_icon_title" name="time">Time</string>
     <string class="recipe_icon_title" name="difficulty">Difficulty</string>
     <string class="recipe_icon_title" name="servings">Servings</string>
     <string class="recipe_icon_title" name="add_to_shop">Add to\nshop</string>
     <string name="channel_name">Daily Recipe</string>
     <string name="channel_description">test2</string>
+
+    //other
+    <string name="filter">filter</string>
+    <string name="filter_capitals">FILTER</string>
+    <string name="shop">Shop</string>
+    <string name="back">back</string>
+    <string name="subtitle">subtitle</string>
+    <string name="shopping_list">Shopping list</string>
+    <string name="result">Result</string>
+    <string name="three_items">You have 3 items</string>
+    <string name="one_kg">1kg</string>
+    <string name="image_link_1">https://www.themealdb.com/images/media/meals/ypxsqy1515365094.jpg</string>
+    <string name="empty"></string>
+    <string name="make_it">make it</string>
+    <string name="easy">easy</string>
+    <string name="only">ONLY</string>
+    <string name="no">NO</string>
+    <string name="dropdown">Dropdown</string>
+    <string name="done">Done</string>
+    <string name="amount">Amount</string>
+    <string name="recipes_with_ingredients">Recipes with your pantry ingredients</string>
+    <string name="select_image">Select Image</string>
+    <string name="main_ingredient">Main ingredient</string>
+    <string name="save_pantry_items">Save Pantry Items</string>
+    <string name="add_pantry_items">Add Pantry Items</string>
+    <string name="add_to_calender">Add to Calender</string>
+    <string name="share_recipe">Share Recipe Using: </string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="preparation">Preparation</string>
 
 </resources>

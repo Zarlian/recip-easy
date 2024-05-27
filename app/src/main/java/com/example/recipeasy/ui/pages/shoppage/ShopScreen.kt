@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeasy.R
@@ -49,7 +50,7 @@ fun ShopScreen(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SecondHeader(title = "Shopping List", onBackClicked = navigateBack)
+        SecondHeader(title = stringResource(R.string.shopping_list), onBackClicked = navigateBack)
         ShopIcons()
         ShopArticles(shop = shop)
     }
@@ -75,7 +76,7 @@ fun ShopIcon(@DrawableRes drawable: Int) {
     Image(
 
         painter = painterResource(drawable),
-        contentDescription = "Shopping Cart",
+        contentDescription = stringResource(R.string.shopping_cart),
         modifier = Modifier.padding(6.dp)
     )
 }
@@ -126,7 +127,7 @@ fun ShopItem(shopItem: ShopItem) {
         Icon(
             imageVector = Icons.Outlined.Edit,
             tint = MaterialTheme.colorScheme.secondary,
-            contentDescription = "Shopping Cart",
+            contentDescription = stringResource(R.string.shopping_cart),
             modifier = Modifier
                 .padding(6.dp)
                 .size(24.dp)

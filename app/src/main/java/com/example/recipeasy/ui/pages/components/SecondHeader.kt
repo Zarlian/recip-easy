@@ -15,9 +15,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.recipeasy.R
 import com.example.recipeasy.ui.theme.oldtheme.RecipeasyTheme
 
 @Composable
@@ -33,7 +35,7 @@ fun SecondHeader(title: String, subtitle: String = "", onBackClicked: () -> Unit
         ) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
-                contentDescription = "back",
+                contentDescription = stringResource(R.string.back),
                 modifier = Modifier
                     .clickable(onClick = onBackClicked)
                     .size(36.dp),
@@ -72,7 +74,7 @@ fun SecondHeader(title: String, subtitle: String = "", onBackClicked: () -> Unit
 @Composable
 fun SecondHeaderPreview() {
     RecipeasyTheme (dynamicColor = false){
-        SecondHeader(title = "Chicken with vegetables", subtitle = "subtitle", onBackClicked = {})
+        SecondHeader(title = stringResource(R.string.chicken_vegtables), subtitle = stringResource(R.string.subtitle), onBackClicked = {})
     }
 }
 
@@ -80,6 +82,6 @@ fun SecondHeaderPreview() {
 @Composable
 fun SecondHeaderPreview2() {
     RecipeasyTheme (dynamicColor = false){
-        SecondHeader(title = "Shopping list", subtitle = "", onBackClicked = {})
+        SecondHeader(title = stringResource(R.string.shopping_list), subtitle = stringResource(R.string.empty), onBackClicked = {})
     }
 }

@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -155,14 +156,14 @@ fun ItemInputForm(
                 keyboardType = KeyboardType.Decimal,
                 imeAction = ImeAction.Next
             ),
-            label = { Text("Amount") },
+            label = { Text(stringResource(R.string.amount)) },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             singleLine = true
         )
 
         Button(onClick = onSelectImageClick, enabled = enabled) {
-            Text(text = "Select Image")
+            Text(text = stringResource(R.string.select_image))
         }
 
         itemDetails.imageUri?.let { uri ->
@@ -187,7 +188,7 @@ fun ItemInputForm(
 
         ) {
             Text(
-                text = "Main ingredient",
+                text = stringResource(R.string.main_ingredient),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(start = 16.dp)
             )
