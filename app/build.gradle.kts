@@ -60,6 +60,8 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("androidx.camera:camera-view:1.3.3")
     implementation("androidx.camera:camera-extensions:1.3.3")
+    implementation("androidx.work:work-testing:2.9.0")
+    implementation("com.google.android.gms:play-services-basement:18.3.0")
     val nav_version = "2.7.7"
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.navigation:navigation-compose:$nav_version")
@@ -76,6 +78,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.04.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    androidTestImplementation("io.mockk:mockk-android:1.12.0")
+    androidTestImplementation("org.mockito:mockito-android:5.12.0")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.6")
 
@@ -107,4 +112,8 @@ dependencies {
     // Animations
 //    implementation("com.google.accompanist:accompanist-navigation-animation:0.23.1")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.31.3-beta")
+
+    testImplementation ("org.robolectric:robolectric:4.5.1")
+
+
 }
