@@ -33,7 +33,7 @@ fun SecondHeader(title: String, subtitle: String = "", onBackClicked: () -> Unit
         ) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
-                contentDescription = "Shopping Cart",
+                contentDescription = "back",
                 modifier = Modifier
                     .clickable(onClick = onBackClicked)
                     .size(36.dp),
