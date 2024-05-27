@@ -10,6 +10,8 @@ import PantryRecipeScreen
 import com.example.recipeasy.ui.pages.pantrypage.pantry.PantryScreen
 import RecipeDetailDestination
 import RecipeScreen
+import android.os.Build
+import androidx.annotation.RequiresExtension
 import com.example.recipeasy.ui.pages.shoppage.ShopScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -26,6 +28,7 @@ import com.example.recipeasy.ui.pages.pantrypage.entry.PantryEntryScreen
 import com.example.recipeasy.ui.pages.shoppage.ShopDestination
 
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun RecipEasyApp() {
     val navController = rememberNavController()
@@ -34,6 +37,7 @@ fun RecipEasyApp() {
     )
 }
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun RecipEasyNavHost(
     navController: NavHostController
