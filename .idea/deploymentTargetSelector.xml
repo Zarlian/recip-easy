@@ -13,16 +13,19 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="PantryListPreview">
+      <SelectionState runConfigName="homeScreenDisplaysRecipes()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PantryScreen">
+      <SelectionState runConfigName="HomeScreenUiTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="FilterScreen">
+      <SelectionState runConfigName="getRandomRecipes()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PantryScreenPreview">
+      <SelectionState runConfigName="PantryDaoTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="daoGetMainIngredient_returnsItemsWithMainIngredientsFromDB()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
