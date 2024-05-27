@@ -41,6 +41,8 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
+
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.12"
@@ -56,6 +58,8 @@ android {
 dependencies {
     implementation("androidx.compose.ui:ui-text-google-fonts:1.6.7")
     implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("androidx.camera:camera-view:1.3.3")
+    implementation("androidx.camera:camera-extensions:1.3.3")
     val nav_version = "2.7.7"
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.navigation:navigation-compose:$nav_version")
@@ -100,5 +104,7 @@ dependencies {
     // Images from url
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
 
-
+    // Animations
+//    implementation("com.google.accompanist:accompanist-navigation-animation:0.23.1")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.31.3-beta")
 }
