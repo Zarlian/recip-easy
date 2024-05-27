@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipeasy.data.dataclasses.MealDetails
+import com.example.recipeasy.network.APIservice
 import com.example.recipeasy.network.recipeApi
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -21,7 +22,7 @@ sealed interface APIUiState {
 }
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-open class APIViewModel : ViewModel() {
+open class APIViewModel(private val apiService: APIservice = recipeApi.retrofitService) : ViewModel() {
     open var apiUiState: APIUiState by mutableStateOf(APIUiState.Loading)
 
     init {
