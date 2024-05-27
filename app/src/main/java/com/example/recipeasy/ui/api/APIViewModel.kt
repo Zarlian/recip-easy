@@ -21,15 +21,15 @@ sealed interface APIUiState {
 }
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-class APIViewModel : ViewModel() {
-    var apiUiState: APIUiState by mutableStateOf(APIUiState.Loading)
+open class APIViewModel : ViewModel() {
+    open var apiUiState: APIUiState by mutableStateOf(APIUiState.Loading)
 
     init {
         getRandomRecipes()
     }
 
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-    fun getRandomRecipes() {
+    open fun getRandomRecipes() {
         val recipes = mutableListOf<MealDetails>()
         viewModelScope.launch {
             apiUiState = APIUiState.Loading
