@@ -124,3 +124,101 @@ fun RecipEasyNavHost(
         }
     }
 }
+
+//@OptIn(ExperimentalAnimationApi::class)
+//@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+//@Composable
+//fun RecipEasyApp() {
+//    val navController = rememberAnimatedNavController()
+//    RecipEasyNavHost(
+//        navController = navController
+//    )
+//}
+//
+//
+//@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+//@OptIn(ExperimentalAnimationApi::class)
+//@Composable
+//fun RecipEasyNavHost(navController: NavHostController) {
+//    AnimatedNavHost(
+//        navController = navController,
+//        startDestination = HomeDestination.route,
+//        enterTransition = { slideInVertically(initialOffsetY = { 200 }) }, // Reduce animation offset
+//        exitTransition = { slideOutVertically(targetOffsetY = { -200 }) },
+//        popEnterTransition = { slideInVertically(initialOffsetY = { -200 }) },
+//        popExitTransition = { slideOutVertically(targetOffsetY = { 200 }) }
+//    ) {
+//        // Ensure you have a composable for HomeDestination.route
+//        composable(route = HomeDestination.route) {
+//            Log.d("RecipEasyNavHost", "Navigated to HomeDestination")
+//            HomeScreen(
+//                navigateToShop = { navController.navigate(ShopDestination.route) },
+//                navigateToFilter = { navController.navigate(FilterDestination.route) },
+//                selectedPage = Page.HOME,
+//                onItemSelected = { },
+//                navigateToRecipeDetail = { navController.navigate("${RecipeDetailDestination.route}/${it}") },
+//                navController = navController
+//            )
+//        }
+//        composable(route = ShopDestination.route) {
+//            ShopScreen(
+//                navigateBack = { navController.popBackStack() },
+//                shop = shop
+//            )
+//        }
+//        composable(route = PantryDestination.route) {
+//            PantryScreen(
+//                selectedPage = Page.PANTRY,
+//                onItemSelected = { },
+//                navigateToFilter = { navController.navigate(FilterDestination.route) },
+//                navigateToShop = { navController.navigate(ShopDestination.route) },
+//                navController = navController,
+//                navigateToPantryEntry = { navController.navigate(PantryEntryDestination.route) }
+//            )
+//        }
+//        composable(route = PantryEntryDestination.route) {
+//            PantryEntryScreen(
+//                navigateBack = { navController.popBackStack() }
+//            )
+//        }
+//        composable(route = ProfileDestination.route) {
+//            ProfileScreen(
+//                navigateToShop = { navController.navigate(ShopDestination.route) },
+//                navigateToFilter = { navController.navigate(FilterDestination.route) },
+//                selectedPage = Page.HOME,
+//                onItemSelected = { },
+//                navController = navController
+//            )
+//        }
+//        composable(route = PantryRecipeDestination.route) {
+//            PantryRecipeScreen(
+//                selectedPage = Page.RECIPES,
+//                onItemSelected = { },
+//                navigateToFilter = { navController.navigate(FilterDestination.route) },
+//                navigateToShop = { navController.navigate(ShopDestination.route) },
+//                navigateToRecipeDetail = { navController.navigate("${RecipeDetailDestination.route}/${it}") },
+//                navController = navController
+//            )
+//        }
+//        composable(route = FilterDestination.route) {
+//            FilterScreen(
+//                navigateBack = { navController.popBackStack() },
+//                navigateToRecipeDetail = { navController.navigate("${RecipeDetailDestination.route}/${it}") },
+//            )
+//        }
+//        composable(
+//            route = RecipeDetailDestination.routeWithArgs,
+//            arguments = listOf(navArgument(RecipeDetailDestination.recipeIdArg) {
+//                type = NavType.StringType
+//            })
+//        ) {
+//            val recipeId = it.arguments?.getString(RecipeDetailDestination.recipeIdArg)
+//            if (recipeId != null) {
+//                RecipeScreen(
+//                    navigateBack = { navController.popBackStack() },
+//                    recipeId = recipeId
+//                )
+//            }
+//        }
+//    }
+//}
