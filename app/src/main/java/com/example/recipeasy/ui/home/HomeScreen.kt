@@ -21,10 +21,8 @@ import com.example.recipeasy.ui.home.HomeViewModel
 
 sealed class Page {
     object HOME : Page()
-    object SHOP : Page()
     object PANTRY : Page()
     object PROFILE : Page()
-    object FILTER : Page()
     object RECIPES : Page()
 }
 
@@ -42,13 +40,11 @@ fun HomeScreen(
     onItemSelected: (Page) -> Unit,
     navigateToRecipeDetail: (String) -> Unit,
     navController: NavHostController,
+    apiViewModel: APIViewModel = viewModel()
 
-    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
 
-    val apiViewModel: APIViewModel = viewModel()
     val apiUiState: APIUiState = apiViewModel.apiUiState
-    val homeUiState by viewModel.homeUiState.collectAsState()
 
     LaunchedEffect(key1 = true) {
         apiViewModel.getRandomRecipes()
@@ -62,7 +58,7 @@ fun HomeScreen(
                 onSearchClicked = navigateToFilter,
                 modifier = modifier,
                 onShopClicked = navigateToShop,
-                navController = navController
+                navController = navController,
             )
         }
     ) { innerPadding ->
