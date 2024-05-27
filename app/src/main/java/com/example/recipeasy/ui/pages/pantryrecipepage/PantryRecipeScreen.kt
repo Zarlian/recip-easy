@@ -10,9 +10,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.recipeasy.R
 import com.example.recipeasy.ui.AppViewModelProvider
 import com.example.recipeasy.ui.NavigationDestination
 import com.example.recipeasy.ui.pages.pantryrecipepage.PantryRecipeViewModel
@@ -68,7 +70,7 @@ fun PantryRecipePageText(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Recipes with your pantry ingredients",
+            text = stringResource(R.string.recipes_with_ingredients),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.secondary
         )

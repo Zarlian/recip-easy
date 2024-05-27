@@ -116,7 +116,7 @@ fun HeaderIcons(
     ) {
         Icon(
             imageVector = Icons.Filled.Search,
-            contentDescription = "filter",
+            contentDescription = stringResource(R.string.filter),
             modifier = modifier.padding(6.dp)
                                 .clickable(onClick = onSearchClicked),
 
@@ -124,7 +124,7 @@ fun HeaderIcons(
         )
         Icon(
             imageVector = Icons.Filled.ShoppingCart,
-            contentDescription = "Shop",
+            contentDescription = stringResource(R.string.shop),
             modifier = modifier.padding(6.dp)
                                 .clickable(onClick = onShopClicked),
             tint = MaterialTheme.colorScheme.secondary

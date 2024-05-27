@@ -50,6 +50,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.IconButton
+import androidx.compose.ui.res.stringResource
 
 
 object PantryDestination : NavigationDestination {
@@ -101,7 +102,7 @@ fun PantryScreen(
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.baseline_save_24),
-                        contentDescription = "Save Pantry Items"
+                        contentDescription = stringResource(R.string.save_pantry_items)
                     )
                 }
 
@@ -111,7 +112,7 @@ fun PantryScreen(
                     containerColor = Color.White,
                     contentColor = MaterialTheme.colorScheme.secondary
                 ) {
-                    Icon(Icons.Filled.Add, contentDescription = "Add pantry item")
+                    Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_pantry_items))
                 }
             }
         }

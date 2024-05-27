@@ -110,7 +110,8 @@ fun RecipeIcons(
             Icon(
                 imageVector = Icons.Filled.Share,
                 contentDescription = "share",
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier
+                    .size(40.dp)
                     .padding(6.dp)
                     .clickable {
                         shareRecipe(context, recipe)
@@ -121,8 +122,9 @@ fun RecipeIcons(
 
             Icon(
                 painter = painterResource(R.drawable.baseline_calendar_month_24),
-                contentDescription = "Add to calendar",
-                modifier = Modifier.size(40.dp)
+                contentDescription = stringResource(R.string.add_to_calender),
+                modifier = Modifier
+                    .size(40.dp)
                     .padding(6.dp)
                     .clickable {
                         addRecipeToCalendar(context, recipe)
@@ -160,7 +162,7 @@ fun RecipeIcon(icon: Int, title: String, text: String) {
     ) {
         Image(
             painter = painterResource(icon),
-            contentDescription = "Shopping Cart",
+            contentDescription = stringResource(R.string.shopping_cart),
             modifier = Modifier.size(40.dp)
         )
         Text(
@@ -187,7 +189,7 @@ fun RecipeText(recipe: MealDetails) {
 
     Column(modifier = Modifier.width(320.dp)) {
             Text(
-                text = "Ingredients",
+                text = stringResource(R.string.ingredients),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -207,7 +209,7 @@ fun RecipeText(recipe: MealDetails) {
 
 
             Text(
-                text = "Preparation",
+                text = stringResource(R.string.preparation),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -240,7 +242,7 @@ fun Recipe(
 
             RecipeArticleMirror(
                 imageUrl = recipe.strMealThumb,
-                text = "",
+                text = stringResource(R.string.empty),
                 onClick = {},
                 color = color
             )
