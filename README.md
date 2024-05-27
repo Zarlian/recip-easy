@@ -28,7 +28,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 |:heavy_check_mark:| Use Retrofit to communicate with an API service
 |:heavy_check_mark:| Schedule at least 1 background task using the Workmanager
 |:heavy_check_mark:| Use at least 2 Implicit Intents
-|:hourglass:| Write significant tests to make a robust app (code coverage at least 90%)
+|:heavy_check_mark:| Write significant tests to make a robust app (code coverage at least 90%)
 |:heavy_check_mark:| Implement a custom application theme using MaterialDesign with a custom app icon
 |:hourglass:| Generate an installable APK
 ||
