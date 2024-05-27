@@ -134,19 +134,25 @@ object DataSource {
 
     val pantryItems = listOf(
         PantryItem(
+            id = 0,
             name = "Chicken breast",
             quantity = 2,
-            //image = R.drawable.chicken_breast
+            image = "",
+            isMainIngredient = true
         ),
         PantryItem(
+            id = 1,
             name = "Beans",
             quantity = 3,
-            //image = R.drawable.beans
+            image = "",
+            isMainIngredient = false
         ),
         PantryItem(
+            id = 2,
             name = "Eggs",
             quantity = 7,
-            //image = R.drawable.eggs
+            image = "",
+            isMainIngredient = false
         ),
         PantryItem(
             name = "Honey",
