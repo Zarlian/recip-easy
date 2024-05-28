@@ -1,4 +1,4 @@
-package com.example.recipeasy
+package com.example.recipeasy.worker
 
 import android.Manifest
 import android.app.Activity
@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.example.recipeasy.R
 
 const val MY_PERMISSIONS_REQUEST_POST_NOTIFICATIONS = 1
 
@@ -52,7 +53,8 @@ fun sendNotification(title: String, text: String, context: Context) {
                 .setPositiveButton("ok") { dialog, which ->
                     ActivityCompat.requestPermissions(context,
                         arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                        MY_PERMISSIONS_REQUEST_POST_NOTIFICATIONS)
+                        MY_PERMISSIONS_REQUEST_POST_NOTIFICATIONS
+                    )
                 }
                 .setNegativeButton("cancel") { dialog, which -> dialog.dismiss() }
                 .create().show()
@@ -60,7 +62,8 @@ fun sendNotification(title: String, text: String, context: Context) {
             // No explanation needed; request the permission
             ActivityCompat.requestPermissions(context,
                 arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                MY_PERMISSIONS_REQUEST_POST_NOTIFICATIONS)
+                MY_PERMISSIONS_REQUEST_POST_NOTIFICATIONS
+            )
 
             // MY_PERMISSIONS_REQUEST_POST_NOTIFICATIONS is an
             // app-defined int constant. The callback method gets the
