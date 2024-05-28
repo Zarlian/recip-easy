@@ -50,8 +50,8 @@ Screenshots for every screen in the application:
 |-------------------------|------------------------|
 
 ### Screen 3 and Screen 4
-| ![Screen 3](images/img_2.png) | ![Screen 4](images/img_3.png) |
-|------------------------|------------------------|
+| ![Screen 3](images/img_2.png) | ![Screen 4](images/img_31.png) |
+|------------------------|--------------------------------|
 
 ### Screen 5 and Screen 6
 | ![Screen 5](images/img_4.png) | ![Screen 6](images/img_25.png) |
@@ -73,7 +73,6 @@ Request to server x retrieving JSON in the following format displayed in screen 
 | ![API Request 1](images/img_9.png) | ![API Request 2](images/img_10.png) |
 |-----------------------------|------------------------------|
 | ![API Request 3](images/img_11.png) | ![API Request 4](images/img_12.png) |
-|------------------------------|------------------------------|
 | ![API Request 5](images/img_13.png) |
 
 ## Intents
@@ -87,7 +86,6 @@ Request to server x retrieving JSON in the following format displayed in screen 
 | ![Intent 2 - Part 1](images/img_17.png) | ![Intent 2 - Part 2](images/img_18.png) |
 |----------------------------------|----------------------------------|
 | ![Intent 2 - Part 3](images/img_19.png) | ![Intent 2 - Part 4](images/img_20.png) |
-|----------------------------------|----------------------------------|
 
 ## WorkManager
 Implementation of the background task in the WorkManager.
@@ -115,8 +113,8 @@ Optional: implementation of sensor data.
 
 ## Camera
 Optional: implementation of the camera.
+
 | ![Camera view](images/img_27.png)) | ![Canvas](images/img_28.png) |
-|------------------------------------------|------------------------------|
 | ![Camera view](images/img_29.png)) | ![Canvas](images/img_30.png) |
 |------------------------------------------|------------------------------|
 
