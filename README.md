@@ -133,4 +133,7 @@ Optional: implementation of the ML kit.
 
 ## Link to Google profile accounts
 - Member1 - https://g.dev/aguilaaa
+
+
 - Member2 - https://g.dev/clint-kindermans
+- Member2 - https://g.dev/zarlian
