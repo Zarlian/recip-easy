@@ -1,8 +1,6 @@
 package com.example.recipeasy.data.dataclasses
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "pantry")
