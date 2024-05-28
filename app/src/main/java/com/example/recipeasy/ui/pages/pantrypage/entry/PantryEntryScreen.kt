@@ -53,7 +53,8 @@ object PantryEntryDestination : NavigationDestination {
 fun PantryEntryScreen(
     navigateBack: () -> Unit,
     canNavigateBack: Boolean = true,
-    viewModel: PantryEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: PantryEntryViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    onTakePictureClick: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -85,6 +86,7 @@ fun PantryEntryScreen(
             onSelectImageClick = {
                 activityResultLauncher.launch("image/*")
             },
+            onTakePictureClick = onTakePictureClick,
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
@@ -101,7 +103,8 @@ fun PantryEntryBody(
     onItemValueChange: (PantryItemDetails) -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onSelectImageClick: () -> Unit
+    onSelectImageClick: () -> Unit,
+    onTakePictureClick: () -> Unit
 ) {
     Column(
         modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium)),
@@ -111,7 +114,8 @@ fun PantryEntryBody(
             itemDetails = itemUiState.pantryItem,
             onValueChange = onItemValueChange,
             modifier = Modifier.fillMaxWidth(),
-            onSelectImageClick = onSelectImageClick
+            onSelectImageClick = onSelectImageClick,
+            onTakePictureClick = onTakePictureClick
         )
         Button(
             onClick = onSaveClick,
@@ -131,7 +135,8 @@ fun ItemInputForm(
     modifier: Modifier = Modifier,
     onValueChange: (PantryItemDetails) -> Unit = {},
     enabled: Boolean = true,
-    onSelectImageClick: () -> Unit // Add this parameter
+    onSelectImageClick: () -> Unit,
+    onTakePictureClick: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -164,6 +169,9 @@ fun ItemInputForm(
 
         Button(onClick = onSelectImageClick, enabled = enabled) {
             Text(text = stringResource(R.string.select_image))
+        }
+        Button(onClick = onTakePictureClick) {
+            Text(text = "Take picture")
         }
 
         itemDetails.imageUri?.let { uri ->
