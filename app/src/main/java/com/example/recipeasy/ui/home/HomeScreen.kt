@@ -1,5 +1,9 @@
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresExtension
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import com.example.recipeasy.ui.NavigationDestination
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.recipeasy.ui.api.APIUiState
@@ -39,7 +42,7 @@ fun HomeScreen(
     apiViewModel: APIViewModel = viewModel()
 
 ) {
-
+    Log.d("Navigation", "HomeDestination reached")
     val apiUiState: APIUiState = apiViewModel.apiUiState
 
     LaunchedEffect(key1 = true) {
@@ -61,24 +64,28 @@ fun HomeScreen(
         when (apiUiState) {
             is APIUiState.Success -> {
                 val recipes = apiUiState.recipes
-                RecipeCardList(
-                    modifier = modifier
-                        .padding(innerPadding)
-                        .fillMaxWidth(),
-                    recipes = recipes,
-                    onItemClick = navigateToRecipeDetail,
-                )
+                AnimatedVisibility(
+                    visible = recipes.isNotEmpty(),
+                    enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight }),
+                ) {
+                    RecipeCardList(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(innerPadding),
+                        recipes = recipes,
+                        onItemClick = navigateToRecipeDetail,
+                    )
+                }
             }
 
             is APIUiState.Loading -> Text(
                 text = "Loading recipes...",
-                modifier = Modifier.padding(all = 10.dp),
+                modifier = Modifier.padding(innerPadding),
                 style = MaterialTheme.typography.bodyMedium
             )
 
             is APIUiState.Error -> Text(
                 text = "Error!",
-                modifier = Modifier.padding(all = 10.dp),
+                modifier = Modifier.padding(innerPadding),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
