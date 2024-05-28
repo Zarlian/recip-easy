@@ -91,18 +91,6 @@ object DataSource {
 
     val recipeList: MutableStateFlow<List<MealDetails>> = MutableStateFlow(defaultRecipeList)
 
-    val pantryRecipeList = listOf(
-        RecipeArticle(
-            id = 0,
-            title = "Chicken\n" +
-                    "with roasted\n" +
-                    "vegetables",
-            image = R.drawable.plate_1,
-            color = Color(0xFFEECED3)
-        )
-    )
-
-
     val pantryItems = listOf(
         PantryItem(
             id = 0,
