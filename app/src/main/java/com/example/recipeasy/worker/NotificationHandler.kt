@@ -73,7 +73,7 @@ fun sendNotification(title: String, text: String, context: Context) {
         // Permission has already been granted
         // Build the notification
         val builder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.eggs)
+            .setSmallIcon(R.drawable.logo_re_round)
             .setContentTitle(title)
             .setContentText(text)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
