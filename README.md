@@ -104,7 +104,9 @@ Optional: implementation of notifications.
 ## Canvas and Animations
 Optional: implementation of canvas and animations.
 
-![Canvas and Animations](ReadmeImages/Animations.png)
+| ![Animation - Part 1](images/imgeee.png)) | ![Canvas](images/img_26.png) |
+|------------------------------------------|------------------------------|
+
 
 ## Sensor Data
 Optional: implementation of sensor data.
@@ -113,8 +115,10 @@ Optional: implementation of sensor data.
 
 ## Camera
 Optional: implementation of the camera.
-
-![Camera](ReadmeImages/Camera.png)
+| ![Camera view](images/img_27.png)) | ![Canvas](images/img_28.png) |
+|------------------------------------------|------------------------------|
+| ![Camera view](images/img_29.png)) | ![Canvas](images/img_30.png) |
+|------------------------------------------|------------------------------|
 
 ## ML Kit
 Optional: implementation of the ML kit.
