@@ -34,7 +34,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 ||
 || **Intermediate - self learning topics (14+/20)**
 |:heavy_check_mark:| Notifications
-|:hourglass:| Canvas and animations
+|:heavy_check_mark:| Canvas and animations
 |:x:| Sensor data (GPS, motion, position, environmental)
 |||
 ||**Experienced - self learning topics (16+/20)**
@@ -42,7 +42,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 |:x:| Use the ML Kit to add new experience features to your app (Vision and/or Natural Language API)
 
 ## Overview app
-### ![](ReadmeImages/Screenshot.png) Screenshots
+### ![img.png](img.png) Screenshots
 Give screenshots for every screen in the application.
 
 ### ![](ReadmeImages/Database.png) Room database
