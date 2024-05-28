@@ -1,12 +1,16 @@
-
 import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,9 +18,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,9 +36,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.recipeasy.R
 import com.example.recipeasy.data.dataclasses.MealDetails
+import com.example.recipeasy.ui.AppViewModelProvider
 import com.example.recipeasy.ui.NavigationDestination
 import com.example.recipeasy.ui.pages.recipedetail.RecipeDetailViewModel
-import com.example.recipeasy.ui.theme.oldtheme.Colors
+import com.example.recipeasy.ui.theme.Colors
 
 object RecipeDetailDestination : NavigationDestination {
     override val route = "recipe_detail"
@@ -46,7 +52,7 @@ fun RecipeScreen(
     navigateBack: () -> Unit,
     recipeId: String
 ) {
-    val viewModel: RecipeDetailViewModel = viewModel()
+    val viewModel: RecipeDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
     val recipeDetailState by viewModel.recipeDetailState.collectAsState()
 
     LaunchedEffect(key1 = recipeId) {
@@ -55,18 +61,32 @@ fun RecipeScreen(
 
     val recipe = recipeDetailState
 
-    Column {
-        if (recipe != null) {
-            SecondHeader(recipe.strMeal, onBackClicked = navigateBack)
+    Scaffold(
+        topBar = {
+            recipe?.let {
+                SecondHeader(it.strMeal, onBackClicked = navigateBack)
+            }
         }
-        if (recipe != null) {
-            Recipe(
-                recipe = recipe
-            )
+    ) { innerPadding ->
+        recipe?.let {
+            AnimatedVisibility(
+                visible = true,
+                enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight })
+            ) {
+                RecipeDetails(
+                    modifier = Modifier.padding(innerPadding),
+                    recipe = it
+                )
+            }
+        } ?: run {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("Recipe is not available")
+            }
         }
     }
-
-
 }
 
 @Composable
@@ -79,7 +99,7 @@ fun RecipeIcons(
         R.drawable.plate,
         R.drawable.outline_add_shopping_cart,
 
-    )
+        )
 
     val iconTitle = listOf(
         stringResource(R.string.time),
@@ -106,7 +126,7 @@ fun RecipeIcons(
 
         val context = LocalContext.current
 
-        Row{
+        Row {
             Icon(
                 imageVector = Icons.Filled.Share,
                 contentDescription = "share",
@@ -182,19 +202,17 @@ fun RecipeIcon(icon: Int, title: String, text: String) {
 fun RecipeText(recipe: MealDetails) {
 
 
-
-
     val preparation = recipe.strInstructions
 
 
     Column(modifier = Modifier.width(320.dp)) {
-            Text(
-                text = stringResource(R.string.ingredients),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary
-            )
+        Text(
+            text = stringResource(R.string.ingredients),
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
 
-
+        HorizontalDivider(modifier = Modifier.padding(vertical = 9.dp))
         recipe.ingredients.forEach { ingredient ->
             Text(
                 text = "- " + ingredient.name + " " + ingredient.measure,
@@ -204,36 +222,37 @@ fun RecipeText(recipe: MealDetails) {
 
         }
 
-            Divider(modifier = Modifier.padding(vertical = 6.dp))
+        Spacer(modifier = Modifier.padding(vertical = 15.dp))
 
 
 
-            Text(
-                text = stringResource(R.string.preparation),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary
-            )
+        Text(
+            text = stringResource(R.string.preparation),
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
+        HorizontalDivider(modifier = Modifier.padding(vertical = 9.dp))
 
-
-            Text(
-                text = preparation,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.padding(bottom = 6.dp)
-            )
-        }
+        Text(
+            text = preparation,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.padding(bottom = 6.dp)
+        )
+    }
 
 }
 
 
 @Composable
-fun Recipe(
+fun RecipeDetails(
+    modifier: Modifier = Modifier,
     recipe: MealDetails
-)
-{
+) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
