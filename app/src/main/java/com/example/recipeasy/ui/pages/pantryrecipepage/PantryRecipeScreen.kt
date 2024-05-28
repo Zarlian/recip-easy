@@ -1,6 +1,9 @@
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -50,23 +53,40 @@ fun PantryRecipeScreen(
         val viewModel: PantryRecipeViewModel = viewModel(factory = AppViewModelProvider.Factory)
         val pantryRecipeState by viewModel.recipesState.collectAsState()
 
+        AnimatedVisibility(
+            visible = pantryRecipeState.isNotEmpty(),
+            enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight }),
+        ) {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                PantryRecipePageText()
+                RecipeCardList(
+                    recipes = pantryRecipeState,
+                    onItemClick = navigateToRecipeDetail
+                )
+            }
 
-        PantryRecipePageText(modifier = modifier.padding(innerPadding))
-        RecipeCardList(
-            modifier = modifier.padding(innerPadding),
-            recipes = pantryRecipeState,
-            onItemClick = navigateToRecipeDetail
-        )
+        }
+
+        if (pantryRecipeState.isEmpty()) {
+            PantryRecipePageText( modifier = modifier.padding(innerPadding))
+        }
     }
 }
+
 
 @Composable
 fun PantryRecipePageText(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 8.dp, vertical = 8.dp),
-        verticalArrangement = Arrangement.Top,
+            .padding(horizontal = 8.dp)
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.Center, // Center the content vertically
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
