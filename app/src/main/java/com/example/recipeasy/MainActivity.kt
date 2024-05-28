@@ -10,7 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.recipeasy.ui.RecipEasyApp
-import com.example.recipeasy.ui.theme.AppTheme
+import com.example.recipeasy.ui.theme.RecipeasyTheme
+import com.example.recipeasy.worker.DailyRecipeWorker
 
 import java.util.concurrent.TimeUnit
 
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         setContent {
-            AppTheme(dynamicColor = false) {
+            RecipeasyTheme(dynamicColor = false) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
