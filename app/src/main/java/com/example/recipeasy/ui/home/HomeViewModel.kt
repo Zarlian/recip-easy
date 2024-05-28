@@ -24,6 +24,6 @@ class HomeViewModel (recipesRepository: RecipeRepository) : ViewModel() {
                 )
 
         companion object {
-            private const val TIMEOUT_MILLIS = 5_000L
+            const val TIMEOUT_MILLIS = 5_000L
         }
 }
