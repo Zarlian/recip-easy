@@ -109,11 +109,7 @@ dependencies {
     // Images from url
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
 
-    // Animations
-//    implementation("com.google.accompanist:accompanist-navigation-animation:0.23.1")
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.31.3-beta")
 
     testImplementation ("org.robolectric:robolectric:4.5.1")
-
 
 }
