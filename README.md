@@ -106,5 +106,5 @@ Optional: implementation of the ML kit.
 - https://
 
 ## Link to Google profile accounts
-- Member1 - https://
-- Member2 - https://
+- Member1 - https://g.dev/aguilaaa
+- Member2 - https://g.dev/clint-kindermans
