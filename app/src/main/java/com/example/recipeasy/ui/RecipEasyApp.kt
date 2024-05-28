@@ -25,6 +25,8 @@ import com.example.recipeasy.ui.pages.ProfileDestination
 import com.example.recipeasy.ui.pages.ProfileScreen
 import com.example.recipeasy.ui.pages.pantrypage.entry.PantryEntryDestination
 import com.example.recipeasy.ui.pages.pantrypage.entry.PantryEntryScreen
+import com.example.recipeasy.ui.pages.pantrypage.picker.PantryPickerDestination
+import com.example.recipeasy.ui.pages.pantrypage.picker.PantryPickerScreen
 import com.example.recipeasy.ui.pages.shoppage.ShopDestination
 
 
@@ -77,7 +79,8 @@ fun RecipEasyNavHost(
 
         composable(route = PantryEntryDestination.route) {
             PantryEntryScreen(
-                navigateBack = { navController.popBackStack() }
+                navigateBack = { navController.popBackStack() },
+                onTakePictureClick = { navController.navigate(PantryPickerDestination.route) }
             )
         }
 
@@ -121,6 +124,12 @@ fun RecipEasyNavHost(
                     recipeId = recipeId
                 )
             }
+        }
+
+        composable(route = PantryPickerDestination.route) {
+            PantryPickerScreen(
+                navigateBack = { navController.popBackStack() },
+            )
         }
     }
 }
