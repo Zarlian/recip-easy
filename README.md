@@ -42,59 +42,84 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 |:x:| Use the ML Kit to add new experience features to your app (Vision and/or Natural Language API)
 
 ## Overview app
-###  Screenshots
-Give screenshots for every screen in the application.
-![img.png](img.png)
-![img_1.png](img_1.png)
-![img_2.png](img_2.png)
-![img_3.png](img_3.png)
-![img_4.png](img_4.png)
-![img_5.png](img_5.png)
-![img_6.png](img_6.png)
+## Screenshots
+Screenshots for every screen in the application:
 
-###  Room database
+### Main Screen and Screen 2
+| ![Main Screen](img.png) | ![Screen 2](img_1.png) |
+|-------------------------|------------------------|
+
+### Screen 3 and Screen 4
+| ![Screen 3](img_2.png) | ![Screen 4](img_3.png) |
+|------------------------|------------------------|
+
+### Screen 5 and Screen 6
+| ![Screen 5](img_4.png) | ![Screen 6](img_25.png) |
+|------------------------|-------------------------|
+
+### Screen 7
+![Screen 7](img_6.png)
+
+## Room Database
 Type of data stored in the database used in screen x and displayed in screen y.
-![img_7.png](img_7.png)
-![img_8.png](img_8.png)
 
-###  API request
+| ![Database Schema 1](img_7.png) | ![Database Schema 2](img_8.png) |
+|---------------------------------|--------------------------------|
+
+## API Request
 Request to server x retrieving JSON in the following format displayed in screen x.
-![img_9.png](img_9.png)
-![img_10.png](img_10.png)
-![img_11.png](img_11.png)
-![img_12.png](img_12.png)
-![img_13.png](img_13.png)
 
-###  Intents
-1. Detail intent 1
-![img_14.png](img_14.png)
-![img_15.png](img_15.png)
-![img_16.png](img_16.png)
-2. Detail intent 2
-![img_17.png](img_17.png)
-![img_18.png](img_18.png)
-![img_19.png](img_19.png)
-![img_20.png](img_20.png)
-###  Workmanager
-Implementation of the backgroundtask in the Workmanager.
-![img_23.png](img_23.png)
-![img_21.png](img_21.png)
+### API Request Screenshots
+| ![API Request 1](img_9.png) | ![API Request 2](img_10.png) |
+|-----------------------------|------------------------------|
+| ![API Request 3](img_11.png) | ![API Request 4](img_12.png) |
+|------------------------------|------------------------------|
+| ![API Request 5](img_13.png) |
 
-### Notifications
+## Intents
+
+### Detail Intent 1
+| ![Intent 1 - Part 1](img_14.png) | ![Intent 1 - Part 2](img_15.png) |
+|----------------------------------|----------------------------------|
+| ![Intent 1 - Part 3](img_16.png) |
+
+### Detail Intent 2
+| ![Intent 2 - Part 1](img_17.png) | ![Intent 2 - Part 2](img_18.png) |
+|----------------------------------|----------------------------------|
+| ![Intent 2 - Part 3](img_19.png) | ![Intent 2 - Part 4](img_20.png) |
+|----------------------------------|----------------------------------|
+
+## WorkManager
+Implementation of the background task in the WorkManager.
+
+| ![WorkManager 1](img_23.png) | ![WorkManager 2](img_21.png) |
+|------------------------------|------------------------------|
+
+## Notifications
 Optional: implementation of notifications.
-![img_22.png](img_22.png)
-![img_24.png](img_24.png)
-### ![](ReadmeImages/Animations.png) Canvas and animations
+
+| ![Notification 1](img_22.png) | ![Notification 2](img_24.png) |
+|-------------------------------|-------------------------------|
+
+## Canvas and Animations
 Optional: implementation of canvas and animations.
 
-### ![](ReadmeImages/SensorData.png) Sensor data
+![Canvas and Animations](ReadmeImages/Animations.png)
+
+## Sensor Data
 Optional: implementation of sensor data.
 
-### ![](ReadmeImages/Camera.png) Camera
+![Sensor Data](ReadmeImages/SensorData.png)
+
+## Camera
 Optional: implementation of the camera.
 
-### ![](ReadmeImages/MLkit.png) ML kit
+![Camera](ReadmeImages/Camera.png)
+
+## ML Kit
 Optional: implementation of the ML kit.
+
+![ML Kit](ReadmeImages/MLkit.png)
 
 ## Repositories
 - Code
