@@ -46,59 +46,59 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 Screenshots for every screen in the application:
 
 ### Main Screen and Screen 2
-| ![Main Screen](img.png) | ![Screen 2](img_1.png) |
+| ![Main Screen](images/img.png) | ![Screen 2](images/img_1.png) |
 |-------------------------|------------------------|
 
 ### Screen 3 and Screen 4
-| ![Screen 3](img_2.png) | ![Screen 4](img_3.png) |
+| ![Screen 3](images/img_2.png) | ![Screen 4](images/img_3.png) |
 |------------------------|------------------------|
 
 ### Screen 5 and Screen 6
-| ![Screen 5](img_4.png) | ![Screen 6](img_25.png) |
+| ![Screen 5](images/img_4.png) | ![Screen 6](images/img_25.png) |
 |------------------------|-------------------------|
 
 ### Screen 7
-![Screen 7](img_6.png)
+![Screen 7](images/img_6.png)
 
 ## Room Database
 Type of data stored in the database used in screen x and displayed in screen y.
 
-| ![Database Schema 1](img_7.png) | ![Database Schema 2](img_8.png) |
+| ![Database Schema 1](images/img_7.png) | ![Database Schema 2](images/img_8.png) |
 |---------------------------------|--------------------------------|
 
 ## API Request
 Request to server x retrieving JSON in the following format displayed in screen x.
 
 ### API Request Screenshots
-| ![API Request 1](img_9.png) | ![API Request 2](img_10.png) |
+| ![API Request 1](images/img_9.png) | ![API Request 2](images/img_10.png) |
 |-----------------------------|------------------------------|
-| ![API Request 3](img_11.png) | ![API Request 4](img_12.png) |
+| ![API Request 3](images/img_11.png) | ![API Request 4](images/img_12.png) |
 |------------------------------|------------------------------|
-| ![API Request 5](img_13.png) |
+| ![API Request 5](images/img_13.png) |
 
 ## Intents
 
 ### Detail Intent 1
-| ![Intent 1 - Part 1](img_14.png) | ![Intent 1 - Part 2](img_15.png) |
+| ![Intent 1 - Part 1](images/img_14.png) | ![Intent 1 - Part 2](images/img_15.png) |
 |----------------------------------|----------------------------------|
-| ![Intent 1 - Part 3](img_16.png) |
+| ![Intent 1 - Part 3](images/img_16.png) |
 
 ### Detail Intent 2
-| ![Intent 2 - Part 1](img_17.png) | ![Intent 2 - Part 2](img_18.png) |
+| ![Intent 2 - Part 1](images/img_17.png) | ![Intent 2 - Part 2](images/img_18.png) |
 |----------------------------------|----------------------------------|
-| ![Intent 2 - Part 3](img_19.png) | ![Intent 2 - Part 4](img_20.png) |
+| ![Intent 2 - Part 3](images/img_19.png) | ![Intent 2 - Part 4](images/img_20.png) |
 |----------------------------------|----------------------------------|
 
 ## WorkManager
 Implementation of the background task in the WorkManager.
 
-| ![WorkManager 1](img_23.png) | ![WorkManager 2](img_21.png) |
+| ![WorkManager 1](images/img_23.png) | ![WorkManager 2](images/img_21.png) |
 |------------------------------|------------------------------|
 
 ## Notifications
 Optional: implementation of notifications.
 
-| ![Notification 1](img_22.png) | ![Notification 2](img_24.png) |
+| ![Notification 1](images/img_22.png) | ![Notification 2](images/img_24.png) |
 |-------------------------------|-------------------------------|
 
 ## Canvas and Animations
