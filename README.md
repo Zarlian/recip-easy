@@ -30,7 +30,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 |:heavy_check_mark:| Use at least 2 Implicit Intents
 |:heavy_check_mark:| Write significant tests to make a robust app (code coverage at least 90%)
 |:heavy_check_mark:| Implement a custom application theme using MaterialDesign with a custom app icon
-|:hourglass:| Generate an installable APK
+|:heavy_check_mark:| Generate an installable APK
 ||
 || **Intermediate - self learning topics (14+/20)**
 |:heavy_check_mark:| Notifications
@@ -125,7 +125,7 @@ Optional: implementation of the ML kit.
 - Code
     - https://gitlab.ti.howest.be/ti/2023-2024/s4/native-mobile-apps/projects/group-05/recip-easy
 - APK
-    - https://gitlab.ti.howest.be/ti/2023-2024/s4/native-mobile-apps/
+    - https://gitlab.ti.howest.be/ti/2023-2024/s4/native-mobile-apps/projects/group-05/recip-easy-apk
 
 ## Link movie
 - https://
