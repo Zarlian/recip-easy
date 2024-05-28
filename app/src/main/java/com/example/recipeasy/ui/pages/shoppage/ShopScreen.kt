@@ -2,11 +2,14 @@ package com.example.recipeasy.ui.pages.shoppage
 
 import SecondHeader
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -17,6 +20,7 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,27 +46,45 @@ object ShopDestination : NavigationDestination {
 
 @Composable
 fun ShopScreen(
-
+    modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
-
     shop: List<ShopArticle>) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        SecondHeader(title = stringResource(R.string.shopping_list), onBackClicked = navigateBack)
-        ShopIcons()
-        ShopArticles(shop = shop)
+
+    Scaffold (
+        topBar = {
+            SecondHeader(title = stringResource(R.string.shopping_list), onBackClicked = navigateBack)
+        }
+    ){innerPadding ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            ShopIcons()
+
+            AnimatedVisibility(
+                visible = shop.isNotEmpty(),
+                enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight })
+            ) {
+
+                ShopArticles( shop = shop)
+            }
+        }
     }
 }
 
 @Composable
-fun ShopIcons() {
+fun ShopIcons(
+    modifier: Modifier = Modifier
+) {
     Row(
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier
-            .width(290.dp)
-            .height(48.dp)
+        modifier = modifier
+            .padding(horizontal = 8.dp)
+            .fillMaxWidth()
+            .height(48.dp),
+           horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         ShopIcon(R.drawable.baseline_print)
         ShopIcon(R.drawable.ah_logo)
@@ -84,8 +106,17 @@ fun ShopIcon(@DrawableRes drawable: Int) {
 
 
 @Composable
-fun ShopArticles(shop: List<ShopArticle>) {
-    LazyColumn() {
+fun ShopArticles(
+    shop: List<ShopArticle>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 8.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         items(shop.size) { index ->
             val shopArticle = shop[index]
             ShopArticle(shopArticle = shopArticle)
