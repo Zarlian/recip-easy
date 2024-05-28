@@ -1,3 +1,5 @@
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,13 +26,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
@@ -38,15 +40,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.recipeasy.R
 import com.example.recipeasy.data.DataSource
-import com.example.recipeasy.data.dataclasses.Ingredient
-import com.example.recipeasy.data.dataclasses.MealDetails
 import com.example.recipeasy.data.dataclasses.RecipeArticle
+import com.example.recipeasy.ui.AppViewModelProvider
 import com.example.recipeasy.ui.NavigationDestination
+import com.example.recipeasy.ui.pages.filterpage.FilterViewModel
 
-import com.example.recipeasy.ui.theme.AppTheme
-import com.example.recipeasy.ui.theme.oldtheme.RecipeasyTheme
+import com.example.recipeasy.ui.theme.RecipeasyTheme
 
 
 object FilterDestination : NavigationDestination {
@@ -58,14 +60,19 @@ fun FilterScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     navigateToRecipeDetail: (String) -> Unit,
-) {
+
+    ) {
     var choice by remember { mutableStateOf("") }
+
+    val viewModel: FilterViewModel = viewModel(factory = AppViewModelProvider.Factory)
+
+    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
             SecondHeader(
                 title = stringResource(R.string.result),
-                subtitle = stringResource(R.string.three_items),
+                subtitle = "You have ${uiState.recipes.size} items",
                 onBackClicked = navigateBack
             )
         },
@@ -75,8 +82,6 @@ fun FilterScreen(
                 modifier = modifier
                     .padding(16.dp)
                     .size(56.dp)
-                //make it a circle
-
             ) {
                 FilterButton()
             }
@@ -99,20 +104,19 @@ fun FilterScreen(
                 FilterBy(choice = choice)
                 Sort()
             }
+            AnimatedVisibility(
+                visible = uiState.recipes.isNotEmpty(),
+                enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight })
+            ) {
 
-            RecipeCardList(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                onItemClick = navigateToRecipeDetail,
-                recipes = listOf(
-                    MealDetails(
-                        stringResource(R.string.number_1), stringResource(R.string.chicken_pie), stringResource(R.string.make_it),
-                        stringResource(R.string.image_link_1),
-                        listOf(Ingredient(stringResource(R.string.chicken), stringResource(R.string.one_kg))), stringResource(R.string.easy), stringResource(R.string.number_4), stringResource(R.string.number_30)
-                    )
+                RecipeCardList(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    onItemClick = navigateToRecipeDetail,
+                    recipes = uiState.recipes
                 )
-            )
+            }
         }
     }
 }
@@ -142,7 +146,10 @@ fun FilterBy(choice: String) {
                 ),
             ) {
                 Text("________________")
-                Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = stringResource(R.string.dropdown))
+                Icon(
+                    imageVector = Icons.Filled.ArrowDropDown,
+                    contentDescription = stringResource(R.string.dropdown)
+                )
             }
 
             DropdownMenu(
@@ -153,9 +160,11 @@ fun FilterBy(choice: String) {
                         DropdownMenuItem(
                             onClick = { checked.value = !checked.value },
                             text = { Text(food) },
-                            leadingIcon = { Checkbox(checked = checked.value, onCheckedChange = { isChecked ->
-                                checked.value = isChecked
-                            }) }
+                            leadingIcon = {
+                                Checkbox(checked = checked.value, onCheckedChange = { isChecked ->
+                                    checked.value = isChecked
+                                })
+                            }
                         )
                     }
 
@@ -174,16 +183,16 @@ fun FilterResults(
     recipeArticles: List<RecipeArticle>,
     modifier: Modifier = Modifier
 ) {
-        LazyColumn(
-            modifier = modifier,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            items(recipeArticles.size) { index ->
-                val recipeArticle = recipeArticles[index]
-                FilterResult(recipeArticle = recipeArticle)
-            }
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        items(recipeArticles.size) { index ->
+            val recipeArticle = recipeArticles[index]
+            FilterResult(recipeArticle = recipeArticle)
         }
+    }
 
 }
 
@@ -253,7 +262,10 @@ private fun FilterImage(drawable: Int, color: Color) {
 @Composable
 fun FilterResultPreview() {
     RecipeasyTheme {
-        FilterResult(modifier = Modifier , RecipeArticle(1,stringResource(R.string.chicken_pie), R.drawable.plate_1, Color(0xFFEECED3)))
+        FilterResult(
+            modifier = Modifier,
+            RecipeArticle(1, "Chicken Pie", R.drawable.plate_1, Color(0xFFEECED3))
+        )
     }
 }
 
@@ -280,9 +292,15 @@ fun Filter(onChoiceSelected: (String) -> Unit) {
             expanded = expandedFilter,
             onDismissRequest = { expandedFilter = false },
             content = {
-                DropdownMenuItem(onClick = { onChoiceSelected("ONLY"); expandedFilter = false ; choice="ONLY" }, text = { Text("ONLY") })
-                DropdownMenuItem(onClick = { onChoiceSelected("NO"); expandedFilter = false ; choice="NO"}, text = { Text("NO") })
-                DropdownMenuItem(onClick = { onChoiceSelected(""); expandedFilter = false ; choice="FILTER"}, text = { Text("CANCEL") })
+                DropdownMenuItem(onClick = {
+                    onChoiceSelected("ONLY"); expandedFilter = false; choice = "ONLY"
+                }, text = { Text("ONLY") })
+                DropdownMenuItem(onClick = {
+                    onChoiceSelected("NO"); expandedFilter = false; choice = "NO"
+                }, text = { Text("NO") })
+                DropdownMenuItem(onClick = {
+                    onChoiceSelected(""); expandedFilter = false; choice = "FILTER"
+                }, text = { Text("CANCEL") })
             }
         )
     }
