@@ -20,11 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.recipeasy.R
-import com.example.recipeasy.ui.theme.oldtheme.RecipeasyTheme
+import com.example.recipeasy.ui.theme.RecipeasyTheme
 
 @Composable
 fun SecondHeader(title: String, subtitle: String = "", onBackClicked: () -> Unit) {
-    //TODO text need to be in the middle, icon to the left
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -74,7 +73,7 @@ fun SecondHeader(title: String, subtitle: String = "", onBackClicked: () -> Unit
 @Composable
 fun SecondHeaderPreview() {
     RecipeasyTheme (dynamicColor = false){
-        SecondHeader(title = stringResource(R.string.chicken_vegtables), subtitle = stringResource(R.string.subtitle), onBackClicked = {})
+        SecondHeader(title = "Chicken with vegetables", subtitle = "testsubtitle", onBackClicked = {})
     }
 }
 
