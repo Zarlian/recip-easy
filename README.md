@@ -8,8 +8,7 @@
 ## Project summary
 Brief description about the project, 1 paragraph maximum.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+We made an app were you can choose recipes based on the products you have in your pantry. If your pantry is empty you can still search recipes and build a shopping list based on the products you need for those recipes. It is also possible to add your own pictures to the ingredients.  
 ## Requirements
 ### ℹ️ Legend
 - :heavy_check_mark: = Implemented
