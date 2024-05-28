@@ -22,6 +22,17 @@ data class ExtendedColorScheme(
     val customColor2: ColorFamily,
 )
 
+object Colors{
+    val surfaceColors = listOf(
+        Color(0xFFEECED3),
+        Color(0xFFBEDEDF),
+        Color(0xFFF7CE94),
+        Color(0xFFF7E7A9),
+        Color(0xFFBFACF4),
+        Color(0xFFA5D8D3)
+    )
+}
+
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
     onPrimary = onPrimaryLight,
@@ -353,7 +364,7 @@ val unspecified_scheme = ColorFamily(
 )
 
 @Composable
-fun AppTheme(
+fun RecipeasyTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
