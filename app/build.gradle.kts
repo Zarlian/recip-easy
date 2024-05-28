@@ -62,6 +62,7 @@ dependencies {
     implementation("androidx.camera:camera-extensions:1.3.3")
     implementation("androidx.work:work-testing:2.9.0")
     implementation("com.google.android.gms:play-services-basement:18.3.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     val nav_version = "2.7.7"
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.navigation:navigation-compose:$nav_version")
@@ -111,5 +112,15 @@ dependencies {
 
 
     testImplementation ("org.robolectric:robolectric:4.5.1")
+
+
+    val camerax_version = "1.2.2"
+    implementation ("androidx.camera:camera-core:${camerax_version}")
+    implementation ("androidx.camera:camera-camera2:${camerax_version}")
+    implementation ("androidx.camera:camera-lifecycle:${camerax_version}")
+    implementation ("androidx.camera:camera-video:${camerax_version}")
+
+    implementation ("androidx.camera:camera-view:${camerax_version}")
+    implementation ("androidx.camera:camera-extensions:${camerax_version}")
 
 }
