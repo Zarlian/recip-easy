@@ -1,4 +1,4 @@
-package com.example.recipeasy
+package com.example.recipeasy.worker
 
 import android.content.Context
 import android.os.Build

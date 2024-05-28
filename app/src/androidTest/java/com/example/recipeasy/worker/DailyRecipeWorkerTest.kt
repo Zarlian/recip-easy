@@ -10,9 +10,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.ListenableWorker
 import androidx.work.testing.TestListenableWorkerBuilder
-import com.example.recipeasy.DailyRecipeWorker
-import io.mockk.every
-import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
