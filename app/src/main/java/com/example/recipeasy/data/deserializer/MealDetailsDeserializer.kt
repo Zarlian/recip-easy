@@ -1,4 +1,6 @@
-package com.example.recipeasy.data.dataclasses
+package com.example.recipeasy.data.deserializer
+import com.example.recipeasy.data.dataclasses.Ingredient
+import com.example.recipeasy.data.dataclasses.MealDetails
 import com.google.gson.*
 import java.lang.reflect.Type
 class MealDetailsDeserializer : JsonDeserializer<MealDetails> {
@@ -13,21 +15,17 @@ class MealDetailsDeserializer : JsonDeserializer<MealDetails> {
 
         // Loop through strIngredient and strMeasure fields
         for (i in 1..20) {
-            val ingredientName = jsonObject?.get("strIngredient$i").toString()
-            val measure = jsonObject?.get("strMeasure$i").toString()
+            val ingredientName = jsonObject?.get("strIngredient$i").toString().replace("\"", "")
+            val measure = jsonObject?.get("strMeasure$i").toString().replace("\"", "")
 
-                // Check if both are not empty strings (combined check)
-                if (measure != "null") {
-                    if (ingredientName != "null" && ingredientName != """""" && measure != """"""")
-                    {
-                       // ingredients.add(Ingredient(ingredientName, measure))
-                            ingredients.add(Ingredient(ingredientName, measure))
 
-                    }
+            if (measure != "null" && measure.isNotBlank()) {
+                if (ingredientName != "null" && ingredientName.isNotBlank()) {
+                    ingredients.add(Ingredient(ingredientName, measure))
                 }
             }
+        }
 
-        // Parse other properties
         return MealDetails(
             idMeal = jsonObject?.get("idMeal")?.asString.orEmpty(),
             strMeal = jsonObject?.get("strMeal")?.asString.orEmpty(),
