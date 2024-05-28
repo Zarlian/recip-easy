@@ -38,7 +38,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 |:x:| Sensor data (GPS, motion, position, environmental)
 |||
 ||**Experienced - self learning topics (16+/20)**
-|:x:| Use the CameraX library
+|:heavy_check_mark:| Use the CameraX library
 |:x:| Use the ML Kit to add new experience features to your app (Vision and/or Natural Language API)
 
 ## Overview app
