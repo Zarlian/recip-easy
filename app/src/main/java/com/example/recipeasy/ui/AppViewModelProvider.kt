@@ -6,9 +6,11 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.recipeasy.RecipeApplication
 import com.example.recipeasy.ui.home.HomeViewModel
+import com.example.recipeasy.ui.pages.filterpage.FilterViewModel
 import com.example.recipeasy.ui.pages.pantrypage.entry.PantryEntryViewModel
 import com.example.recipeasy.ui.pages.pantrypage.pantry.PantryViewModel
 import com.example.recipeasy.ui.pages.pantryrecipepage.PantryRecipeViewModel
+import com.example.recipeasy.ui.pages.recipedetail.RecipeDetailViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -25,7 +27,14 @@ object AppViewModelProvider {
 
         initializer {
             PantryRecipeViewModel(recipeasyApplication().container.pantryRepository)
+        }
 
+        initializer {
+            FilterViewModel(recipeasyApplication().container.recipeRepository)
+        }
+
+        initializer{
+            RecipeDetailViewModel()
         }
     }
 }
