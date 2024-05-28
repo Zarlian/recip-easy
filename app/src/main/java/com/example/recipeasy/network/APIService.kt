@@ -1,7 +1,7 @@
 package com.example.recipeasy.network
 
 import com.example.recipeasy.data.dataclasses.MealDetails
-import com.example.recipeasy.data.dataclasses.MealDetailsDeserializer
+import com.example.recipeasy.data.deserializer.MealDetailsDeserializer
 import com.example.recipeasy.data.dataclasses.Recipe
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
