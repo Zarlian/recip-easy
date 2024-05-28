@@ -132,7 +132,7 @@ Optional: implementation of the ML kit.
     - https://gitlab.ti.howest.be/ti/2023-2024/s4/native-mobile-apps/projects/group-05/recip-easy-apk
 
 ## Link movie
-- https://
+- https://www.youtube.com/watch?v=SdDPUMXxJPo
 
 ## Link to Google profile accounts
 - Member1 - https://g.dev/aguilaaa
