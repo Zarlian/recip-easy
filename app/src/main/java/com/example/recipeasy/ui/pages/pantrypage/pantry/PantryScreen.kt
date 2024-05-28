@@ -4,6 +4,8 @@ import MainTopBar
 import Page
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,8 +45,8 @@ import com.example.recipeasy.R
 import com.example.recipeasy.data.dataclasses.PantryItem
 import com.example.recipeasy.ui.AppViewModelProvider
 import com.example.recipeasy.ui.NavigationDestination
-import com.example.recipeasy.ui.theme.AppTheme
-import com.example.recipeasy.ui.theme.oldtheme.Colors
+import com.example.recipeasy.ui.theme.RecipeasyTheme
+import com.example.recipeasy.ui.theme.Colors
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -112,19 +114,28 @@ fun PantryScreen(
                     containerColor = Color.White,
                     contentColor = MaterialTheme.colorScheme.secondary
                 ) {
-                    Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_pantry_items))
+                    Icon(
+                        Icons.Filled.Add,
+                        contentDescription = stringResource(R.string.add_pantry_items)
+                    )
                 }
             }
         }
     ) { innerPadding ->
-        PantryList(
-            modifier = modifier
-                .padding(innerPadding)
-                .fillMaxWidth(),
-            pantry = pantryUiState.pantryItems,
-            onIncreaseClick = { viewModel.increaseQuantity(it.id) },
-            onDecreaseClick = { viewModel.decreaseQuantity(it.id) }
-        )
+
+        AnimatedVisibility(
+            visible = pantryUiState.pantryItems.isNotEmpty(),
+            enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight }),
+        ) {
+            PantryList(
+                modifier = modifier
+                    .padding(innerPadding)
+                    .fillMaxWidth(),
+                pantry = pantryUiState.pantryItems,
+                onIncreaseClick = { viewModel.increaseQuantity(it.id) },
+                onDecreaseClick = { viewModel.decreaseQuantity(it.id) }
+            )
+        }
     }
 }
 
@@ -228,13 +239,13 @@ fun PantryButton(
 @Preview
 @Composable
 fun PantryButtonPreview() {
-AppTheme {
-    PantryButton(
-        text = 5,
-        onIncreaseClick = {},
-        onDecreaseClick = {}
-    )
-}
+    RecipeasyTheme {
+        PantryButton(
+            text = 5,
+            onIncreaseClick = {},
+            onDecreaseClick = {}
+        )
+    }
 }
 
 @Composable
@@ -275,7 +286,6 @@ private fun PantryImage(
         }
     }
 }
-
 
 
 @Composable
